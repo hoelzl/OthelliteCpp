@@ -1,0 +1,10 @@
+<component name="CopyrightManager">
+  <settings default="Open Source Projects">
+    <module2copyright>
+      <element module="C++ Sources" copyright="Open Source Projects" />
+    </module2copyright>
+    <LanguageOptions name="__TEMPLATE__">
+      <option name="block" value="false" />
+    </LanguageOptions>
+  </settings>
+</component>
