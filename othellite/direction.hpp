@@ -5,6 +5,7 @@
 #define OTHELLITE_DIRECTION_HPP
 
 #include "common.hpp"
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <iostream>
@@ -109,6 +110,9 @@ constexpr Direction S{1_S, 0_E};
 constexpr Direction SW{1_S, 1_W};
 constexpr Direction W{0_N, 1_W};
 constexpr Direction NW{1_N, 1_W};
+
+[[maybe_unused]] constexpr std::array<Direction, 8> directions{N, NE, E, SE,
+                                                               S, SW, W, NW};
 
 } // namespace othellite::grid
 

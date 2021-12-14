@@ -11,7 +11,7 @@ add_library(othellite_lib
         common.hpp
         position.cpp
         position.hpp
-        )
+        common.cpp)
 target_include_directories(othellite_lib PUBLIC .)
 
 add_executable(othellite main.cpp)
