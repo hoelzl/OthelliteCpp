@@ -1,5 +1,9 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
+#pragma once
+#ifndef OTHELLITE_DIRECTION_HPP
+#define OTHELLITE_DIRECTION_HPP
+
 #include "common.hpp"
 #include <cstddef>
 #include <cstdint>
@@ -107,3 +111,5 @@ constexpr Direction W{0_N, 1_W};
 constexpr Direction NW{1_N, 1_W};
 
 } // namespace othellite::grid
+
+#endif

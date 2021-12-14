@@ -1,5 +1,6 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
+#pragma once
 #ifndef OTHELLITE_COMMON_HPP
 #define OTHELLITE_COMMON_HPP
 
