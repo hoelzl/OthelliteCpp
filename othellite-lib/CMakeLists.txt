@@ -3,7 +3,7 @@ project(othellite)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(othellite_lib
+add_library(othellite-lib
         board.cpp
         board.hpp
         direction.cpp
@@ -12,7 +12,4 @@ add_library(othellite_lib
         position.cpp
         position.hpp
         common.cpp)
-target_include_directories(othellite_lib PUBLIC .)
-
-add_executable(othellite main.cpp)
-target_link_libraries(othellite othellite_lib)
+target_include_directories(othellite-lib PUBLIC .)

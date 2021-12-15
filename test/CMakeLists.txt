@@ -9,5 +9,5 @@ add_executable(othellite-test
         direction_test.cpp
         position_test.cpp
         common_test.cpp)
-target_link_libraries(othellite-test PUBLIC othellite_lib)
+target_link_libraries(othellite-test PUBLIC othellite-lib)
 target_include_directories(othellite-test PRIVATE external)
