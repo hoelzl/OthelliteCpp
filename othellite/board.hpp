@@ -21,6 +21,12 @@ class Board
     std::array<Field, 64> fields{};
 
 public:
+    enum class InitialState
+    {
+        empty,
+        center_square,
+    };
+
     using iterator = decltype(fields)::iterator;
     using const_iterator [[maybe_unused]] = decltype(fields)::const_iterator;
 
@@ -35,6 +41,8 @@ public:
     [[nodiscard]] std::string to_string() const;
 
     [[nodiscard]] static const std::vector<grid::Position>& get_positions();
+
+    void initialize(InitialState initial_state = InitialState::center_square);
 
     [[nodiscard]] bool is_empty(grid::Position pos) const;
     [[maybe_unused]] [[nodiscard]] bool is_occupied(grid::Position pos) const;

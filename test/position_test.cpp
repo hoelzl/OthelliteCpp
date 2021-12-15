@@ -167,6 +167,99 @@ TEST_CASE("Linear indices are computed correctly.")
     }
 }
 
+TEST_CASE("Comparison operators for positions work as expected.")
+{
+    auto p1 = Position{Row{3}, Column{7}};
+    auto p2 = Position{Row{3}, Column{7}};
+    auto p3 = Position{Row{3}, Column{8}};
+    auto p4 = Position{Row{4}, Column{1}};
+    auto p5 = Position{Row{5}, Column{7}};
+
+    SUBCASE("operator==() returns true iff lhs == rhs.")
+    {
+        CHECK(p1 == p1);
+        CHECK(p1 == p2);
+        CHECK_FALSE(p1 == p3);
+        CHECK_FALSE(p1 == p3);
+        CHECK_FALSE(p1 == p5);
+    }
+
+    SUBCASE("operator!=() returns true iff lhs != rhs.")
+    {
+        CHECK_FALSE(p1 != p1);
+        CHECK_FALSE(p1 != p2);
+        CHECK(p1 != p3);
+        CHECK(p1 != p3);
+        CHECK(p1 != p5);
+    }
+
+    SUBCASE("operator<=() returns true iff lhs <= rhs.")
+    {
+        CHECK(p1 <= p1);
+        CHECK(p1 <= p2);
+        CHECK(p1 <= p3);
+        CHECK(p1 <= p4);
+        CHECK(p1 <= p5);
+        CHECK(p2 <= p1);
+        CHECK(p2 <= p2);
+        CHECK(p2 <= p3);
+        CHECK(p2 <= p4);
+        CHECK(p2 <= p5);
+        CHECK(p3 <= p3);
+        CHECK(p3 <= p4);
+        CHECK(p3 <= p5);
+        CHECK(p4 <= p4);
+        CHECK(p4 <= p5);
+        CHECK(p5 <= p5);
+    }
+
+    SUBCASE("operator<=() returns false iff lhs > rhs.")
+    {
+        CHECK_FALSE(p3 <= p1);
+        CHECK_FALSE(p3 <= p2);
+        CHECK_FALSE(p4 <= p1);
+        CHECK_FALSE(p4 <= p2);
+        CHECK_FALSE(p4 <= p3);
+        CHECK_FALSE(p5 <= p1);
+        CHECK_FALSE(p5 <= p2);
+        CHECK_FALSE(p5 <= p3);
+        CHECK_FALSE(p5 <= p4);
+    }
+
+    SUBCASE("operator<() returns true iff lhs < rhs.")
+    {
+        CHECK(p1 < p3);
+        CHECK(p1 < p4);
+        CHECK(p1 < p5);
+        CHECK(p2 < p3);
+        CHECK(p2 < p4);
+        CHECK(p2 < p5);
+        CHECK(p3 < p4);
+        CHECK(p3 < p5);
+        CHECK(p4 < p5);
+    }
+
+    SUBCASE("operator<() returns false iff lhs >= rhs.")
+    {
+        CHECK_FALSE(p1 < p1);
+        CHECK_FALSE(p1 < p2);
+        CHECK_FALSE(p2 < p1);
+        CHECK_FALSE(p2 < p2);
+        CHECK_FALSE(p3 < p1);
+        CHECK_FALSE(p3 < p2);
+        CHECK_FALSE(p3 < p3);
+        CHECK_FALSE(p4 < p1);
+        CHECK_FALSE(p4 < p2);
+        CHECK_FALSE(p4 < p3);
+        CHECK_FALSE(p4 < p4);
+        CHECK_FALSE(p5 < p1);
+        CHECK_FALSE(p5 < p2);
+        CHECK_FALSE(p5 < p3);
+        CHECK_FALSE(p5 < p4);
+        CHECK_FALSE(p5 < p5);
+    }
+}
+
 TEST_CASE("Positions are formatted correctly.")
 {
     auto pos = Position{Row{2}, Column{5}};

@@ -60,6 +60,45 @@ TEST_CASE("Board::to_string()")
     CHECK(Board::from_string(board_str).to_string() == std::string{board_str});
 }
 
+TEST_CASE("Board::initialize()")
+{
+    auto board_str = "|O|*| | |O|*| | |\n"
+                     "|O|*| | |O|*| |*|\n"
+                     "|O|*| | |O|*| | |\n"
+                     "|O|*| | |O|*| | |\n"
+                     "|O|*| | |O|*| | |\n"
+                     "|O|*| | |O|*| | |\n"
+                     "|O|*| | |O|*| | |\n"
+                     "|O|*| | |O|*| |O|";
+    auto board = Board::from_string(board_str);
+
+    SUBCASE("InitialState::empty sets all fields to empty")
+    {
+        board.initialize(Board::InitialState::empty);
+        for (auto pos: Board::get_positions()) {
+            CHECK(board[pos] == Field::empty);
+        }
+    }
+
+    SUBCASE("InitialState::center_square sets all fields, center fields are occupied")
+    {
+        auto light_fields = std::set<Position>{Position{Row{3}, Column{4}},
+                                               Position{Row{4}, Column{3}}};
+        auto dark_fields = std::set<Position>{Position{Row{3}, Column{3}},
+                                              Position{Row{4}, Column{4}}};
+        board.initialize(Board::InitialState::center_square);
+        for (auto pos: Board::get_positions()) {
+            if (light_fields.contains(pos)) {
+                CHECK(board[pos] == Field::light);
+            } else if (dark_fields.contains(pos)) {
+                CHECK(board[pos] == Field::dark);
+            } else {
+                CHECK(board[pos] == Field::empty);
+            }
+        }
+    }
+}
+
 TEST_CASE("Board::is_valid_move()")
 {
     auto board_str = "| | | | | | | | |\n"

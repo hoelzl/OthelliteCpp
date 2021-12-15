@@ -24,7 +24,7 @@ TEST_CASE("HorizontalMovement converts to integer.")
 
 TEST_CASE("HorizontalMovement is correctly written to stream.")
 {
-    std::stringstream os{};
+    auto os = std::stringstream{};
     os << 2_W << " " << 3_E;
     CHECK(os.str() == "2W 3E");
 }
@@ -47,7 +47,7 @@ TEST_CASE("HorizontalMovement converts to integer.")
 
 TEST_CASE("VerticalMovement is correctly written to stream.")
 {
-    std::stringstream os{};
+    auto os = std::stringstream{};
     os << 4_N << " " << 1_S;
     CHECK(os.str() == "4N 1S");
 }
@@ -61,7 +61,7 @@ TEST_CASE("Direction can be constructed from movements.")
 
 TEST_CASE("Direction constants are correctly defined.")
 {
-    std::stringstream os{};
+    auto os = std::stringstream{};
 
     SUBCASE("Vertical main compass directions.")
     {

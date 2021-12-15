@@ -78,7 +78,7 @@ std::set<Position> Board::positions_to_flip_in_direction(PlayerColor pc,
 std::vector<Position>
 Board::occupied_positions_in_direction(Direction d, Position starting_pos) const
 {
-    std::vector<Position> occupied_positions{};
+    auto occupied_positions = std::vector<Position>{};
     while (starting_pos.is_valid()) {
         if (!field_is_occupied((*this)[starting_pos])) {
             break;
@@ -92,7 +92,7 @@ Board::occupied_positions_in_direction(Direction d, Position starting_pos) const
 std::set<Position> Board::filter_positions_that_can_be_flipped(
         PlayerColor pc, const std::vector<Position>& non_empty_positions) const
 {
-    std::set<Position> result{};
+    auto result = std::set<Position>{};
     auto highest_index =
             find_highest_index_for_player_owned_fields(pc, non_empty_positions);
 
@@ -110,10 +110,10 @@ std::size_t othellite::Board::find_highest_index_for_player_owned_fields(
         othellite::PlayerColor pc,
         const std::vector<Position>& non_empty_positions) const
 {
-    int num_non_empty_position{static_cast<int>(non_empty_positions.size())};
+    auto num_non_empty_position = static_cast<int>(non_empty_positions.size());
     for (int i = num_non_empty_position - 1; i >= 0; --i) {
-        const Position& position{non_empty_positions[i]};
-        const Field& field = (*this)[position];
+        const auto& position = Position{non_empty_positions[i]};
+        const auto& field = (*this)[position];
         if (field_is_owned_by_player(field, pc)) {
             return i;
         }
@@ -123,7 +123,7 @@ std::size_t othellite::Board::find_highest_index_for_player_owned_fields(
 
 const std::vector<Position>& othellite::Board::get_positions()
 {
-    static std::vector<Position> result{};
+    static auto result = std::vector<Position>{};
     if (result.empty()) {
         for (auto row = 0; row < 8; ++row) {
             for (auto col = 0; col < 8; ++col) {
@@ -132,6 +132,18 @@ const std::vector<Position>& othellite::Board::get_positions()
         }
     }
     return result;
+}
+void othellite::Board::initialize(InitialState initial_state)
+{
+    for (auto pos: get_positions()) {
+        (*this)[pos] = Field::empty;
+    }
+    if (initial_state == InitialState::center_square) {
+        (*this)[Position{Row{3}, Column{3}}] = Field::dark;
+        (*this)[Position{Row{3}, Column{4}}] = Field::light;
+        (*this)[Position{Row{4}, Column{3}}] = Field::light;
+        (*this)[Position{Row{4}, Column{4}}] = Field::dark;
+    }
 }
 
 auto BoardReader::board_from_string(std::string_view board_str) -> Board
@@ -147,8 +159,8 @@ auto BoardReader::board_from_string(std::string_view board_str) -> Board
 
 std::string BoardReader::clean_board_str(std::string_view board_str)
 {
-    static const std::string valid_chars{"O* "};
-    std::string result{};
+    static const auto valid_chars = std::string{"O* "};
+    auto result = std::string{};
     copy_if(board_str, std::back_inserter(result),
             [](auto c) { return c == 'O' || c == '*' || c == ' '; });
     return result;
@@ -167,7 +179,7 @@ auto BoardReader::convert_char(char c) -> Field
 
 std::string BoardWriter::board_to_string(const Board& board)
 {
-    std::string result{};
+    auto result = std::string{};
     auto prefix = std::string{"|"};
     for (auto pos: Board::get_positions()) {
         auto next_char = field_to_char(board[pos]);
