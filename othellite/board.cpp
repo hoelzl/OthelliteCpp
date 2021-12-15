@@ -121,6 +121,19 @@ std::size_t othellite::Board::find_highest_index_for_player_owned_fields(
     return 0;
 }
 
+const std::vector<Position>& othellite::Board::get_positions()
+{
+    static std::vector<Position> result{};
+    if (result.empty()) {
+        for (auto row = 0; row < 8; ++row) {
+            for (auto col = 0; col < 8; ++col) {
+                result.push_back(Position{Row{row}, Column{col}});
+            }
+        }
+    }
+    return result;
+}
+
 auto BoardReader::board_from_string(std::string_view board_str) -> Board
 {
     auto cleaned_string = clean_board_str(board_str);
@@ -140,6 +153,7 @@ std::string BoardReader::clean_board_str(std::string_view board_str)
             [](auto c) { return c == 'O' || c == '*' || c == ' '; });
     return result;
 }
+
 auto BoardReader::convert_char(char c) -> Field
 {
     switch (c) {
@@ -150,17 +164,19 @@ auto BoardReader::convert_char(char c) -> Field
             throw std::invalid_argument("Field inputs can only be ' ', '*' or 'O'.");
     }
 }
+
 std::string BoardWriter::board_to_string(const Board& board)
 {
     std::string result{};
     auto prefix = std::string{"|"};
-    for (auto row = 0; row < 8; ++row) {
-        for (auto col = 0; col < 8; ++col) {
-            auto next_char = field_to_char(board[Position{Row{row}, Column{col}}]);
-            result += prefix + std::string{next_char};
+    for (auto pos: Board::get_positions()) {
+        auto next_char = field_to_char(board[pos]);
+        result += prefix + std::string{next_char};
+        if (pos.get_column() == 7) {
+            prefix = std::string{"|\n|"};
+        } else {
             prefix = std::string{"|"};
         }
-        prefix = std::string{"|\n|"};
     }
     result += std::string{"|"};
     return result;

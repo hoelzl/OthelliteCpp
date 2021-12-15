@@ -34,6 +34,8 @@ public:
 
     [[nodiscard]] std::string to_string() const;
 
+    [[nodiscard]] static const std::vector<grid::Position>& get_positions();
+
     [[nodiscard]] bool is_empty(grid::Position pos) const;
     [[maybe_unused]] [[nodiscard]] bool is_occupied(grid::Position pos) const;
 
@@ -43,7 +45,6 @@ private:
     friend class BoardReader;
     friend class BoardWriter;
     Field& operator[](std::size_t index);
-
 
     [[nodiscard]] bool does_move_flip_any_field(PlayerColor pc,
                                                 grid::Position starting_pos) const;
