@@ -81,6 +81,11 @@ inline constexpr bool operator==(Position lhs, Position rhs)
     return lhs.get_row() == rhs.get_row() && lhs.get_column() == rhs.get_column();
 }
 
+inline constexpr bool operator<(Position lhs, Position rhs)
+{
+    return lhs.get_row() < rhs.get_row() || lhs.get_column() < rhs.get_column();
+}
+
 std::ostream& operator<<(std::ostream& os, Position pos);
 
 } // namespace othellite::grid

@@ -9,8 +9,10 @@
 #include <array>
 #include <concepts>
 #include <memory>
+#include <set>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace othellite {
 
@@ -32,10 +34,31 @@ public:
 
     [[nodiscard]] std::string to_string() const;
 
+    [[nodiscard]] bool is_empty(grid::Position pos) const;
+    [[maybe_unused]] [[nodiscard]] bool is_occupied(grid::Position pos) const;
+
+    [[nodiscard]] bool is_valid_move(PlayerColor pc, grid::Position pos) const;
+
 private:
     friend class BoardReader;
     friend class BoardWriter;
     Field& operator[](std::size_t index);
+
+
+    [[nodiscard]] bool does_move_flip_any_field(PlayerColor pc,
+                                                grid::Position starting_pos) const;
+    [[nodiscard]] std::set<grid::Position>
+    positions_to_flip_in_direction(PlayerColor pc, grid::Position starting_pos,
+                                   grid::Direction d) const;
+    [[nodiscard]] std::vector<grid::Position>
+    occupied_positions_in_direction(grid::Direction d,
+                                    grid::Position starting_pos) const;
+    [[nodiscard]] std::set<grid::Position> filter_positions_that_can_be_flipped(
+            PlayerColor pc,
+            const std::vector<grid::Position>& non_empty_positions) const;
+    [[nodiscard]] std::size_t find_highest_index_for_player_owned_fields(
+            PlayerColor pc,
+            const std::vector<grid::Position>& non_empty_positions) const;
 };
 
 class BoardReader
