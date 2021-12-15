@@ -49,6 +49,8 @@ public:
 
     [[nodiscard]] bool is_valid_move(PlayerColor pc, grid::Position pos) const;
 
+    [[nodiscard]] std::set<grid::Position> find_valid_moves(PlayerColor pc) const;
+
 private:
     friend class BoardReader;
     friend class BoardWriter;

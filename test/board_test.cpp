@@ -144,6 +144,97 @@ TEST_CASE("Board::is_valid_move()")
     }
 }
 
+void check_valid_moves(const Board& board, PlayerColor pc,
+                       const std::set<Position>& valid_moves)
+{
+    for (auto pos: Board::get_positions()) {
+        auto result = board.is_valid_move(pc, pos);
+        if (valid_moves.contains(pos)) {
+            CHECK(result);
+        } else {
+            CHECK_FALSE(result);
+        }
+    }
+}
+
+TEST_CASE("Board::is_valid_moves() for initial board (alternative test "
+          "implementation).")
+{
+    auto board = Board{};
+    board.initialize(Board::InitialState::center_square);
+
+    SUBCASE("Light has four moves.")
+    {
+        auto valid_moves = std::set<Position>{
+                Position{Row{2}, Column{3}}, Position{Row{3}, Column{2}},
+                Position{Row{4}, Column{5}}, Position{Row{5}, Column{4}}};
+        check_valid_moves(board, PlayerColor::light, valid_moves);
+    }
+
+    SUBCASE("Dark has four moves.")
+    {
+        auto valid_moves = std::set<Position>{
+                Position{Row{2}, Column{4}}, Position{Row{3}, Column{5}},
+                Position{Row{4}, Column{2}}, Position{Row{5}, Column{3}}};
+        check_valid_moves(board, PlayerColor::dark, valid_moves);
+    }
+}
+
+TEST_CASE("Board::find_valid_moves() against initial board.")
+{
+    auto board = Board{};
+    board.initialize(Board::InitialState::center_square);
+
+    SUBCASE("Light has four moves.")
+    {
+        auto valid_moves = std::set<Position>{
+                Position{Row{2}, Column{3}}, Position{Row{3}, Column{2}},
+                Position{Row{4}, Column{5}}, Position{Row{5}, Column{4}}};
+        CHECK(board.find_valid_moves(PlayerColor::light) == valid_moves);
+    }
+
+    SUBCASE("Dark has four moves.")
+    {
+        auto valid_moves = std::set<Position>{
+                Position{Row{2}, Column{4}}, Position{Row{3}, Column{5}},
+                Position{Row{4}, Column{2}}, Position{Row{5}, Column{3}}};
+        CHECK(board.find_valid_moves(PlayerColor::dark) == valid_moves);
+    }
+}
+
+
+TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
+{
+    auto board_str = "|*|O|O|O| | | | |\n"
+                     "| |*| | | | | | |\n"
+                     "| | | | | | | | |\n"
+                     "| | | |*|O| | | |\n"
+                     "| | | |O|*| | | |\n"
+                     "| | | | | | | | |\n"
+                     "| | | | | | | | |\n"
+                     "| | | | | | | | |";
+    auto board = Board::from_string(board_str);
+
+    SUBCASE("Light has four moves.")
+    {
+        auto valid_moves = std::set<Position>{
+                Position{Row{2}, Column{0}}, Position{Row{2}, Column{1}},
+                Position{Row{2}, Column{3}}, Position{Row{3}, Column{2}},
+                Position{Row{4}, Column{5}}, Position{Row{5}, Column{4}}};
+        CHECK(board.find_valid_moves(PlayerColor::light) == valid_moves);
+    }
+
+    SUBCASE("Dark has four moves.")
+    {
+        auto valid_moves = std::set<Position>{
+                Position{Row{0}, Column{4}}, Position{Row{2}, Column{4}},
+                Position{Row{3}, Column{5}}, Position{Row{4}, Column{2}},
+                Position{Row{5}, Column{3}}};
+        CHECK(board.find_valid_moves(PlayerColor::dark) == valid_moves);
+    }
+}
+
+
 TEST_CASE("BoardReader::clean_board_str()")
 {
     std::string input{"a *bcd*0O*O !!!!!  O"};

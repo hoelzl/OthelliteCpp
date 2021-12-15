@@ -145,6 +145,16 @@ void othellite::Board::initialize(InitialState initial_state)
         (*this)[Position{Row{4}, Column{4}}] = Field::dark;
     }
 }
+std::set<Position> othellite::Board::find_valid_moves(othellite::PlayerColor pc) const
+{
+    auto result = std::set<Position>{};
+    for (auto pos: Board::get_positions()) {
+        if (is_valid_move(pc, pos)) {
+            result.insert(pos);
+        }
+    }
+    return result;
+}
 
 auto BoardReader::board_from_string(std::string_view board_str) -> Board
 {
