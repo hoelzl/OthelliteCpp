@@ -215,7 +215,7 @@ TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
                      "| | | | | | | | |";
     auto board = Board::from_string(board_str);
 
-    SUBCASE("Light has four moves.")
+    SUBCASE("Light has six moves.")
     {
         auto valid_moves = std::set<Position>{
                 Position{Row{2}, Column{0}}, Position{Row{2}, Column{1}},
@@ -224,13 +224,192 @@ TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
         CHECK(board.find_valid_moves(PlayerColor::light) == valid_moves);
     }
 
-    SUBCASE("Dark has four moves.")
+    SUBCASE("Dark has five moves.")
     {
         auto valid_moves = std::set<Position>{
                 Position{Row{0}, Column{4}}, Position{Row{2}, Column{4}},
                 Position{Row{3}, Column{5}}, Position{Row{4}, Column{2}},
                 Position{Row{5}, Column{3}}};
         CHECK(board.find_valid_moves(PlayerColor::dark) == valid_moves);
+    }
+}
+
+TEST_CASE("Board::play_move()")
+{
+    auto board = Board::from_string("|*|O|O|O| | | | |\n"
+                                    "| |*| | | | | | |\n"
+                                    "| | | | | | | | |\n"
+                                    "| | | |*|O| | | |\n"
+                                    "| | | |O|*| | | |\n"
+                                    "| | | | | | | | |\n"
+                                    "| | | | | | | | |\n"
+                                    "| | | | | | | | |");
+
+    SUBCASE("Light player moves.")
+    {
+        SUBCASE("Light player plays (2, 0).")
+        {
+            board.play_move(PlayerColor::light, Position{Row{2}, Column{0}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |O| | | | | | |\n"
+                                               "|O| | | | | | | |\n"
+                                               "| | | |*|O| | | |\n"
+                                               "| | | |O|*| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+
+        SUBCASE("Light player plays (2, 1).")
+        {
+            board.play_move(PlayerColor::light, Position{Row{2}, Column{1}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |O| | | | | | |\n"
+                                               "| |O| | | | | | |\n"
+                                               "| | | |*|O| | | |\n"
+                                               "| | | |O|*| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+
+        SUBCASE("Light player plays (2, 3).")
+        {
+            board.play_move(PlayerColor::light, Position{Row{2}, Column{3}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | |O| | | | |\n"
+                                               "| | | |O|O| | | |\n"
+                                               "| | | |O|*| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+
+        SUBCASE("Light player plays (3, 2).")
+        {
+            board.play_move(PlayerColor::light, Position{Row{3}, Column{2}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | |O|O|O| | | |\n"
+                                               "| | | |O|*| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+
+        SUBCASE("Light player plays (4, 5).")
+        {
+            board.play_move(PlayerColor::light, Position{Row{4}, Column{5}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | |*|O| | | |\n"
+                                               "| | | |O|O|O| | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+
+        SUBCASE("Light player plays (5, 4).")
+        {
+            board.play_move(PlayerColor::light, Position{Row{5}, Column{4}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | |*|O| | | |\n"
+                                               "| | | |O|O| | | |\n"
+                                               "| | | | |O| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+    }
+
+    SUBCASE("Dark player moves.")
+    {
+        SUBCASE("Dark player plays (0, 4).")
+        {
+            board.play_move(PlayerColor::dark, Position{Row{0}, Column{4}});
+
+            auto expected = Board::from_string("|*|*|*|*|*| | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | |*|O| | | |\n"
+                                               "| | | |O|*| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+        SUBCASE("Dark player plays (2, 4).")
+        {
+            board.play_move(PlayerColor::dark, Position{Row{2}, Column{4}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | | |*| | | |\n"
+                                               "| | | |*|*| | | |\n"
+                                               "| | | |O|*| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+        SUBCASE("Dark player plays (3, 5).")
+        {
+            board.play_move(PlayerColor::dark, Position{Row{3}, Column{5}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | |*|*|*| | |\n"
+                                               "| | | |O|*| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+        SUBCASE("Dark player plays (4, 2).")
+        {
+            board.play_move(PlayerColor::dark, Position{Row{4}, Column{2}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | |*|O| | | |\n"
+                                               "| | |*|*|*| | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
+        SUBCASE("Dark player plays (5, 3).")
+        {
+            board.play_move(PlayerColor::dark, Position{Row{5}, Column{3}});
+
+            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+                                               "| |*| | | | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | |*|O| | | |\n"
+                                               "| | | |*|*| | | |\n"
+                                               "| | | |*| | | | |\n"
+                                               "| | | | | | | | |\n"
+                                               "| | | | | | | | |");
+            CHECK(board == expected);
+        }
     }
 }
 

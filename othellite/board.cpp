@@ -133,6 +133,7 @@ const std::vector<Position>& othellite::Board::get_positions()
     }
     return result;
 }
+
 void othellite::Board::initialize(InitialState initial_state)
 {
     for (auto pos: get_positions()) {
@@ -145,6 +146,7 @@ void othellite::Board::initialize(InitialState initial_state)
         (*this)[Position{Row{4}, Column{4}}] = Field::dark;
     }
 }
+
 std::set<Position> othellite::Board::find_valid_moves(othellite::PlayerColor pc) const
 {
     auto result = std::set<Position>{};
@@ -154,6 +156,35 @@ std::set<Position> othellite::Board::find_valid_moves(othellite::PlayerColor pc)
         }
     }
     return result;
+}
+
+void othellite::Board::play_move(othellite::PlayerColor pc, Position pos)
+{
+    if (is_valid_move(pc, pos)) {
+        (*this)[pos] = field_for_player_color(pc);
+        auto flipped_positions = find_positions_flipped_by_move(pc, pos);
+        flip_positions(pc, flipped_positions);
+    }
+}
+
+std::set<Position>
+othellite::Board::find_positions_flipped_by_move(othellite::PlayerColor pc,
+                                                 Position pos)
+{
+    auto result = std::set<Position>{};
+    for (auto d: grid::directions) {
+        result.merge(positions_to_flip_in_direction(pc, pos, d));
+    }
+    return result;
+}
+
+void othellite::Board::flip_positions(othellite::PlayerColor pc,
+                                      const std::set<Position>& positions_to_flip)
+{
+    auto field = field_for_player_color(pc);
+    for (auto pos: positions_to_flip) {
+        (*this)[pos] = field;
+    }
 }
 
 auto BoardReader::board_from_string(std::string_view board_str) -> Board
@@ -202,4 +233,10 @@ std::string BoardWriter::board_to_string(const Board& board)
     }
     result += std::string{"|"};
     return result;
+}
+
+bool othellite::operator==(const Board& lhs, const Board& rhs)
+{
+    return std::ranges::all_of(Board::get_positions(),
+                               [&](auto p) { return lhs[p] == rhs[p]; });
 }
