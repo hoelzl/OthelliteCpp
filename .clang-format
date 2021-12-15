@@ -1,21 +1,71 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: c++20
+AccessModifierOffset: -4
+AlignAfterOpenBracket: AlwaysBreak
+AlignOperands: false
+AllowAllArgumentsOnNextLine: true
+AllowAllConstructorInitializersOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortLambdasOnASingleLine: All
+AlwaysBreakTemplateDeclarations: Yes
+BinPackArguments: true
+BinPackParameters: true
+BraceWrapping: 
+  AfterCaseLabel: false
+  AfterClass: true
+  AfterControlStatement: false
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: false
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: false
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: true
+  BeforeWhile: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+BreakBeforeBraces: Custom
+BreakInheritanceList: BeforeComma
+BreakStringLiterals: true
+ColumnLimit: 88
+FixNamespaceComments: true
+IncludeBlocks: Regroup
+IncludeCategories: 
+  - Regex: '^<.*'
+    Priority: 1
+  - Regex: '^".*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 3
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IndentWidth: 4
+MacroBlockBegin: ''
+MacroBlockEnd: ''
+MaxEmptyLinesToKeep: 2
+PointerAlignment: Left
+ReflowComments: true
+SpacesInContainerLiterals: false
+TabWidth: 4
+---
+Language: JavaScript
 BasedOnStyle: LLVM
 AccessModifierOffset: -4
-AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: None
-AlignOperands: Align
 AllowAllArgumentsOnNextLine: false
 AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: Never
-AllowShortLambdasOnASingleLine: All
-AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: Yes
-BreakBeforeBraces: Custom
-BraceWrapping:
+BraceWrapping: 
   AfterCaseLabel: false
   AfterClass: true
   AfterControlStatement: Never
@@ -28,38 +78,18 @@ BraceWrapping:
   IndentBraces: false
   SplitEmptyFunction: true
   SplitEmptyRecord: true
-BreakBeforeBinaryOperators: None
-BreakBeforeTernaryOperators: true
-BreakConstructorInitializers: BeforeColon
+BreakBeforeBraces: Custom
 BreakInheritanceList: BeforeComma
-ColumnLimit: 88
+ColumnLimit: 120
 CompactNamespaces: true
 ContinuationIndentWidth: 8
 IndentCaseLabels: true
-IndentPPDirectives: None
 IndentWidth: 4
-KeepEmptyLinesAtTheStartOfBlocks: true
 MaxEmptyLinesToKeep: 2
-NamespaceIndentation: None
-ObjCSpaceAfterProperty: false
-ObjCSpaceBeforeProtocolList: true
 PointerAlignment: Left
-ReflowComments: true
 SpaceAfterCStyleCast: true
-SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false
-SpaceBeforeAssignmentOperators: true
-SpaceBeforeCpp11BracedList: false
-SpaceBeforeCtorInitializerColon: true
-SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: ControlStatements
 SpaceBeforeRangeBasedForLoopColon: false
-SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 1
-SpacesInAngles: false
-SpacesInCStyleCastParentheses: false
 SpacesInContainerLiterals: false
-SpacesInParentheses: false
-SpacesInSquareBrackets: false
 TabWidth: 4
-UseTab: Never
+...

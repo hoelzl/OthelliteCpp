@@ -4,9 +4,7 @@
 #ifndef OTHELLITE_DIRECTION_HPP
 #define OTHELLITE_DIRECTION_HPP
 
-#include "common.hpp"
 #include <array>
-#include <cstddef>
 #include <cstdint>
 #include <iostream>
 #include <limits>
@@ -26,31 +24,33 @@ public:
     [[nodiscard]] Movement::int_type get_amount() const { return amount; }
 
 protected:
-    explicit constexpr Movement(int_type amount) : amount{amount} {}
+    explicit constexpr Movement(int_type const amount) : amount{amount} {}
     int_type amount;
 };
 
 class HorizontalMovement : public Movement
 {
-    explicit constexpr HorizontalMovement(Movement::int_type amount) : Movement(amount)
-    {
-    }
-    friend consteval class HorizontalMovement operator"" _W(unsigned long long amount);
-    friend consteval class HorizontalMovement operator"" _E(unsigned long long amount);
-    friend std::ostream& operator<<(std::ostream& os,
-                                    HorizontalMovement horizontal_movement);
+    explicit constexpr HorizontalMovement(int_type const horizontal_movement)
+        : Movement(horizontal_movement)
+    {}
+    friend consteval class HorizontalMovement operator""_W(unsigned long long amount);
+    friend consteval class HorizontalMovement operator""_E(unsigned long long amount);
+    friend std::ostream&
+    operator<<(std::ostream& os, HorizontalMovement horizontal_movement);
 };
 
 class VerticalMovement : public Movement
 {
-    explicit constexpr VerticalMovement(Movement::int_type amount) : Movement(amount) {}
-    friend consteval class VerticalMovement operator"" _N(unsigned long long amount);
-    friend consteval class VerticalMovement operator"" _S(unsigned long long amount);
-    friend std::ostream& operator<<(std::ostream& os,
-                                    VerticalMovement vertical_movement);
+    explicit constexpr VerticalMovement(Movement::int_type const vertical_movement)
+        : Movement(vertical_movement)
+    {}
+    friend consteval class VerticalMovement operator""_N(unsigned long long amount);
+    friend consteval class VerticalMovement operator""_S(unsigned long long amount);
+    friend std::ostream&
+    operator<<(std::ostream& os, VerticalMovement vertical_movement);
 };
 
-consteval HorizontalMovement operator"" _W(unsigned long long amount)
+consteval auto operator""_W(unsigned long long amount) -> HorizontalMovement
 {
     if (amount < std::numeric_limits<Movement::int_type>::max()) {
         return HorizontalMovement{static_cast<Movement::int_type>(-1 * amount)};
@@ -58,7 +58,7 @@ consteval HorizontalMovement operator"" _W(unsigned long long amount)
     throw std::invalid_argument("Bad argument for _W literal.");
 }
 
-consteval HorizontalMovement operator"" _E(unsigned long long amount)
+consteval HorizontalMovement operator""_E(unsigned long long amount)
 {
     if (amount < std::numeric_limits<Movement::int_type>::max()) {
         return HorizontalMovement{static_cast<Movement::int_type>(amount)};
@@ -68,7 +68,7 @@ consteval HorizontalMovement operator"" _E(unsigned long long amount)
 
 std::ostream& operator<<(std::ostream& os, HorizontalMovement horizontal_movement);
 
-consteval VerticalMovement operator"" _N(unsigned long long amount)
+consteval VerticalMovement operator""_N(unsigned long long amount)
 {
     if (amount < std::numeric_limits<Movement::int_type>::max()) {
         return VerticalMovement{static_cast<Movement::int_type>(-1 * amount)};
@@ -76,7 +76,7 @@ consteval VerticalMovement operator"" _N(unsigned long long amount)
     throw std::invalid_argument("Bad argument for _N literal.");
 }
 
-consteval VerticalMovement operator"" _S(unsigned long long amount)
+consteval VerticalMovement operator""_S(unsigned long long amount)
 {
     if (amount < std::numeric_limits<Movement::int_type>::max()) {
         return VerticalMovement{static_cast<Movement::int_type>(amount)};
@@ -89,8 +89,7 @@ std::ostream& operator<<(std::ostream& os, VerticalMovement vertical_movement);
 class Direction
 {
 public:
-    constexpr Direction(VerticalMovement dy, HorizontalMovement dx) : dy{dy}, dx{dx} {}
-    constexpr ~Direction() = default;
+    constexpr Direction(VerticalMovement dy, HorizontalMovement dx) : dx{dx}, dy{dy} {}
 
     [[nodiscard]] constexpr HorizontalMovement get_dx() const { return dx; }
     [[nodiscard]] constexpr VerticalMovement get_dy() const { return dy; }

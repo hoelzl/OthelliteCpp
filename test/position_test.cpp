@@ -1,9 +1,11 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
-#include "doctest.hpp"
 #include "position.hpp"
+
 #include <sstream>
 #include <stdexcept>
+
+#include "doctest.hpp"
 
 using namespace othellite::grid;
 
@@ -13,16 +15,16 @@ TEST_CASE("Rows with valid indices can be created and used.")
 
     SUBCASE("Rows are automatically converted to integers.")
     {
-        auto row = Row{1};
+        auto constexpr row = Row{1};
         CHECK(row + 1 == 2);
     }
 }
 
 TEST_CASE("Rows can be compared for equality.")
 {
-    auto row1 = Row{3};
-    auto row2 = Row{3};
-    auto row3 = Row{2};
+    auto constexpr row1 = Row{3};
+    auto constexpr row2 = Row{3};
+    auto constexpr row3 = Row{2};
 
     CHECK(row1 == row2);
     CHECK(row2 != row3);
@@ -31,9 +33,9 @@ TEST_CASE("Rows can be compared for equality.")
 
 TEST_CASE("Columns can be compared for equality.")
 {
-    auto column1 = Column{3};
-    auto column2 = Column{3};
-    auto column3 = Column{2};
+    auto constexpr column1 = Column{3};
+    auto constexpr column2 = Column{3};
+    auto constexpr column3 = Column{2};
 
     CHECK(column1 == column2);
     CHECK(column2 != column3);
@@ -46,7 +48,7 @@ TEST_CASE("Columns with valid indices can be created and used.")
 
     SUBCASE("Columns are automatically converted to integers.")
     {
-        auto column = Column{1};
+        auto constexpr column = Column{1};
         CHECK(column + 1 == 2);
     }
 }
@@ -58,7 +60,7 @@ TEST_CASE("Positions can be constructed.")
 
 TEST_CASE("Valid positions return correct values for simple operations.")
 {
-    auto pos = Position{Row{2}, Column{4}};
+    auto constexpr pos = Position{Row{2}, Column{4}};
 
     SUBCASE("get_row() and get_column() return correct values.")
     {
@@ -125,13 +127,13 @@ TEST_CASE("Next position is computed correctly when inside board dimensions.")
 TEST_CASE("next_in_direction() throws for invalid positions")
 {
     auto pos = Position{Row{-1}, Column{2}};
-    CHECK_THROWS_AS(pos.next_in_direction(N), std::invalid_argument);
+    CHECK_THROWS_AS((void)pos.next_in_direction(N), std::invalid_argument);
     pos = Position{Row{8}, Column{2}};
-    CHECK_THROWS_AS(pos.next_in_direction(N), std::invalid_argument);
+    CHECK_THROWS_AS((void)pos.next_in_direction(N), std::invalid_argument);
     pos = Position{Row{6}, Column{-1}};
-    CHECK_THROWS_AS(pos.next_in_direction(N), std::invalid_argument);
+    CHECK_THROWS_AS((void)pos.next_in_direction(N), std::invalid_argument);
     pos = Position{Row{6}, Column{8}};
-    CHECK_THROWS_AS(pos.next_in_direction(N), std::invalid_argument);
+    CHECK_THROWS_AS((void)pos.next_in_direction(N), std::invalid_argument);
 }
 
 TEST_CASE("Linear indices are computed correctly.")
@@ -262,7 +264,7 @@ TEST_CASE("Comparison operators for positions work as expected.")
 
 TEST_CASE("Positions are formatted correctly.")
 {
-    auto pos = Position{Row{2}, Column{5}};
+    auto constexpr pos = Position{Row{2}, Column{5}};
     std::stringstream os{};
     os << pos;
 

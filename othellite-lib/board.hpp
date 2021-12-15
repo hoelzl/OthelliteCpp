@@ -4,15 +4,13 @@
 #ifndef OTHELLITE_BOARD_HPP
 #define OTHELLITE_BOARD_HPP
 
-#include "common.hpp"
-#include "position.hpp"
 #include <array>
-#include <concepts>
-#include <memory>
 #include <set>
 #include <string>
-#include <string_view>
 #include <vector>
+
+#include "common.hpp"
+#include "position.hpp"
 
 namespace othellite {
 
@@ -36,11 +34,11 @@ public:
     static Board from_string(std::string_view board_string);
 
     Field& operator[](grid::Position pos);
-    const Field& operator[](grid::Position pos) const;
+    Field const& operator[](grid::Position pos) const;
 
     [[nodiscard]] std::string to_string() const;
 
-    [[nodiscard]] static const std::vector<grid::Position>& get_positions();
+    [[nodiscard]] static std::vector<grid::Position> const& get_positions();
 
     void initialize(InitialState initial_state = InitialState::center_square);
 
@@ -58,33 +56,29 @@ private:
     friend class BoardWriter;
     Field& operator[](std::size_t index);
 
-    [[nodiscard]] bool does_move_flip_any_field(PlayerColor pc,
-                                                grid::Position starting_pos) const;
+    [[nodiscard]] bool
+    does_move_flip_any_field(PlayerColor pc, grid::Position starting_pos) const;
 
-    [[nodiscard]] std::set<grid::Position>
-    positions_to_flip_in_direction(PlayerColor pc, grid::Position starting_pos,
-                                   grid::Direction d) const;
+    [[nodiscard]] std::set<grid::Position> positions_to_flip_in_direction(
+        PlayerColor pc, grid::Position starting_pos, grid::Direction d) const;
 
-    [[nodiscard]] std::vector<grid::Position>
-    occupied_positions_in_direction(grid::Direction d,
-                                    grid::Position starting_pos) const;
+    [[nodiscard]] std::vector<grid::Position> occupied_positions_in_direction(
+        grid::Direction d, grid::Position starting_pos) const;
 
     [[nodiscard]] std::set<grid::Position> filter_positions_that_can_be_flipped(
-            PlayerColor pc,
-            const std::vector<grid::Position>& non_empty_positions) const;
+        PlayerColor pc, std::vector<grid::Position> const& non_empty_positions) const;
 
     [[nodiscard]] std::size_t find_highest_index_for_player_owned_fields(
-            PlayerColor pc,
-            const std::vector<grid::Position>& non_empty_positions) const;
+        PlayerColor pc, std::vector<grid::Position> const& non_empty_positions) const;
 
-    std::set<grid::Position> find_positions_flipped_by_move(PlayerColor pc,
-                                                            grid::Position pos);
+    [[nodiscard]] std::set<grid::Position>
+    find_positions_flipped_by_move(PlayerColor pc, grid::Position pos) const;
 
-    void flip_positions(PlayerColor pc,
-                        const std::set<grid::Position>& positions_to_flip);
+    void
+    flip_positions(PlayerColor pc, std::set<grid::Position> const& positions_to_flip);
 };
 
-bool operator==(const Board& lhs, const Board& rhs);
+bool operator==(Board const& lhs, Board const& rhs);
 
 class BoardReader
 {
@@ -97,7 +91,7 @@ public:
 class BoardWriter
 {
 public:
-    static std::string board_to_string(const Board& board);
+    static std::string board_to_string(Board const& board);
 };
 
 } // namespace othellite

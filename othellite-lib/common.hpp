@@ -5,7 +5,6 @@
 #define OTHELLITE_COMMON_HPP
 
 #include <cstdint>
-#include <stdexcept>
 
 namespace othellite {
 

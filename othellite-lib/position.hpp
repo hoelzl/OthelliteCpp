@@ -4,16 +4,18 @@
 #ifndef OTHELLITE_POSITION_HPP
 #define OTHELLITE_POSITION_HPP
 
-#include "common.hpp"
-#include "direction.hpp"
 #include <cstdint>
 #include <stdexcept>
+
+#include "common.hpp"
+#include "direction.hpp"
 
 namespace othellite::grid {
 
 using coordinate_t = int_least8_t;
 
-struct Row {
+struct Row
+{
     constexpr explicit Row(int row) : value{static_cast<coordinate_t>(row)} {}
 
     coordinate_t value;
@@ -25,7 +27,8 @@ struct Row {
 
 inline constexpr bool operator==(Row lhs, Row rhs) { return lhs.value == rhs.value; }
 
-struct Column {
+struct Column
+{
     constexpr explicit Column(int column) : value{static_cast<coordinate_t>(column)} {}
 
     coordinate_t value;
@@ -53,7 +56,7 @@ public:
         return 0 <= row && row < board_size && 0 <= column && column < board_size;
     }
 
-    constexpr Position next_in_direction(Direction d)
+    [[nodiscard]] constexpr Position next_in_direction(Direction const d) const
     {
         throw_if_invalid();
         return {Row{row + d.get_dy()}, Column{column + d.get_dx()}};
@@ -76,18 +79,18 @@ private:
     }
 };
 
-inline constexpr bool operator==(Position lhs, Position rhs)
+inline constexpr bool operator==(Position const lhs, Position const rhs)
 {
     return lhs.get_row() == rhs.get_row() && lhs.get_column() == rhs.get_column();
 }
 
-inline constexpr bool operator<(Position lhs, Position rhs)
+inline constexpr bool operator<(Position const lhs, Position const rhs)
 {
     return lhs.get_row() < rhs.get_row() ||
-           (lhs.get_row() == rhs.get_row() && lhs.get_column() < rhs.get_column());
+        (lhs.get_row() == rhs.get_row() && lhs.get_column() < rhs.get_column());
 }
 
-inline constexpr bool operator<=(Position lhs, Position rhs)
+inline constexpr bool operator<=(Position const lhs, Position const rhs)
 {
     return lhs == rhs || lhs < rhs;
 }
