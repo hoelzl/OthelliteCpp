@@ -4,10 +4,7 @@
 
 #include "doctest.hpp"
 
-using othellite::Board;
-using othellite::BoardReader;
-using othellite::Field;
-using othellite::PlayerColor;
+using namespace othellite;
 using othellite::grid::Column;
 using othellite::grid::Position;
 using othellite::grid::Row;
@@ -73,22 +70,22 @@ TEST_CASE("Board::initialize()")
                      "|O|*| | |O|*| |O|";
     auto board = Board::from_string(board_str);
 
-    SUBCASE("InitialState::empty sets all fields to empty")
+    SUBCASE("InitialBoardState::empty sets all fields to empty")
     {
-        board.initialize(Board::InitialState::empty);
-        for (auto pos : Board::get_positions()) {
+        board.initialize(InitialBoardState::empty);
+        for (auto pos : all_board_positions()) {
             CHECK(board[pos] == Field::empty);
         }
     }
 
-    SUBCASE("InitialState::center_square sets all fields, center fields are occupied")
+    SUBCASE("InitialBoardState::center_square sets all fields, center fields are occupied")
     {
         auto light_fields = std::set<Position>{
             Position{Row{3}, Column{4}}, Position{Row{4}, Column{3}}};
         auto dark_fields = std::set<Position>{
             Position{Row{3}, Column{3}}, Position{Row{4}, Column{4}}};
-        board.initialize(Board::InitialState::center_square);
-        for (auto pos : Board::get_positions()) {
+        board.initialize(InitialBoardState::center_square);
+        for (auto pos : all_board_positions()) {
             if (light_fields.contains(pos)) {
                 CHECK(board[pos] == Field::light);
             }
@@ -152,7 +149,7 @@ TEST_CASE("Board::is_valid_move()")
 void check_valid_moves(
     Board const& board, PlayerColor pc, std::set<Position> const& valid_moves)
 {
-    for (auto pos : Board::get_positions()) {
+    for (auto pos : all_board_positions()) {
         auto result = board.is_valid_move(pc, pos);
         if (valid_moves.contains(pos)) {
             CHECK(result);
@@ -167,7 +164,7 @@ TEST_CASE("Board::is_valid_moves() for initial board (alternative test "
           "implementation).")
 {
     auto board = Board{};
-    board.initialize(Board::InitialState::center_square);
+    board.initialize(InitialBoardState::center_square);
 
     SUBCASE("Light has four moves.")
     {
@@ -193,7 +190,7 @@ TEST_CASE("Board::is_valid_moves() for initial board (alternative test "
 TEST_CASE("Board::find_valid_moves() against initial board.")
 {
     auto board = Board{};
-    board.initialize(Board::InitialState::center_square);
+    board.initialize(InitialBoardState::center_square);
 
     SUBCASE("Light has four moves.")
     {

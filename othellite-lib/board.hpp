@@ -5,6 +5,7 @@
 #define OTHELLITE_LIB_BOARD_HPP
 
 #include <array>
+#include <concepts>
 #include <set>
 #include <string>
 #include <vector>
@@ -14,17 +15,17 @@
 
 namespace othellite {
 
+enum class InitialBoardState
+{
+    empty,
+    center_square,
+};
+
 class Board
 {
     std::array<Field, 64> fields{};
 
 public:
-    enum class InitialState
-    {
-        empty,
-        center_square,
-    };
-
     using iterator = decltype(fields)::iterator;
     using const_iterator [[maybe_unused]] = decltype(fields)::const_iterator;
 
@@ -38,9 +39,7 @@ public:
 
     [[nodiscard]] std::string to_string() const;
 
-    [[nodiscard]] static std::vector<grid::Position> const& get_positions();
-
-    void initialize(InitialState initial_state = InitialState::center_square);
+    void initialize(InitialBoardState initial_state = InitialBoardState::center_square);
 
     [[nodiscard]] bool is_empty(grid::Position pos) const;
     [[maybe_unused]] [[nodiscard]] bool is_occupied(grid::Position pos) const;
@@ -81,6 +80,38 @@ private:
 };
 
 bool operator==(Board const& lhs, Board const& rhs);
+
+[[nodiscard]] std::vector<grid::Position> const& all_board_positions();
+
+template <typename BoardT>
+concept BoardType = requires(
+    BoardT b,
+    BoardT const cb,
+    std::string s,
+    grid::Position pos,
+    InitialBoardState initial_state,
+    PlayerColor pc)
+{
+    // clang-format off
+	std::forward_iterator<typename BoardT::iterator>;
+    { BoardT::from_string(s) } -> std::derived_from<BoardT>;
+	{ ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
+	{ ::std::end(b) } -> std::convertible_to<typename BoardT::iterator>;
+	{ b.operator[](pos) } -> std::same_as<Field&>;
+	{ cb.operator[](pos) } -> std::same_as<Field const&>;
+	{ cb.to_string() } -> std::derived_from<std::string>;
+	b.initialize();
+	b.initialize(initial_state);
+	{ b.is_empty(pos) } -> std::convertible_to<bool>;
+	{ b.is_occupied(pos) } -> std::convertible_to<bool>;
+	{ b.is_valid_move(pc, pos) } -> std::convertible_to<bool>;
+	{ b.find_valid_moves(pc) } -> std::convertible_to<std::set<grid::Position>>;
+	b.play_move(pc, pos);
+	{ b.compute_score() } -> std::convertible_to<Score>;
+    // clang-format on
+};
+
+static_assert(BoardType<Board>);
 
 class BoardReader
 {

@@ -11,9 +11,8 @@
 
 namespace othellite::game {
 
-template <typename BoardT>
-requires std::derived_from<BoardT, Board>
-class GameImpl : public Game
+template <BoardType BoardT>
+class GameImpl final : public Game
 {
 public:
     GameImpl(
@@ -38,17 +37,14 @@ private:
     std::unique_ptr<BoardT> board;
 };
 
-template <typename BoardT>
-requires std::derived_from<BoardT, Board>
+template <BoardType BoardT>
 void GameImpl<BoardT>::new_game(bool swap_payers) {}
 
-template <typename BoardT>
-requires std::derived_from<BoardT, Board>
+template <BoardType BoardT>
 void GameImpl<BoardT>::run_game_loop() {}
 
 
-template <typename BoardT>
-requires std::derived_from<BoardT, Board> //
+template <BoardType BoardT>
     std::unique_ptr<GameResult> GameImpl<BoardT>::get_result()
 const
 {
