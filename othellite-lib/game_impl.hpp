@@ -3,13 +3,16 @@
 #ifndef OTHELLITE_LIB_GAME_IMPL_HPP
 #define OTHELLITE_LIB_GAME_IMPL_HPP
 
+#include <concepts>
+
+#include "board.hpp"
 #include "game.hpp"
 #include "game_result.hpp"
 
 namespace othellite::game {
 
 template <typename BoardT>
-// requires std::is_convertible_v<BoardT, Board>
+requires std::derived_from<BoardT, Board>
 class GameImpl : public Game
 {
 public:
@@ -28,6 +31,7 @@ public:
 
     [[nodiscard]] Players const& get_players() const { return players; }
     [[nodiscard]] BoardT const& get_board() const { return *board; }
+
 private:
     Players players;
     std::unique_ptr<Notifier> notifier;
@@ -35,21 +39,21 @@ private:
 };
 
 template <typename BoardT>
-// requires std::is_convertible_v<BoardT, Board>
-void GameImpl<BoardT>::new_game(bool swap_payers)
-{}
+requires std::derived_from<BoardT, Board>
+void GameImpl<BoardT>::new_game(bool swap_payers) {}
 
 template <typename BoardT>
-// requires std::is_convertible_v<BoardT, Board>
-void GameImpl<BoardT>::run_game_loop()
-{}
+requires std::derived_from<BoardT, Board>
+void GameImpl<BoardT>::run_game_loop() {}
+
 
 template <typename BoardT>
-// requires std::is_convertible_v<BoardT, Board>
-std::unique_ptr<GameResult> GameImpl<BoardT>::get_result() const
+requires std::derived_from<BoardT, Board> //
+    std::unique_ptr<GameResult> GameImpl<BoardT>::get_result()
+const
 {
-	auto score = board->compute_score();
-	auto const& [dark_player, light_player] = players;
+    auto score = board->compute_score();
+    auto const& [dark_player, light_player] = players;
     return std::make_unique<WinByScore>(score, *board, dark_player, light_player);
 }
 
