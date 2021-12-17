@@ -1,10 +1,15 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
 #pragma once
-#ifndef OTHELLITE_COMMON_HPP
-#define OTHELLITE_COMMON_HPP
+#ifndef OTHELLITE_LIB_COMMON_HPP
+#define OTHELLITE_LIB_COMMON_HPP
 
 #include <cstdint>
+#include <string>
+
+namespace othellite::game {
+class Player;
+}
 
 namespace othellite {
 
@@ -19,8 +24,8 @@ enum class Field : int_least8_t
 
 enum class PlayerColor : int_least8_t
 {
-    light,
     dark,
+    light,
 };
 
 bool field_is_empty(Field field);
@@ -33,7 +38,39 @@ bool field_is_owned_by_opponent_of(Field field, PlayerColor pc);
 char field_to_char(Field field);
 
 PlayerColor other_player_color(PlayerColor pc);
+std::string player_color_to_string(PlayerColor pc);
+
+
+class Score
+{
+public:
+    Score(
+        int_fast8_t const num_dark_fields,
+        int_fast8_t const num_light_fields,
+        int_fast8_t const num_empty_fields)
+        : num_dark_fields{num_dark_fields}
+        , num_light_fields{num_light_fields}
+        , num_empty_fields{num_empty_fields}
+    {}
+
+    [[nodiscard]] int_fast8_t get_num_dark_fields() const { return num_dark_fields; }
+    [[nodiscard]] int_fast8_t get_num_light_fields() const { return num_light_fields; }
+    [[nodiscard]] int_fast8_t get_num_empty_fields() const { return num_empty_fields; }
+
+    [[nodiscard]] int_fast8_t get_num_fields_for(PlayerColor pc) const;
+    [[nodiscard]] int_fast8_t get_num_fields_for(game::Player const& player) const;
+
+    [[nodiscard]] std::string to_string(PlayerColor first_player) const;
+    [[nodiscard]] std::string to_string(game::Player const& player) const;
+
+private:
+    int_fast8_t num_dark_fields{};
+    int_fast8_t num_light_fields{};
+    int_fast8_t num_empty_fields{};
+};
+
 
 } // namespace othellite
 
-#endif // OTHELLITE_COMMON_HPP
+
+#endif // OTHELLITE_LIB_COMMON_HPP

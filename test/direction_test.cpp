@@ -1,8 +1,10 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
 #include "direction.hpp"
-#include "doctest.hpp"
+
 #include <sstream>
+
+#include "doctest.hpp"
 
 using namespace othellite::grid;
 

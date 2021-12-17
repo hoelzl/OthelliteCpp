@@ -1,8 +1,8 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
 #pragma once
-#ifndef OTHELLITE_BOARD_HPP
-#define OTHELLITE_BOARD_HPP
+#ifndef OTHELLITE_LIB_BOARD_HPP
+#define OTHELLITE_LIB_BOARD_HPP
 
 #include <array>
 #include <set>
@@ -51,6 +51,8 @@ public:
 
     void play_move(PlayerColor pc, grid::Position pos);
 
+    [[nodiscard]] Score compute_score() const;
+
 private:
     friend class BoardReader;
     friend class BoardWriter;
@@ -95,4 +97,4 @@ public:
 };
 
 } // namespace othellite
-#endif // OTHELLITE_BOARD_HPP
+#endif // OTHELLITE_LIB_BOARD_HPP

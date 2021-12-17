@@ -1,8 +1,8 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
 #pragma once
-#ifndef OTHELLITE_DIRECTION_HPP
-#define OTHELLITE_DIRECTION_HPP
+#ifndef OTHELLITE_LIB_DIRECTION_HPP
+#define OTHELLITE_LIB_DIRECTION_HPP
 
 #include <array>
 #include <cstdint>
@@ -24,7 +24,9 @@ public:
     [[nodiscard]] Movement::int_type get_amount() const { return amount; }
 
 protected:
-    explicit constexpr Movement(int_type const amount) : amount{amount} {}
+    explicit constexpr Movement(int_type const amount)
+        : amount{amount}
+    {}
     int_type amount;
 };
 
@@ -89,7 +91,10 @@ std::ostream& operator<<(std::ostream& os, VerticalMovement vertical_movement);
 class Direction
 {
 public:
-    constexpr Direction(VerticalMovement dy, HorizontalMovement dx) : dx{dx}, dy{dy} {}
+    constexpr Direction(VerticalMovement dy, HorizontalMovement dx)
+        : dx{dx}
+        , dy{dy}
+    {}
 
     [[nodiscard]] constexpr HorizontalMovement get_dx() const { return dx; }
     [[nodiscard]] constexpr VerticalMovement get_dy() const { return dy; }
@@ -101,6 +106,7 @@ private:
 
 std::ostream& operator<<(std::ostream& os, Direction d);
 
+// ReSharper disable CppInconsistentNaming
 constexpr Direction N{1_N, 0_E};
 constexpr Direction NE{1_N, 1_E};
 constexpr Direction E{0_N, 1_E};
@@ -109,9 +115,10 @@ constexpr Direction S{1_S, 0_E};
 constexpr Direction SW{1_S, 1_W};
 constexpr Direction W{0_N, 1_W};
 constexpr Direction NW{1_N, 1_W};
+// ReSharper restore CppInconsistentNaming
 
-[[maybe_unused]] constexpr std::array<Direction, 8> directions{N, NE, E, SE,
-                                                               S, SW, W, NW};
+[[maybe_unused]] constexpr std::array<Direction, 8> directions{
+    N, NE, E, SE, S, SW, W, NW};
 
 } // namespace othellite::grid
 
