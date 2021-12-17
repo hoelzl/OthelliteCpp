@@ -14,7 +14,7 @@ add_library(othellite-lib
     direction.hpp
     game.cpp
     game.hpp
-    game_impl.hpp
+    default_game.hpp
     game_result.cpp   
     game_result.hpp
     player.cpp

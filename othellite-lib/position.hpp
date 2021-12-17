@@ -109,6 +109,16 @@ inline constexpr bool operator<=(Position const lhs, Position const rhs)
     return lhs == rhs || lhs < rhs;
 }
 
+inline constexpr bool operator>(Position const lhs, Position const rhs)
+{
+    return rhs < lhs;
+}
+
+inline constexpr bool operator>=(Position const lhs, Position const rhs)
+{
+    return rhs <= lhs;
+}
+
 std::ostream& operator<<(std::ostream& os, Position pos);
 
 } // namespace othellite::grid

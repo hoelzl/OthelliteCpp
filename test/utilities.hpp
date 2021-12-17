@@ -3,8 +3,8 @@
 #ifndef TEST_UTILITIES_HPP
 #define TEST_UTILITIES_HPP
 
+#include <algorithm>
 #include <sstream>
-#include <string_view>
 
 #include "board.hpp"
 #include "game.hpp"
@@ -12,6 +12,9 @@
 #include "position.hpp"
 
 namespace othellite {
+using std::ranges::min;
+
+
 struct ConstantPlayerStub final : public game::Player
 {
 
@@ -34,20 +37,112 @@ struct ConstantPlayerStub final : public game::Player
     grid::Position played_position;
 };
 
-struct NotifierSpy final : public game::Notifier
+struct MinimalPlayer final : public game::Player
+{
+    using Player::Player;
+
+    [[nodiscard]] virtual grid::Position pick_move(Board const& board) const override
+    {
+        auto moves = board.find_valid_moves(color);
+        return min(moves);
+    }
+};
+
+
+struct SpyForNotifierOutput final : public game::Notifier
 {
     virtual void display_message(std::string_view const message) override
     {
         stream << message << "\n";
     }
 
-    [[nodiscard]] std::string output() const
-    {
-        return stream.str();
-    }
+    [[nodiscard]] std::string output() const { return stream.str(); }
 
     std::stringstream stream{};
 };
+
+struct SpyForNotifierMoves final : public game::Notifier
+{
+    virtual void display_message(std::string_view message) override
+    {
+        messages.emplace_back(message);
+    }
+
+    virtual void display_board(Board const& board) override { boards.push_back(board); }
+
+    virtual void note_new_game(game::Players const& players, Board board) override {}
+
+    virtual void note_move(
+        game::Player const& player, grid::Position pos, Board const& board) override
+    {
+        moves.emplace_back(
+            player.get_name().data(),
+            player.get_color(),
+            pos.get_row(),
+            pos.get_column());
+    }
+
+    virtual void note_result(game::GameResult const& result) override
+    {
+        if (auto* win_result = dynamic_cast<game::WinByScore const*>(&result)) {
+            result_summary.type = "win";
+            result_summary.winner = win_result->get_winner().get_color();
+            result_summary.loser = win_result->get_loser().get_color();
+        }
+        else if (auto* tie_result = dynamic_cast<game::TiedResult const*>(&result)) {
+            result_summary.type = "tie";
+            result_summary.winner = tie_result->get_dark_player().get_color();
+            result_summary.loser = tie_result->get_light_player().get_color();
+        }
+        else if (
+            auto* goof_result
+            = dynamic_cast<game::WinByOpponentMistake const*>(&result)) {
+            result_summary.type = "wrong_move";
+            result_summary.winner = goof_result->get_winner().get_color();
+            result_summary.loser = goof_result->get_loser().get_color();
+        }
+    }
+
+    struct Move
+    {
+        std::string player_name{};
+        PlayerColor color{};
+        int row{};
+        int column{};
+    };
+
+    struct Result
+    {
+        std::string type{"unknown"};
+        PlayerColor winner{};
+        PlayerColor loser{};
+    };
+
+    std::vector<std::string> messages{};
+    std::vector<Board> boards{};
+    std::vector<Move> moves{};
+    Result result_summary{};
+};
+
+inline bool operator==(SpyForNotifierMoves::Move const lhs, SpyForNotifierMoves::Move const rhs)
+{
+    return lhs.player_name == rhs.player_name && lhs.color == rhs.color
+           && lhs.row == rhs.row && lhs.column == rhs.column;
+}
+
+inline std::ostream& operator<<(std::ostream& os, SpyForNotifierMoves const& spy)
+{
+    for (auto& [player_name, color, row, column] : spy.moves) {
+        os << "    {\"" << player_name
+           << "\", PlayerColor::" << player_color_to_string(color) << ", " << row
+           << ", " << column << "},\n";
+    }
+    os << "\n\nResult: " << spy.result_summary.type
+       << ", winner: " << player_color_to_string(spy.result_summary.winner)
+       << ", loser: " << player_color_to_string(spy.result_summary.loser) << "\n";
+
+    return os;
+}
 
 } // namespace othellite
 

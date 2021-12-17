@@ -6,7 +6,7 @@
 #include "console_notifier.hpp"
 #include "direction.hpp"
 #include "game.hpp"
-#include "game_impl.hpp"
+#include "default_game.hpp"
 
 using namespace othellite;
 using namespace othellite::grid;
@@ -21,10 +21,15 @@ int main()
     std::cout << "But we also have: " << NE << ", " << SE << ", " << SW << ", " << NW
               << ".\n";
 
-    auto dark_player = RandomPlayer{};
+    auto dark_player = RandomPlayer{"The dark player"};
     auto light_player = RandomPlayer{};
-    auto game = std::make_unique<GameImpl<Board>>(
+    auto const game = std::make_unique<DefaultGame<Board>>(
         dark_player, light_player, std::make_unique<ConsoleNotifier>());
-    std::cout << game->get_board().to_string() << std::endl;
+	game->new_game(false);
+	game->run_game_loop();
+	game->new_game(true);
+	game->run_game_loop();
+	auto result = game->get_result();
+
     return 0;
 }

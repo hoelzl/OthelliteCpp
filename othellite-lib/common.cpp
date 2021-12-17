@@ -5,6 +5,7 @@
 #include <format>
 #include <stdexcept>
 
+#include "game.hpp"
 #include "player.hpp"
 
 namespace othellite {
@@ -83,6 +84,19 @@ std::string Score::to_string(PlayerColor const first_player) const
 std::string Score::to_string(game::Player const& player) const
 {
     return to_string(player.get_color());
+}
+
+bool Score::is_tied() const { return get_num_dark_fields() == get_num_light_fields(); }
+
+std::tuple<game::Player const&, game::Player const&>
+Score::compute_winner(game::Players const& players) const
+{
+    if (get_num_dark_fields() >= get_num_light_fields()) {
+        return {players.get_dark_player(), players.get_light_player()};
+    }
+    else {
+        return {players.get_light_player(), players.get_dark_player()};
+    }
 }
 
 } // namespace othellite

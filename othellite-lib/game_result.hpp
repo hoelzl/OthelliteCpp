@@ -56,6 +56,7 @@ public:
     [[nodiscard]] Player const& get_winner() const { return winner; }
     [[nodiscard]] Player const& get_loser() const { return loser; }
 
+private:
     std::reference_wrapper<Player const> winner;
     std::reference_wrapper<Player const> loser;
 };

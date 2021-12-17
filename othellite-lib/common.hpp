@@ -8,8 +8,9 @@
 #include <string>
 
 namespace othellite::game {
+class Players;
 class Player;
-}
+} // namespace othellite::game
 
 namespace othellite {
 
@@ -62,6 +63,10 @@ public:
 
     [[nodiscard]] std::string to_string(PlayerColor first_player) const;
     [[nodiscard]] std::string to_string(game::Player const& player) const;
+
+    [[nodiscard]] bool is_tied() const;
+    [[nodiscard]] std::tuple<game::Player const&, game::Player const&>
+    compute_winner(game::Players const& players) const;
 
 private:
     int_fast8_t num_dark_fields{};

@@ -4,7 +4,7 @@ BasedOnStyle: LLVM
 Standard: c++20
 AccessModifierOffset: -4
 AlignAfterOpenBracket: AlwaysBreak
-AlignOperands: false
+AlignOperands: Align
 AllowAllArgumentsOnNextLine: true
 AllowAllConstructorInitializersOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
@@ -33,6 +33,7 @@ BraceWrapping:
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 BreakBeforeBraces: Custom
+BreakBeforeBinaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 BreakStringLiterals: true

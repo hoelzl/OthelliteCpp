@@ -29,6 +29,8 @@ public:
     using iterator = decltype(fields)::iterator;
     using const_iterator [[maybe_unused]] = decltype(fields)::const_iterator;
 
+    Board() = default;
+
     iterator begin() { return std::begin(fields); }
     iterator end() { return std::end(fields); }
 
@@ -55,6 +57,7 @@ public:
 private:
     friend class BoardReader;
     friend class BoardWriter;
+
     Field& operator[](std::size_t index);
 
     [[nodiscard]] bool

@@ -3,6 +3,7 @@
 #ifndef OTHELLITE_LIB_GAME_HPP
 #define OTHELLITE_LIB_GAME_HPP
 
+#include <cassert>
 #include <functional>
 #include <memory>
 
@@ -11,15 +12,42 @@
 
 namespace othellite::game {
 
-struct Players
+class Players
 {
-    Players(Player const& dark_player, Player const& light_player)
+public:
+    Players(Player& dark_player, Player& light_player)
         : dark_player{std::ref(dark_player)}
         , light_player{std::ref(light_player)}
-    {}
+    {
+        dark_player.set_color(PlayerColor::dark);
+		light_player.set_color(PlayerColor::light);
+    }
 
-    std::reference_wrapper<Player const> dark_player;
-    std::reference_wrapper<Player const> light_player;
+    [[nodiscard]] Player& get_dark_player() const
+    {
+        return dark_player;
+    }
+
+    [[nodiscard]] Player& get_light_player() const
+    {
+        return light_player;
+    }
+
+	[[nodiscard]] Player& get_other_player(Player const& player) const
+    {
+		if (player == get_light_player()) {
+		    return get_dark_player();
+		} else {
+		    return get_light_player();
+		}
+    }
+
+    void swap_dark_and_light_player();
+	void new_game() const;
+
+private:
+    std::reference_wrapper<Player> dark_player;
+    std::reference_wrapper<Player> light_player;
 };
 
 class Notifier
@@ -53,7 +81,7 @@ public:
 
     virtual void new_game(bool swap_payers = false) = 0;
     virtual void run_game_loop() = 0;
-    [[nodiscard]] virtual std::unique_ptr<GameResult> get_result() const = 0;
+    [[nodiscard]] virtual std::shared_ptr<GameResult const> get_result() const = 0;
 };
 
 } // namespace othellite::game

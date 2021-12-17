@@ -10,9 +10,13 @@
 
 namespace othellite::game {
 
-void Player::start_game(PlayerColor const pc) { color = pc; }
+void Player::new_game() {}
 
 void Player::game_over(GameResult const& result) {}
+
+bool operator==(Player const& lhs, Player const& rhs) { return &lhs == &rhs; }
+
+bool operator!=(Player const& lhs, Player const& rhs) { return !(lhs == rhs); }
 
 auto RandomPlayer::pick_move(Board const& board) const -> grid::Position
 {
