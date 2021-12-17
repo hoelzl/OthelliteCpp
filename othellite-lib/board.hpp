@@ -94,12 +94,12 @@ concept BoardType = requires(
 {
     // clang-format off
 	std::forward_iterator<typename BoardT::iterator>;
-    { BoardT::from_string(s) } -> std::derived_from<BoardT>;
+    { BoardT::from_string(s) } -> std::convertible_to<BoardT>;
 	{ ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
 	{ ::std::end(b) } -> std::convertible_to<typename BoardT::iterator>;
-	{ b.operator[](pos) } -> std::same_as<Field&>;
-	{ cb.operator[](pos) } -> std::same_as<Field const&>;
-	{ cb.to_string() } -> std::derived_from<std::string>;
+	{ b.operator[](pos) } -> std::convertible_to<Field&>;
+	{ cb.operator[](pos) } -> std::convertible_to<Field const&>;
+	{ cb.to_string() } -> std::convertible_to<std::string>;
 	b.initialize();
 	b.initialize(initial_state);
 	{ b.is_empty(pos) } -> std::convertible_to<bool>;
