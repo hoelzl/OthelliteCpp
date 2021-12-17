@@ -3,6 +3,7 @@
 #ifndef OTHELLITE_LIB_GAME_HPP
 #define OTHELLITE_LIB_GAME_HPP
 
+#include <functional>
 #include <memory>
 
 #include "game_result.hpp"
@@ -13,18 +14,18 @@ namespace othellite::game {
 struct Players
 {
     Players(Player const& dark_player, Player const& light_player)
-        : dark_player{dark_player}
-        , light_player{light_player}
+        : dark_player{std::ref(dark_player)}
+        , light_player{std::ref(light_player)}
     {}
 
-    Player const& dark_player;
-    Player const& light_player;
+    std::reference_wrapper<Player const> dark_player;
+    std::reference_wrapper<Player const> light_player;
 };
 
 class Notifier
 {
 public:
-	Notifier() = default;
+    Notifier() = default;
     Notifier(Notifier const& other) = default;
     Notifier(Notifier&& other) noexcept = default;
     Notifier& operator=(Notifier const& other) = default;
@@ -32,11 +33,12 @@ public:
     virtual ~Notifier() = default;
 
     virtual void display_message(std::string_view message) = 0;
-	virtual void display_board(Board const& board);
+    virtual void display_board(Board const& board);
 
     virtual void note_new_game(Players const& players, Board board);
-	virtual void note_move(Player const& player, grid::Position pos, Board const& board);
-	virtual void note_result(GameResult const& result);
+    virtual void
+    note_move(Player const& player, grid::Position pos, Board const& board);
+    virtual void note_result(GameResult const& result);
 };
 
 class Game

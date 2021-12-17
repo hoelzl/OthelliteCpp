@@ -19,10 +19,10 @@ void Notifier::note_new_game(Players const& players, Board board)
     auto const& [dark_player, light_player] = players;
     display_message("Starting a new game.");
 
-    auto message = std::format("Dark player: {}", dark_player.get_name());
+    auto message = std::format("Dark player: {}", dark_player.get().get_name());
     display_message(message);
 
-    message = std::format("Light player: {}", light_player.get_name());
+    message = std::format("Light player: {}", light_player.get().get_name());
     display_message(message);
 }
 

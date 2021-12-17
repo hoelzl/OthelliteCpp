@@ -1,7 +1,6 @@
 #include "game_result.hpp"
 
 #include <format>
-#include <stdexcept>
 
 #include "player.hpp"
 
