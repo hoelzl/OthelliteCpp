@@ -3,7 +3,6 @@
 #ifndef REVISER_LIB_PLAYER_HPP
 #define REVISER_LIB_PLAYER_HPP
 
-#include <string_view>
 #include <vector>
 
 #include "common.hpp"
@@ -68,10 +67,10 @@ private:
     [[nodiscard]] std::vector<grid::Position>
     compute_possible_moves(Board const& board) const;
 
-    void print_possible_moves(const std::vector<grid::Position>& moves) const;
+    void print_possible_moves(std::vector<grid::Position> const& moves) const;
 
-    [[nodiscard]] grid::Position
-    handle_user_input(std::vector<grid::Position> const& moves) const;
+    [[nodiscard]] static grid::Position
+    handle_user_input(std::vector<grid::Position> const& moves);
 };
 
 } // namespace reviser::game

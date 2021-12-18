@@ -100,8 +100,8 @@ inline constexpr bool operator==(Position const lhs, Position const rhs)
 
 inline constexpr bool operator<(Position const lhs, Position const rhs)
 {
-    return lhs.get_row() < rhs.get_row() ||
-        (lhs.get_row() == rhs.get_row() && lhs.get_column() < rhs.get_column());
+    return lhs.get_row() < rhs.get_row()
+           || (lhs.get_row() == rhs.get_row() && lhs.get_column() < rhs.get_column());
 }
 
 inline constexpr bool operator<=(Position const lhs, Position const rhs)

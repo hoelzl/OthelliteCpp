@@ -56,6 +56,7 @@ PointerAlignment: Left
 ReflowComments: true
 SpacesInContainerLiterals: false
 TabWidth: 4
+UseTab: Never
 ---
 Language: JavaScript
 BasedOnStyle: LLVM

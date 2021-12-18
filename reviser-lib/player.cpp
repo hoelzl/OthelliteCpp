@@ -62,9 +62,8 @@ void SimpleCommandLinePlayer::print_possible_moves(
     std::cout << "Please select a move: " << std::endl;
 }
 
-// ReSharper disable once CppMemberFunctionMayBeStatic
-grid::Position SimpleCommandLinePlayer::handle_user_input(
-    std::vector<grid::Position> const& moves) const
+grid::Position
+SimpleCommandLinePlayer::handle_user_input(std::vector<grid::Position> const& moves)
 {
     size_t selection{};
     std::cin >> selection;
