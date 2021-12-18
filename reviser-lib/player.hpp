@@ -4,6 +4,7 @@
 #define REVISER_LIB_PLAYER_HPP
 
 #include <string_view>
+#include <vector>
 
 #include "common.hpp"
 #include "position.hpp"
@@ -55,6 +56,24 @@ public:
     using Player::Player;
     [[nodiscard]] grid::Position pick_move(Board const& board) const override;
 };
+
+class SimpleCommandLinePlayer final : public Player
+{
+public:
+    using Player::Player;
+
+    [[nodiscard]] grid::Position pick_move(Board const& board) const override;
+
+private:
+    [[nodiscard]] std::vector<grid::Position>
+    compute_possible_moves(Board const& board) const;
+
+    void print_possible_moves(const std::vector<grid::Position>& moves) const;
+
+    [[nodiscard]] grid::Position
+    handle_user_input(std::vector<grid::Position> const& moves) const;
+};
+
 } // namespace reviser::game
 
 #endif

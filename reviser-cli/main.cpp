@@ -21,8 +21,8 @@ int main()
     std::cout << "But we also have: " << NE << ", " << SE << ", " << SW << ", " << NW
               << ".\n";
 
-    auto dark_player = RandomPlayer{"The dark player"};
-    auto light_player = RandomPlayer{};
+    auto dark_player = RandomPlayer{"The computer player"};
+    auto light_player = SimpleCommandLinePlayer{"The human"};
     auto const game = std::make_unique<DefaultGame<Board>>(
         dark_player, light_player, std::make_unique<ConsoleNotifier>());
     game->new_game(false);
