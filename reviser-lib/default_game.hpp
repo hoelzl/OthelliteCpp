@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef OTHELLITE_LIB_GAME_IMPL_HPP
-#define OTHELLITE_LIB_GAME_IMPL_HPP
+#ifndef REVISER_LIB_GAME_IMPL_HPP
+#define REVISER_LIB_GAME_IMPL_HPP
 
 #include <optional>
 
@@ -9,7 +9,7 @@
 #include "game.hpp"
 #include "game_result.hpp"
 
-namespace othellite::game {
+namespace reviser::game {
 
 template <BoardType BoardT>
 class DefaultGame final : public Game
@@ -23,11 +23,14 @@ public:
         , current_player{std::ref(dark_player)}
     {}
 
-    virtual void new_game(bool swap_payers = false) override;
-    virtual void run_game_loop() override;
-    [[nodiscard]] virtual std::shared_ptr<GameResult const> get_result() const override;
+    void new_game(bool swap_payers) override;
+    void run_game_loop() override;
+    [[nodiscard]] std::shared_ptr<GameResult const> get_result() const override;
 
-    [[nodiscard]] Players const& get_players() const { return players; }
+    [[maybe_unused]] [[nodiscard]] Players const& get_players() const
+    {
+        return players;
+    }
     [[nodiscard]] BoardT& get_board() { return *board; }
 
 private:
@@ -73,7 +76,7 @@ void DefaultGame<BoardT>::run_game_loop()
             set_result_from_score();
         }
     }
-	notifier->note_result(*get_result());
+    notifier->note_result(*get_result());
 }
 
 template <BoardType BoardT>
@@ -171,6 +174,6 @@ void DefaultGame<BoardT>::disqualify_current_player()
         get_current_player());
 }
 
-} // namespace othellite::game
+} // namespace reviser::game
 
 #endif

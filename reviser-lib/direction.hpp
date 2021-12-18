@@ -1,15 +1,15 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
 #pragma once
-#ifndef OTHELLITE_LIB_DIRECTION_HPP
-#define OTHELLITE_LIB_DIRECTION_HPP
+#ifndef REVISER_LIB_DIRECTION_HPP
+#define REVISER_LIB_DIRECTION_HPP
 
 #include <array>
 #include <cstdint>
 #include <iostream>
 #include <limits>
 
-namespace othellite::grid {
+namespace reviser::grid {
 
 class Movement
 {
@@ -120,6 +120,6 @@ constexpr Direction NW{1_N, 1_W};
 [[maybe_unused]] constexpr std::array<Direction, 8> directions{
     N, NE, E, SE, S, SW, W, NW};
 
-} // namespace othellite::grid
+} // namespace reviser::grid
 
 #endif

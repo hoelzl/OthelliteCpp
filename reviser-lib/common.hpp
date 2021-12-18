@@ -1,18 +1,18 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
 #pragma once
-#ifndef OTHELLITE_LIB_COMMON_HPP
-#define OTHELLITE_LIB_COMMON_HPP
+#ifndef REVISER_LIB_COMMON_HPP
+#define REVISER_LIB_COMMON_HPP
 
 #include <cstdint>
 #include <string>
 
-namespace othellite::game {
+namespace reviser::game {
 class Players;
 class Player;
-} // namespace othellite::game
+} // namespace reviser::game
 
-namespace othellite {
+namespace reviser {
 
 constexpr int_least8_t board_size{8};
 
@@ -75,7 +75,7 @@ private:
 };
 
 
-} // namespace othellite
+} // namespace reviser
 
 
-#endif // OTHELLITE_LIB_COMMON_HPP
+#endif // REVISER_LIB_COMMON_HPP

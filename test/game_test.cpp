@@ -1,3 +1,5 @@
+// Copyright (c) 2021 Dr. Matthias Hölzl.
+
 #include "game.hpp"
 
 #include <string>
@@ -9,7 +11,7 @@
 
 using namespace std::string_literals;
 
-namespace othellite {
+namespace reviser {
 
 TEST_CASE("Notifier")
 {
@@ -106,7 +108,8 @@ TEST_CASE("Notifier")
             auto result
                 = game::WinByOpponentMistake{score, board, dark_player, light_player};
             auto expected
-                = "\nGAME OVER.\ndark_player (dark) won.\nThe opponent made an invalid move.\n"s;
+                = "\nGAME OVER.\ndark_player (dark) won.\nThe opponent made an "
+                  "invalid move.\n"s;
 
             notifier.note_result(result);
 
@@ -200,17 +203,16 @@ TEST_CASE("Test game for the minimal player.")
         {"light_player", PlayerColor::light, 7, 7},
     };
 
-    game->new_game();
+    game->new_game(false);
     game->run_game_loop();
 
-	for (auto i = 0u; i < expected_moves.size(); ++i) {
-	    CHECK(notifier_spy_ptr->moves[i] == expected_moves[i]);
-	}
+    for (auto i = 0u; i < expected_moves.size(); ++i) {
+        CHECK(notifier_spy_ptr->moves[i] == expected_moves[i]);
+    }
 
-	CHECK(notifier_spy_ptr->result_summary.type == "win"s);
-	CHECK(notifier_spy_ptr->result_summary.winner == PlayerColor::light);
-	CHECK(notifier_spy_ptr->result_summary.loser == PlayerColor::dark);
-
+    CHECK(notifier_spy_ptr->result_summary.type == "win"s);
+    CHECK(notifier_spy_ptr->result_summary.winner == PlayerColor::light);
+    CHECK(notifier_spy_ptr->result_summary.loser == PlayerColor::dark);
 }
 
-} // namespace othellite
+} // namespace reviser

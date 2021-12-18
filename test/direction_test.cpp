@@ -6,7 +6,7 @@
 
 #include "doctest.hpp"
 
-using namespace othellite::grid;
+using namespace reviser::grid;
 
 TEST_CASE("HorizontalMovement can be constructed as literals")
 {

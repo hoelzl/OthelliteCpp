@@ -1,4 +1,6 @@
 
+// Copyright (c) 2021 Dr. Matthias Hölzl.
+
 #include "game.hpp"
 
 #include <format>
@@ -8,7 +10,7 @@
 #include "game_result.hpp"
 
 
-namespace othellite::game {
+namespace reviser::game {
 
 using namespace std::string_literals;
 
@@ -17,14 +19,14 @@ void Players::swap_dark_and_light_player()
     auto const tmp_player = dark_player;
     dark_player = light_player;
     light_player = tmp_player;
-	dark_player.get().set_color(PlayerColor::dark);
-	light_player.get().set_color(PlayerColor::light);
+    dark_player.get().set_color(PlayerColor::dark);
+    light_player.get().set_color(PlayerColor::light);
 }
 
 void Players::new_game() const
 {
-	get_dark_player().new_game();
-	get_light_player().new_game();
+    get_dark_player().new_game();
+    get_light_player().new_game();
 }
 
 void Notifier::display_board(Board const& board) { display_message(board.to_string()); }
@@ -46,7 +48,7 @@ void Notifier::note_move(
     auto const message = std::format(
         "\n{} ({}) plays ({}, {}).",
         player.get_name(),
-		player_color_to_string(player.get_color()),
+        player_color_to_string(player.get_color()),
         pos.get_row().value,
         pos.get_column().value);
 
@@ -60,4 +62,4 @@ void Notifier::note_result(GameResult const& result)
     display_message(message);
 }
 
-} // namespace othellite::game
+} // namespace reviser::game

@@ -1,19 +1,21 @@
+// Copyright (c) 2021 Dr. Matthias Hölzl.
+
 #pragma once
 
-#ifndef OTHELLITE_LIB_GAME_RESULT_HPP
-#define OTHELLITE_LIB_GAME_RESULT_HPP
+#ifndef REVISER_LIB_GAME_RESULT_HPP
+#define REVISER_LIB_GAME_RESULT_HPP
 
 #include <functional>
 #include <string>
 
 #include "common.hpp"
 
-namespace othellite {
+namespace reviser {
 class Board;
 class Score;
-}
+} // namespace reviser
 
-namespace othellite::game {
+namespace reviser::game {
 class Player;
 
 class GameResult
@@ -33,7 +35,7 @@ public:
     [[nodiscard]] virtual std::string to_string() const = 0;
 
     [[nodiscard]] virtual Score get_score() const { return score; }
-    [[nodiscard]] virtual Board const& get_board() const { return board; }
+    [[maybe_unused]] [[nodiscard]] virtual Board const& get_board() const;
 
 private:
     Score score;
@@ -93,11 +95,12 @@ public:
     [[nodiscard]] Player const& get_light_player() const { return light_player; }
 
     [[nodiscard]] virtual std::string to_string() const override;
+
 private:
     std::reference_wrapper<Player const> dark_player;
     std::reference_wrapper<Player const> light_player;
 };
 
 
-} // namespace othellite::game
-#endif // OTHELLITE_LIB_GAME_RESULT_HPP
+} // namespace reviser::game
+#endif // REVISER_LIB_GAME_RESULT_HPP

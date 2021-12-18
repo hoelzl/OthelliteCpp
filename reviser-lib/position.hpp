@@ -1,8 +1,8 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
 #pragma once
-#ifndef OTHELLITE_LIB_POSITION_HPP
-#define OTHELLITE_LIB_POSITION_HPP
+#ifndef REVISER_LIB_POSITION_HPP
+#define REVISER_LIB_POSITION_HPP
 
 #include <cstdint>
 #include <stdexcept>
@@ -10,7 +10,7 @@
 #include "common.hpp"
 #include "direction.hpp"
 
-namespace othellite::grid {
+namespace reviser::grid {
 
 using coordinate_t = int_least8_t;
 
@@ -121,7 +121,7 @@ inline constexpr bool operator>=(Position const lhs, Position const rhs)
 
 std::ostream& operator<<(std::ostream& os, Position pos);
 
-} // namespace othellite::grid
+} // namespace reviser::grid
 
 
-#endif // OTHELLITE_LIB_POSITION_HPP
+#endif // REVISER_LIB_POSITION_HPP

@@ -6,7 +6,7 @@
 
 
 std::ostream&
-othellite::grid::operator<<(std::ostream& os, othellite::grid::Position const pos)
+reviser::grid::operator<<(std::ostream& os, reviser::grid::Position const pos)
 {
     os << "Position(" << std::to_string(pos.get_row().value) << ", "
        << std::to_string(pos.get_column().value) << ")";

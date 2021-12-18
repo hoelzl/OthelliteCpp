@@ -4,7 +4,7 @@
 
 #include "player.hpp"
 
-namespace othellite::game {
+namespace reviser::game {
 
 
 std::string WinByScore::to_string() const
@@ -31,4 +31,5 @@ std::string TiedResult::to_string() const
         get_score().to_string(PlayerColor::dark));
 }
 
-} // namespace othellite::game
+[[maybe_unused]] Board const& GameResult::get_board() const { return board; }
+} // namespace reviser::game

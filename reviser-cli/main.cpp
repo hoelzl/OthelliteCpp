@@ -4,13 +4,13 @@
 
 #include "board.hpp"
 #include "console_notifier.hpp"
+#include "default_game.hpp"
 #include "direction.hpp"
 #include "game.hpp"
-#include "default_game.hpp"
 
-using namespace othellite;
-using namespace othellite::grid;
-using namespace othellite::game;
+using namespace reviser;
+using namespace reviser::grid;
+using namespace reviser::game;
 
 int main()
 {
@@ -25,11 +25,11 @@ int main()
     auto light_player = RandomPlayer{};
     auto const game = std::make_unique<DefaultGame<Board>>(
         dark_player, light_player, std::make_unique<ConsoleNotifier>());
-	game->new_game(false);
-	game->run_game_loop();
-	game->new_game(true);
-	game->run_game_loop();
-	auto result = game->get_result();
+    game->new_game(false);
+    game->run_game_loop();
+    game->new_game(true);
+    game->run_game_loop();
+    auto result = game->get_result();
 
     return 0;
 }

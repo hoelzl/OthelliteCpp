@@ -5,7 +5,7 @@
 #include "doctest.hpp"
 #include "utilities.hpp"
 
-using namespace othellite;
+using namespace reviser;
 using namespace std::string_literals;
 
 TEST_CASE("field_is_empty()")
@@ -66,40 +66,44 @@ TEST_CASE("other_player_color()")
 TEST_CASE("player_color_to_string()")
 {
     CHECK(player_color_to_string(PlayerColor::dark) == "dark"s);
-	CHECK(player_color_to_string(PlayerColor::light) == "light"s);
+    CHECK(player_color_to_string(PlayerColor::light) == "light"s);
 }
 
 TEST_CASE("class Score")
 {
-	auto score = Score{10, 20, 34};
+    auto score = Score{10, 20, 34};
 
     SUBCASE("Simple getters")
     {
         CHECK(score.get_num_dark_fields() == 10);
-		CHECK(score.get_num_light_fields() == 20);
-		CHECK(score.get_num_empty_fields() == 34);
+        CHECK(score.get_num_light_fields() == 20);
+        CHECK(score.get_num_empty_fields() == 34);
     }
 
-	SUBCASE("get_num_fields_for(PlayerColor)")
+    SUBCASE("get_num_fields_for(PlayerColor)")
     {
         CHECK(score.get_num_fields_for(PlayerColor::dark) == 10);
         CHECK(score.get_num_fields_for(PlayerColor::light) == 20);
     }
 
-	SUBCASE("get_num_fields_for(grid::Player)")
+    SUBCASE("get_num_fields_for(grid::Player)")
     {
-		auto dark_player = ConstantPlayerStub{"dark_player", PlayerColor::dark};
-		auto light_player = ConstantPlayerStub{"light_player", PlayerColor::light};
+        auto dark_player = ConstantPlayerStub{"dark_player", PlayerColor::dark};
+        auto light_player = ConstantPlayerStub{"light_player", PlayerColor::light};
 
-		CHECK(score.get_num_fields_for(dark_player) == 10);
-		CHECK(score.get_num_fields_for(light_player) == 20);
+        CHECK(score.get_num_fields_for(dark_player) == 10);
+        CHECK(score.get_num_fields_for(light_player) == 20);
     }
 
-	SUBCASE("to_string()")
+    SUBCASE("to_string()")
     {
-		CHECK(score.to_string(PlayerColor::dark) == "10:20"s);
-		CHECK(score.to_string(PlayerColor::light) == "20:10"s);
-		CHECK(score.to_string(ConstantPlayerStub{"player", PlayerColor::dark}) == "10:20"s);
-		CHECK(score.to_string(ConstantPlayerStub{"player", PlayerColor::light}) == "20:10"s);
+        CHECK(score.to_string(PlayerColor::dark) == "10:20"s);
+        CHECK(score.to_string(PlayerColor::light) == "20:10"s);
+        CHECK(
+            score.to_string(ConstantPlayerStub{"player", PlayerColor::dark})
+            == "10:20"s);
+        CHECK(
+            score.to_string(ConstantPlayerStub{"player", PlayerColor::light})
+            == "20:10"s);
     }
 }

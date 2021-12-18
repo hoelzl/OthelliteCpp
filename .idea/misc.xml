@@ -3,7 +3,8 @@
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
   <component name="CidrRootsConfiguration">
     <sourceRoots>
-      <file path="$PROJECT_DIR$/othellite-lib" />
+      <file path="$PROJECT_DIR$/reviser-cli" />
+      <file path="$PROJECT_DIR$/reviser-lib" />
       <file path="$PROJECT_DIR$/test" />
     </sourceRoots>
     <libraryRoots>

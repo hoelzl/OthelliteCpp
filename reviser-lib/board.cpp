@@ -12,7 +12,7 @@
 #include "position.hpp"
 
 
-namespace othellite {
+namespace reviser {
 
 using grid::Column;
 using grid::Direction;
@@ -43,24 +43,19 @@ Field const& Board::operator[](grid::Position const pos) const
 
 std::string Board::to_string() const { return BoardWriter::board_to_string(*this); }
 
-bool Board::is_empty(Position pos) const
-{
-    return field_is_empty((*this)[pos]);
-}
+bool Board::is_empty(Position pos) const { return field_is_empty((*this)[pos]); }
 
 [[maybe_unused]] bool Board::is_occupied(Position const pos) const
 {
     return field_is_occupied((*this)[pos]);
 }
 
-bool Board::is_valid_move(
-    PlayerColor const pc, Position const pos) const
+bool Board::is_valid_move(PlayerColor const pc, Position const pos) const
 {
     return is_empty(pos) && does_move_flip_any_field(pc, pos);
 }
 
-bool Board::does_move_flip_any_field(
-    PlayerColor pc, Position starting_pos) const
+bool Board::does_move_flip_any_field(PlayerColor pc, Position starting_pos) const
 {
     return std::ranges::any_of(grid::directions, [&](auto d) {
         return !positions_to_flip_in_direction(pc, starting_pos, d).empty();
@@ -93,8 +88,8 @@ std::set<Position> Board::filter_positions_that_can_be_flipped(
     PlayerColor const pc, std::vector<Position> const& non_empty_positions) const
 {
     auto result = std::set<Position>{};
-    auto const highest_index =
-        find_highest_index_for_player_owned_fields(pc, non_empty_positions);
+    auto const highest_index
+        = find_highest_index_for_player_owned_fields(pc, non_empty_positions);
 
     for (auto i = 0u; i < highest_index; ++i) {
         auto& pos = non_empty_positions[i];
@@ -133,8 +128,7 @@ void Board::initialize(InitialBoardState const initial_state)
     }
 }
 
-std::set<Position>
-Board::find_valid_moves(PlayerColor const pc) const
+std::set<Position> Board::find_valid_moves(PlayerColor const pc) const
 {
     auto result = std::set<Position>{};
     for (auto pos : all_board_positions()) {
@@ -158,19 +152,19 @@ Score Board::compute_score() const
 {
     int_fast8_t dark_count{0};
     int_fast8_t light_count{0};
-	int_fast8_t empty_count{0};
+    int_fast8_t empty_count{0};
     for (auto const pos : all_board_positions()) {
         switch ((*this)[pos]) {
         case Field::dark: ++dark_count; break;
         case Field::light: ++light_count; break;
-        case Field::empty: ++empty_count; break; 
+        case Field::empty: ++empty_count; break;
         }
     }
-	return Score{dark_count, light_count, empty_count};
+    return Score{dark_count, light_count, empty_count};
 }
 
-std::set<Position> Board::find_positions_flipped_by_move(
-    PlayerColor const pc, Position const pos) const
+std::set<Position>
+Board::find_positions_flipped_by_move(PlayerColor const pc, Position const pos) const
 {
     auto result = std::set<Position>{};
     for (auto const d : grid::directions) {
@@ -255,4 +249,4 @@ std::vector<Position> const& all_board_positions()
     }
     return result;
 }
-}
+} // namespace reviser

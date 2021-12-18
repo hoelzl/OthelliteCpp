@@ -8,7 +8,7 @@
 #include "game.hpp"
 #include "player.hpp"
 
-namespace othellite {
+namespace reviser {
 
 bool field_is_empty(Field const field) { return field == Field::empty; }
 
@@ -99,4 +99,4 @@ Score::compute_winner(game::Players const& players) const
     }
 }
 
-} // namespace othellite
+} // namespace reviser

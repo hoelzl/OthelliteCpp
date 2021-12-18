@@ -1,8 +1,8 @@
 // Copyright (c) 2021 Dr. Matthias Hölzl.
 
 #pragma once
-#ifndef OTHELLITE_LIB_BOARD_HPP
-#define OTHELLITE_LIB_BOARD_HPP
+#ifndef REVISER_LIB_BOARD_HPP
+#define REVISER_LIB_BOARD_HPP
 
 #include <array>
 #include <concepts>
@@ -13,7 +13,7 @@
 #include "common.hpp"
 #include "position.hpp"
 
-namespace othellite {
+namespace reviser {
 
 enum class InitialBoardState
 {
@@ -130,5 +130,5 @@ public:
     static std::string board_to_string(Board const& board);
 };
 
-} // namespace othellite
-#endif // OTHELLITE_LIB_BOARD_HPP
+} // namespace reviser
+#endif // REVISER_LIB_BOARD_HPP

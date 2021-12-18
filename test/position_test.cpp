@@ -7,7 +7,7 @@
 
 #include "doctest.hpp"
 
-using namespace othellite::grid;
+using namespace reviser::grid;
 
 TEST_CASE("Rows with valid indices can be created and used.")
 {

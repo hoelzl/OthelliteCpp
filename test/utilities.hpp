@@ -1,3 +1,5 @@
+// Copyright (c) 2021 Dr. Matthias Hölzl.
+
 #pragma once
 
 #ifndef TEST_UTILITIES_HPP
@@ -5,13 +7,14 @@
 
 #include <algorithm>
 #include <sstream>
+#include <utility>
 
 #include "board.hpp"
 #include "game.hpp"
 #include "player.hpp"
 #include "position.hpp"
 
-namespace othellite {
+namespace reviser {
 using std::ranges::min;
 
 
@@ -29,7 +32,7 @@ struct ConstantPlayerStub final : public game::Player
     }
 
 
-    [[nodiscard]] virtual grid::Position pick_move(Board const& board) const override
+    [[nodiscard]] grid::Position pick_move(Board const& board) const override
     {
         return played_position;
     }
@@ -41,7 +44,7 @@ struct MinimalPlayer final : public game::Player
 {
     using Player::Player;
 
-    [[nodiscard]] virtual grid::Position pick_move(Board const& board) const override
+    [[nodiscard]] grid::Position pick_move(Board const& board) const override
     {
         auto moves = board.find_valid_moves(color);
         return min(moves);
@@ -51,7 +54,7 @@ struct MinimalPlayer final : public game::Player
 
 struct SpyForNotifierOutput final : public game::Notifier
 {
-    virtual void display_message(std::string_view const message) override
+    void display_message(std::string_view const message) override
     {
         stream << message << "\n";
     }
@@ -63,16 +66,16 @@ struct SpyForNotifierOutput final : public game::Notifier
 
 struct SpyForNotifierMoves final : public game::Notifier
 {
-    virtual void display_message(std::string_view message) override
+    void display_message(std::string_view message) override
     {
         messages.emplace_back(message);
     }
 
-    virtual void display_board(Board const& board) override { boards.push_back(board); }
+    void display_board(Board const& board) override { boards.push_back(board); }
 
-    virtual void note_new_game(game::Players const& players, Board board) override {}
+    void note_new_game(game::Players const& players, Board board) override {}
 
-    virtual void note_move(
+    void note_move(
         game::Player const& player, grid::Position pos, Board const& board) override
     {
         moves.emplace_back(
@@ -82,7 +85,7 @@ struct SpyForNotifierMoves final : public game::Notifier
             pos.get_column());
     }
 
-    virtual void note_result(game::GameResult const& result) override
+    void note_result(game::GameResult const& result) override
     {
         if (auto* win_result = dynamic_cast<game::WinByScore const*>(&result)) {
             result_summary.type = "win";
@@ -105,6 +108,12 @@ struct SpyForNotifierMoves final : public game::Notifier
 
     struct Move
     {
+        Move(std::string player_name, PlayerColor color, int row, int column)
+            : player_name(std::move(player_name))
+            , color(color)
+            , row(row)
+            , column(column)
+        {}
         std::string player_name{};
         PlayerColor color{};
         int row{};
@@ -124,7 +133,8 @@ struct SpyForNotifierMoves final : public game::Notifier
     Result result_summary{};
 };
 
-inline bool operator==(SpyForNotifierMoves::Move const lhs, SpyForNotifierMoves::Move const rhs)
+inline bool
+operator==(SpyForNotifierMoves::Move const& lhs, SpyForNotifierMoves::Move const& rhs)
 {
     return lhs.player_name == rhs.player_name && lhs.color == rhs.color
            && lhs.row == rhs.row && lhs.column == rhs.column;
@@ -144,7 +154,6 @@ inline std::ostream& operator<<(std::ostream& os, SpyForNotifierMoves const& spy
     return os;
 }
 
-} // namespace othellite
-
+} // namespace reviser
 
 #endif

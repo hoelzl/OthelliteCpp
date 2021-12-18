@@ -1,25 +1,25 @@
 #pragma once
 
-#ifndef OTHELLITE_LIB_PLAYER_HPP
-#define OTHELLITE_LIB_PLAYER_HPP
+#ifndef REVISER_LIB_PLAYER_HPP
+#define REVISER_LIB_PLAYER_HPP
 
 #include <string_view>
 
 #include "common.hpp"
 #include "position.hpp"
 
-namespace othellite {
+namespace reviser {
 class Board;
 }
 
-namespace othellite::game {
+namespace reviser::game {
 class GameResult;
 
 
 class Player
 {
 public:
-    Player(
+    explicit Player(
         std::string_view const name = "An unnamed player",
         PlayerColor const pc = PlayerColor::dark)
         : name{name}
@@ -37,7 +37,7 @@ public:
 
     virtual void new_game();
     [[nodiscard]] virtual grid::Position pick_move(Board const& board) const = 0;
-    virtual void game_over(GameResult const& result);
+    [[maybe_unused]] virtual void game_over(GameResult const& result);
 
 protected:
     std::string name{"An unnamed player"};
@@ -53,8 +53,8 @@ class RandomPlayer final : public Player
 {
 public:
     using Player::Player;
-    [[nodiscard]] virtual grid::Position pick_move(Board const& board) const override;
+    [[nodiscard]] grid::Position pick_move(Board const& board) const override;
 };
-} // namespace othellite::game
+} // namespace reviser::game
 
 #endif

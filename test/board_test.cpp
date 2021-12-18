@@ -4,10 +4,10 @@
 
 #include "doctest.hpp"
 
-using namespace othellite;
-using othellite::grid::Column;
-using othellite::grid::Position;
-using othellite::grid::Row;
+using namespace reviser;
+using reviser::grid::Column;
+using reviser::grid::Position;
+using reviser::grid::Row;
 
 TEST_CASE("Board::from_string()")
 {
@@ -78,7 +78,8 @@ TEST_CASE("Board::initialize()")
         }
     }
 
-    SUBCASE("InitialBoardState::center_square sets all fields, center fields are occupied")
+    SUBCASE(
+        "InitialBoardState::center_square sets all fields, center fields are occupied")
     {
         auto light_fields = std::set<Position>{
             Position{Row{3}, Column{4}}, Position{Row{4}, Column{3}}};

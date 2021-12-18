@@ -8,11 +8,11 @@
 #include "board.hpp"
 
 
-namespace othellite::game {
+namespace reviser::game {
 
 void Player::new_game() {}
 
-void Player::game_over(GameResult const& result) {}
+[[maybe_unused]] void Player::game_over(GameResult const& result) {}
 
 bool operator==(Player const& lhs, Player const& rhs) { return &lhs == &rhs; }
 
@@ -29,4 +29,4 @@ auto RandomPlayer::pick_move(Board const& board) const -> grid::Position
     assert(!out.empty());
     return out[0];
 }
-} // namespace othellite::game
+} // namespace reviser::game
