@@ -5,13 +5,13 @@
 #ifndef REVISER_LIB_PLAYER_HPP
 #define REVISER_LIB_PLAYER_HPP
 
-#include <vector>
+#include <random>
 
 #include "common.hpp"
 #include "position.hpp"
 
 namespace reviser {
-class Board;
+class ArrayBoard;
 }
 
 namespace reviser::game {
@@ -41,7 +41,7 @@ public:
     void set_color(const PlayerColor pc) { this->color = pc; }
 
     virtual void new_game();
-    [[nodiscard]] virtual grid::Position pick_move(const Board& board) const = 0;
+    [[nodiscard]] virtual grid::Position pick_move(const ArrayBoard& board) const = 0;
     [[maybe_unused]] virtual void game_over(const GameResult& result);
 
 private:
@@ -58,7 +58,10 @@ class RandomPlayer final : public Player
 {
 public:
     using Player::Player;
-    [[nodiscard]] grid::Position pick_move(const Board& board) const override;
+    [[nodiscard]] grid::Position pick_move(const ArrayBoard& board) const override;
+
+private:
+    static std::mt19937 make_rng() { return std::mt19937{std::random_device{}()}; };
 };
 
 } // namespace reviser::game

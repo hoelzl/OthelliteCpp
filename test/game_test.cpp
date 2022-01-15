@@ -27,7 +27,7 @@ TEST_CASE("Notifier")
                                   "| | | | | | | | |\n"
                                   "| |*|O|*|O|*|O| |\n"
                                   "| | |*|O|*|O| | |"s;
-        const auto board = Board::from_string(board_string);
+        const auto board = ArrayBoard::from_string(board_string);
 
         notifier.display_board(board);
         CHECK(notifier.output() == board_string + "\n"s);
@@ -47,7 +47,7 @@ TEST_CASE("Notifier")
                                   "| | | | | | | | |\n"
                                   "| | | | | | | | |\n"
                                   "| | | | | | | | |\n"s;
-        auto constexpr board = Board{};
+        auto constexpr board = ArrayBoard{};
         std::string expected
             = ("Starting a new game.\n"s + "Dark player: dark_player\n"s
                + "Light player: light_player\n"s + empty_board_string);
@@ -69,7 +69,7 @@ TEST_CASE("Notifier")
                             "| | | | | | | | |\n"
                             "| | | | | | | | |\n"
                             "| | | | | | | | |"s;
-        auto board = Board::from_string(board_string);
+        auto board = ArrayBoard::from_string(board_string);
         std::string expected
             = ("\ndark_player (dark) plays (1, 2).\n"s + board_string + "\n"s);
 
@@ -84,7 +84,7 @@ TEST_CASE("Notifier")
     {
         auto dark_player = ConstantPlayerStub{"dark_player", PlayerColor::dark};
         auto light_player = ConstantPlayerStub{"light_player", PlayerColor::light};
-        auto board = Board{};
+        auto board = ArrayBoard{};
 
         SUBCASE("Dark player won with best score.")
         {
@@ -145,7 +145,7 @@ TEST_CASE("Test game for the minimal player.")
     auto notifier_spy = std::make_unique<SpyForNotifierMoves>();
     // We rely on the game keeping the notifier spy alive for us...
     const auto* notifier_spy_ptr = notifier_spy.get();
-    auto game = std::make_unique<game::DefaultGame<Board>>(
+    auto game = std::make_unique<game::DefaultGame<ArrayBoard>>(
         dark_player, light_player, std::move(notifier_spy));
 
     const auto expected_moves = std::vector<SpyForNotifierMoves::Move>{

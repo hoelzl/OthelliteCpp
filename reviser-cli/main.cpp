@@ -1,14 +1,12 @@
 // Copyright (c) 2021-2022 Dr. Matthias Hölzl.
 
-#include <iostream>
-
-#include "board.hpp"
+#include "array_board.hpp"
 #include "console_notifier.hpp"
 #include "default_game.hpp"
 #include "game.hpp"
 #include "simple_command_line_player.hpp"
 
-using reviser::Board;
+using reviser::ArrayBoard;
 using reviser::game::DefaultGame;
 using reviser::game::RandomPlayer;
 using reviser_cli::ConsoleNotifier;
@@ -18,8 +16,9 @@ int main()
 {
     try {
         auto dark_player = RandomPlayer{"The computer player"};
-        auto light_player = SimpleCommandLinePlayer{"The human"};
-        const auto game = std::make_unique<DefaultGame<Board>>(
+        // auto light_player = SimpleCommandLinePlayer{"The human"};
+        auto light_player = RandomPlayer{"Not nearly human"};
+        const auto game = std::make_unique<DefaultGame<ArrayBoard>>(
             dark_player, light_player, std::make_unique<ConsoleNotifier>());
         game->new_game(false);
         game->run_game_loop();

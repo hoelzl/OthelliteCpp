@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 23)
 
 add_executable(reviser-cli
     "main.cpp"
+    "console_notifier.cpp"
+    "console_notifier.hpp"
     "simple_command_line_player.cpp"
     "simple_command_line_player.hpp")
 

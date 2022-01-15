@@ -7,7 +7,7 @@
 
 #include <optional>
 
-#include "board.hpp"
+#include "array_board.hpp"
 #include "game.hpp"
 #include "game_result.hpp"
 

@@ -5,7 +5,7 @@
 #include <format>
 #include <string>
 
-#include "board.hpp"
+#include "array_board.hpp"
 #include "game_result.hpp"
 
 
@@ -26,9 +26,9 @@ void Players::new_game() const
     get_light_player().new_game();
 }
 
-void Notifier::display_board(const Board& board) { display_message(board.to_string()); }
+void Notifier::display_board(const ArrayBoard& board) { display_message(board.to_string()); }
 
-void Notifier::note_new_game(const Players& players, const Board& board)
+void Notifier::note_new_game(const Players& players, const ArrayBoard& board)
 {
     display_message("Starting a new game.");
 
@@ -41,14 +41,13 @@ void Notifier::note_new_game(const Players& players, const Board& board)
 }
 
 void Notifier::note_move(
-    const Player& player, const grid::Position pos, const Board& board)
+    const Player& player, const grid::Position pos, const ArrayBoard& board)
 {
     const auto message = std::format(
-        "\n{} ({}) plays ({}, {}).",
+        "\n{} ({}) plays {}.",
         player.get_name(),
         player_color_to_string(player.get_color()),
-        pos.get_row().value,
-        pos.get_column().value);
+        pos.to_string());
 
     display_message(message);
     display_board(board);

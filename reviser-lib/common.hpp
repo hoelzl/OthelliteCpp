@@ -5,6 +5,7 @@
 #define REVISER_LIB_COMMON_HPP
 
 #include <cstdint>
+#include <map>
 #include <string>
 
 namespace reviser::game {
@@ -46,6 +47,15 @@ char field_to_char(Field field);
 PlayerColor other_player_color(PlayerColor pc);
 std::string player_color_to_string(PlayerColor pc);
 
+template <typename K, std::integral V>
+V find_default(const std::map<K, V>& values, K value)
+{
+    const auto it{values.find(value)};
+    if (it == values.cend()) {
+        return V{};
+    }
+    return it->second;
+}
 
 class Score
 {
@@ -57,6 +67,13 @@ public:
         : num_dark_fields{num_dark_fields}
         , num_light_fields{num_light_fields}
         , num_empty_fields{num_empty_fields}
+    {}
+
+    explicit Score(const std::map<Field, int_fast8_t>& values)
+        : Score{
+            find_default(values, Field::dark),
+            find_default(values, Field::light),
+            find_default(values, Field::empty)}
     {}
 
     [[nodiscard]] int_fast8_t get_num_dark_fields() const { return num_dark_fields; }

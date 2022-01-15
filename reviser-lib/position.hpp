@@ -5,6 +5,7 @@
 #define REVISER_LIB_POSITION_HPP
 
 #include <cstdint>
+#include <format>
 #include <stdexcept>
 
 #include "common.hpp"
@@ -79,6 +80,11 @@ public:
     [[nodiscard]] std::size_t to_linear_index() const
     {
         return row * board_size + column;
+    }
+
+	[[nodiscard]] std::string to_string() const
+    {
+        return std::format("({}, {})", get_row().value, get_column().value);
     }
 
 private:

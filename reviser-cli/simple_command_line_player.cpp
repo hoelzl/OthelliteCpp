@@ -5,12 +5,12 @@
 #include <algorithm>
 #include <format>
 
-#include "board.hpp"
+#include "array_board.hpp"
 #include "position.hpp"
 
 namespace reviser_cli {
 
-Position SimpleCommandLinePlayer::pick_move(const Board& board) const
+Position SimpleCommandLinePlayer::pick_move(const ArrayBoard& board) const
 {
     const auto moves = compute_possible_moves(board);
     print_possible_moves(moves);
@@ -18,7 +18,7 @@ Position SimpleCommandLinePlayer::pick_move(const Board& board) const
 }
 
 std::vector<Position>
-SimpleCommandLinePlayer::compute_possible_moves(const Board& board) const
+SimpleCommandLinePlayer::compute_possible_moves(const ArrayBoard& board) const
 {
     auto move_set = board.find_valid_moves(get_color());
     auto moves = std::vector<Position>{};
@@ -52,10 +52,8 @@ Position SimpleCommandLinePlayer::handle_user_input(const std::vector<Position>&
     if (selection < moves.size()) {
         return moves[selection];
     }
-    else {
-        std::cout << "Invalid input, returning first move.\n";
-        return moves[0];
-    }
+    std::cout << "Invalid input, returning first move.\n";
+    return moves[0];
 }
 
 } // namespace reviser_cli

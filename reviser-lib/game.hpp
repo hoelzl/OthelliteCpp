@@ -58,12 +58,12 @@ public:
     virtual ~Notifier() = default;
 
     virtual void display_message(std::string_view message) = 0;
-    virtual void display_board(const Board& board);
+    virtual void display_board(const ArrayBoard& board);
 
-    virtual void note_new_game(const Players& players, const Board& board);
+    virtual void note_new_game(const Players& players, const ArrayBoard& board);
 
     virtual void
-    note_move(const Player& player, grid::Position pos, const Board& board);
+    note_move(const Player& player, grid::Position pos, const ArrayBoard& board);
 
     virtual void note_result(const GameResult& result);
 };

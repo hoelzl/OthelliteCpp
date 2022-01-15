@@ -4,12 +4,12 @@ project(reviser)
 set(CMAKE_CXX_STANDARD 23)
 
 add_library(reviser-lib
-        board.cpp
+        array_board.cpp
+        array_board.hpp
         board.hpp
+        board.cpp
         common.cpp
         common.hpp
-        "../reviser-cli/console_notifier.cpp"
-        "../reviser-cli/console_notifier.hpp"
         direction.cpp
         direction.hpp
         game.cpp

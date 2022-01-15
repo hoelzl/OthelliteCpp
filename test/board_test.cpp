@@ -1,6 +1,6 @@
 // Copyright (c) 2021-2022 Dr. Matthias Hölzl.
 
-#include "board.hpp"
+#include "array_board.hpp"
 
 #include "doctest.hpp"
 
@@ -9,7 +9,7 @@ using reviser::grid::Column;
 using reviser::grid::Position;
 using reviser::grid::Row;
 
-TEST_CASE("Board::from_string()")
+TEST_CASE("ArrayBoard::from_string()")
 {
     auto board_str = "|O|*| | |O|*| | |\n"
                      "|O|*| | |O|*| |*|\n"
@@ -20,11 +20,11 @@ TEST_CASE("Board::from_string()")
                      "|O|*| | |O|*| | |\n"
                      "|O|*| | |O|*| |O|\n";
 
-    SUBCASE("does not throw") { CHECK_NOTHROW(Board::from_string(board_str)); }
+    SUBCASE("does not throw") { CHECK_NOTHROW(ArrayBoard::from_string(board_str)); }
 
     SUBCASE("produces correct board")
     {
-        auto board = Board::from_string(board_str);
+        auto board = ArrayBoard::from_string(board_str);
         CHECK(board[Position{Row{0}, Column{0}}] == Field::light);
         CHECK(board[Position{Row{0}, Column{1}}] == Field::dark);
         CHECK(board[Position{Row{0}, Column{2}}] == Field::empty);
@@ -45,7 +45,7 @@ TEST_CASE("Board::from_string()")
     }
 }
 
-TEST_CASE("Board::to_string()")
+TEST_CASE("ArrayBoard::to_string()")
 {
     const auto board_str = "|O|*| | |O|*| | |\n"
                            "|O|*| | |O|*| |*|\n"
@@ -55,10 +55,10 @@ TEST_CASE("Board::to_string()")
                            "|O|*| | |O|*| | |\n"
                            "|O|*| | |O|*| | |\n"
                            "|O|*| | |O|*| |O|";
-    CHECK(Board::from_string(board_str).to_string() == std::string{board_str});
+    CHECK(ArrayBoard::from_string(board_str).to_string() == std::string{board_str});
 }
 
-TEST_CASE("Board::initialize()")
+TEST_CASE("ArrayBoard::initialize()")
 {
     auto board_str = "|O|*| | |O|*| | |\n"
                      "|O|*| | |O|*| |*|\n"
@@ -68,7 +68,7 @@ TEST_CASE("Board::initialize()")
                      "|O|*| | |O|*| | |\n"
                      "|O|*| | |O|*| | |\n"
                      "|O|*| | |O|*| |O|";
-    auto board = Board::from_string(board_str);
+    auto board = ArrayBoard::from_string(board_str);
 
     SUBCASE("InitialBoardState::empty sets all fields to empty")
     {
@@ -100,7 +100,7 @@ TEST_CASE("Board::initialize()")
     }
 }
 
-TEST_CASE("Board::is_valid_move()")
+TEST_CASE("ArrayBoard::is_valid_move()")
 {
     auto board_str = "| | | | | | | | |\n"
                      "| | | | | | | | |\n"
@@ -110,7 +110,7 @@ TEST_CASE("Board::is_valid_move()")
                      "| | | | | | | | |\n"
                      "| | | | | | | | |\n"
                      "| | | | | | | | |";
-    auto board = Board::from_string(board_str);
+    auto board = ArrayBoard::from_string(board_str);
 
     SUBCASE("All light moves are classified correctly.")
     {
@@ -148,7 +148,7 @@ TEST_CASE("Board::is_valid_move()")
 }
 
 void check_valid_moves(
-    const Board& board, PlayerColor pc, const std::set<Position>& valid_moves)
+    const ArrayBoard& board, PlayerColor pc, const std::set<Position>& valid_moves)
 {
     for (auto pos : all_board_positions()) {
         auto result = board.is_valid_move(pc, pos);
@@ -161,10 +161,10 @@ void check_valid_moves(
     }
 }
 
-TEST_CASE("Board::is_valid_moves() for initial board (alternative test "
+TEST_CASE("ArrayBoard::is_valid_moves() for initial board (alternative test "
           "implementation).")
 {
-    auto board = Board{};
+    auto board = ArrayBoard{};
     board.initialize(InitialBoardState::center_square);
 
     SUBCASE("Light has four moves.")
@@ -188,9 +188,9 @@ TEST_CASE("Board::is_valid_moves() for initial board (alternative test "
     }
 }
 
-TEST_CASE("Board::find_valid_moves() against initial board.")
+TEST_CASE("ArrayBoard::find_valid_moves() against initial board.")
 {
-    auto board = Board{};
+    auto board = ArrayBoard{};
     board.initialize(InitialBoardState::center_square);
 
     SUBCASE("Light has four moves.")
@@ -215,7 +215,7 @@ TEST_CASE("Board::find_valid_moves() against initial board.")
 }
 
 
-TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
+TEST_CASE("ArrayBoard::find_valid_moves() against board with occupied corner.")
 {
     const auto board_str = "|*|O|O|O| | | | |\n"
                            "| |*| | | | | | |\n"
@@ -225,7 +225,7 @@ TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
                            "| | | | | | | | |\n"
                            "| | | | | | | | |\n"
                            "| | | | | | | | |";
-    const auto board = Board::from_string(board_str);
+    const auto board = ArrayBoard::from_string(board_str);
 
     SUBCASE("Light has six moves.")
     {
@@ -251,9 +251,9 @@ TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
     }
 }
 
-TEST_CASE("Board::play_move()")
+TEST_CASE("ArrayBoard::play_move()")
 {
-    auto board = Board::from_string("|*|O|O|O| | | | |\n"
+    auto board = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                     "| |*| | | | | | |\n"
                                     "| | | | | | | | |\n"
                                     "| | | |*|O| | | |\n"
@@ -268,7 +268,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::light, Position{Row{2}, Column{0}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |O| | | | | | |\n"
                                                "|O| | | | | | | |\n"
                                                "| | | |*|O| | | |\n"
@@ -283,7 +283,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::light, Position{Row{2}, Column{1}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |O| | | | | | |\n"
                                                "| |O| | | | | | |\n"
                                                "| | | |*|O| | | |\n"
@@ -298,7 +298,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::light, Position{Row{2}, Column{3}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | |O| | | | |\n"
                                                "| | | |O|O| | | |\n"
@@ -313,7 +313,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::light, Position{Row{3}, Column{2}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | | | | | | |\n"
                                                "| | |O|O|O| | | |\n"
@@ -328,7 +328,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::light, Position{Row{4}, Column{5}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | | | | | | |\n"
                                                "| | | |*|O| | | |\n"
@@ -343,7 +343,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::light, Position{Row{5}, Column{4}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | | | | | | |\n"
                                                "| | | |*|O| | | |\n"
@@ -361,7 +361,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::dark, Position{Row{0}, Column{4}});
 
-            auto expected = Board::from_string("|*|*|*|*|*| | | |\n"
+            auto expected = ArrayBoard::from_string("|*|*|*|*|*| | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | | | | | | |\n"
                                                "| | | |*|O| | | |\n"
@@ -375,7 +375,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::dark, Position{Row{2}, Column{4}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | | |*| | | |\n"
                                                "| | | |*|*| | | |\n"
@@ -389,7 +389,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::dark, Position{Row{3}, Column{5}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | | | | | | |\n"
                                                "| | | |*|*|*| | |\n"
@@ -403,7 +403,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::dark, Position{Row{4}, Column{2}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | | | | | | |\n"
                                                "| | | |*|O| | | |\n"
@@ -417,7 +417,7 @@ TEST_CASE("Board::play_move()")
         {
             board.play_move(PlayerColor::dark, Position{Row{5}, Column{3}});
 
-            auto expected = Board::from_string("|*|O|O|O| | | | |\n"
+            auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
                                                "| |*| | | | | | |\n"
                                                "| | | | | | | | |\n"
                                                "| | | |*|O| | | |\n"
@@ -431,17 +431,17 @@ TEST_CASE("Board::play_move()")
 }
 
 
-TEST_CASE("BoardReader::clean_board_str()")
+TEST_CASE("BoardReader<ArrayBoard>::clean_board_str()")
 {
     const std::string input{"a *bcd*0O*O !!!!!  O"};
     const std::string expected{" **O*O   O"};
-    CHECK(BoardReader::clean_board_str(input) == expected);
+    CHECK(BoardReader<ArrayBoard>::clean_board_str(input) == expected);
 }
 
-TEST_CASE("BoardReader::convert_char()")
+TEST_CASE("BoardReader<ArrayBoard>::convert_char()")
 {
-    CHECK(BoardReader::convert_char('O') == Field::light);
-    CHECK(BoardReader::convert_char('*') == Field::dark);
-    CHECK(BoardReader::convert_char(' ') == Field::empty);
-    CHECK_THROWS_AS(BoardReader::convert_char('a'), std::invalid_argument);
+    CHECK(BoardReader<ArrayBoard>::convert_char('O') == Field::light);
+    CHECK(BoardReader<ArrayBoard>::convert_char('*') == Field::dark);
+    CHECK(BoardReader<ArrayBoard>::convert_char(' ') == Field::empty);
+    CHECK_THROWS_AS(BoardReader<ArrayBoard>::convert_char('a'), std::invalid_argument);
 }
