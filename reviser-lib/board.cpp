@@ -20,21 +20,18 @@ using grid::Position;
 using grid::Row;
 using ::std::ranges::copy_if;
 
-auto Board::from_string(
-    const std::string_view board_string) -> Board
+auto Board::from_string(const std::string_view board_string) -> Board
 {
     return BoardReader::board_from_string(board_string);
 }
 
-auto Board::operator[](
-    const std::size_t index) -> Field&
+auto Board::operator[](const std::size_t index) -> Field&
 {
     assert(index < 64);
     return fields[index];
 }
 
-auto Board::operator[](
-    const grid::Position pos) -> Field&
+auto Board::operator[](const grid::Position pos) -> Field&
 {
     return fields[pos.to_linear_index()];
 }
@@ -65,7 +62,8 @@ bool Board::does_move_flip_any_field(PlayerColor pc, Position starting_pos) cons
     });
 }
 
-std::set<Position> Board::positions_to_flip_in_direction(const PlayerColor pc, const Position starting_pos, const Direction d) const
+std::set<Position> Board::positions_to_flip_in_direction(
+    const PlayerColor pc, const Position starting_pos, const Direction d) const
 {
     const auto next_pos = starting_pos.next_in_direction(d);
     const auto occupied_positions = occupied_positions_in_direction(d, next_pos);
@@ -86,7 +84,8 @@ Board::occupied_positions_in_direction(const Direction d, Position starting_pos)
     return occupied_positions;
 }
 
-std::set<Position> Board::filter_positions_that_can_be_flipped(const PlayerColor pc, const std::vector<Position>& non_empty_positions) const
+std::set<Position> Board::filter_positions_that_can_be_flipped(
+    const PlayerColor pc, const std::vector<Position>& non_empty_positions) const
 {
     auto result = std::set<Position>{};
     const auto highest_index
@@ -102,7 +101,8 @@ std::set<Position> Board::filter_positions_that_can_be_flipped(const PlayerColor
     return result;
 }
 
-std::size_t Board::find_highest_index_for_player_owned_fields(const PlayerColor pc, const std::vector<Position>& non_empty_positions) const
+std::size_t Board::find_highest_index_for_player_owned_fields(
+    const PlayerColor pc, const std::vector<Position>& non_empty_positions) const
 {
     const auto num_non_empty_position = static_cast<int>(non_empty_positions.size());
     for (int i = num_non_empty_position - 1; i >= 0; --i) {
@@ -173,7 +173,8 @@ Board::find_positions_flipped_by_move(const PlayerColor pc, const Position pos) 
     return result;
 }
 
-void Board::flip_positions(const PlayerColor pc, const std::set<Position>& positions_to_flip)
+void Board::flip_positions(
+    const PlayerColor pc, const std::set<Position>& positions_to_flip)
 {
     const auto field = field_for_player_color(pc);
     for (const auto pos : positions_to_flip) {
@@ -181,8 +182,7 @@ void Board::flip_positions(const PlayerColor pc, const std::set<Position>& posit
     }
 }
 
-auto BoardReader::board_from_string(
-    const std::string_view board_str) -> Board
+auto BoardReader::board_from_string(const std::string_view board_str) -> Board
 {
     const auto cleaned_string = clean_board_str(board_str);
     assert(cleaned_string.size() == 64);
@@ -203,8 +203,7 @@ std::string BoardReader::clean_board_str(std::string_view board_str)
     return result;
 }
 
-auto BoardReader::convert_char(
-    const char c) -> Field
+auto BoardReader::convert_char(const char c) -> Field
 {
     switch (c) {
     case 'O': return Field::light;

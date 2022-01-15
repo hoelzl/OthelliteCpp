@@ -17,7 +17,7 @@ std::ostream& operator<<(std::ostream& os, Field field)
     case Field::light: os << "light"; break;
     case Field::dark: os << "dark"; break;
     }
-	return os;
+    return os;
 }
 
 std::ostream& operator<<(std::ostream& os, PlayerColor pc)
@@ -26,15 +26,14 @@ std::ostream& operator<<(std::ostream& os, PlayerColor pc)
     case PlayerColor::light: os << "light"; break;
     case PlayerColor::dark: os << "dark"; break;
     }
-	return os;
+    return os;
 }
 
 bool field_is_empty(const Field field) { return field == Field::empty; }
 
 bool field_is_occupied(const Field field) { return field != Field::empty; }
 
-auto field_for_player_color(
-    const PlayerColor pc) -> Field
+auto field_for_player_color(const PlayerColor pc) -> Field
 {
     switch (pc) {
     case PlayerColor::light: return Field::light;
@@ -63,8 +62,7 @@ char field_to_char(const Field field)
     throw std::invalid_argument("Unexpected value for field.");
 }
 
-auto other_player_color(
-    const PlayerColor pc) -> PlayerColor
+auto other_player_color(const PlayerColor pc) -> PlayerColor
 {
     if (pc == PlayerColor::light) {
         return PlayerColor::dark;

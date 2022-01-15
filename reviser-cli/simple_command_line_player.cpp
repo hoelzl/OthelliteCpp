@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <format>
 
-#include "position.hpp"
 #include "board.hpp"
+#include "position.hpp"
 
 namespace reviser_cli {
 
@@ -25,14 +25,16 @@ SimpleCommandLinePlayer::compute_possible_moves(const Board& board) const
     return moves;
 }
 
-void SimpleCommandLinePlayer::print_possible_move(const std::vector<Position>& moves, unsigned i) const
+void SimpleCommandLinePlayer::print_possible_move(
+    const std::vector<Position>& moves, unsigned i) const
 {
     std::cout << std::format(
-            "{:>4}: {:>2}, {:>2}", i, moves[i].get_row() + 1, moves[i].get_column() + 1)
-        << "\n";
+        "{:>4}: {:>2}, {:>2}", i, moves[i].get_row() + 1, moves[i].get_column() + 1)
+              << "\n";
 }
 
-void SimpleCommandLinePlayer::print_possible_moves(const std::vector<Position>& moves) const
+void SimpleCommandLinePlayer::print_possible_moves(
+    const std::vector<Position>& moves) const
 {
     std::cout << "\nYour possible moves are:\n";
     for (auto i = 0u; i < moves.size(); ++i) {
@@ -41,8 +43,7 @@ void SimpleCommandLinePlayer::print_possible_moves(const std::vector<Position>& 
     std::cout << "Please select a move: " << std::endl;
 }
 
-Position
-SimpleCommandLinePlayer::handle_user_input(const std::vector<Position>& moves)
+Position SimpleCommandLinePlayer::handle_user_input(const std::vector<Position>& moves)
 {
     size_t selection{};
     std::cin >> selection;
@@ -55,4 +56,4 @@ SimpleCommandLinePlayer::handle_user_input(const std::vector<Position>& moves)
     }
 }
 
-}
+} // namespace reviser_cli

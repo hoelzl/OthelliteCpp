@@ -17,10 +17,8 @@
 namespace reviser {
 using std::ranges::min;
 
-
 struct ConstantPlayerStub final : public game::Player
 {
-
     explicit ConstantPlayerStub(
         const std::string_view player_name = "Unnamed Player",
         const PlayerColor pc = PlayerColor::dark,
@@ -30,7 +28,6 @@ struct ConstantPlayerStub final : public game::Player
         set_name(player_name);
         set_color(pc);
     }
-
 
     [[nodiscard]] grid::Position pick_move(const Board& board) const override
     {

@@ -21,8 +21,7 @@ bool operator==(const Player& lhs, const Player& rhs) { return &lhs == &rhs; }
 
 bool operator!=(const Player& lhs, const Player& rhs) { return !(lhs == rhs); }
 
-auto RandomPlayer::pick_move(
-    const Board& board) const -> grid::Position
+auto RandomPlayer::pick_move(const Board& board) const -> grid::Position
 {
     const auto moves = board.find_valid_moves(get_color());
 

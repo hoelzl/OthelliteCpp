@@ -12,8 +12,7 @@ reviser::grid::operator<<(std::ostream& os, const VerticalMovement vertical_move
 }
 
 std::ostream& reviser::grid::operator<<(
-    std::ostream& os,
-    const HorizontalMovement horizontal_movement)
+    std::ostream& os, const HorizontalMovement horizontal_movement)
 {
     const auto amount = horizontal_movement.get_amount();
     os << abs(amount) << (amount < 0 ? "W" : "E");

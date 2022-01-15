@@ -38,10 +38,11 @@ void Notifier::note_new_game(const Players& players, const Board& board)
 
     message = std::format("Light player: {}", players.get_light_player().get_name());
     display_message(message);
-	display_board(board);
+    display_board(board);
 }
 
-void Notifier::note_move(const Player& player, const grid::Position pos, const Board& board)
+void Notifier::note_move(
+    const Player& player, const grid::Position pos, const Board& board)
 {
     const auto message = std::format(
         "\n{} ({}) plays ({}, {}).",

@@ -6,8 +6,8 @@
 
 namespace reviser_cli {
 
-using reviser::grid::Position;
 using reviser::Board;
+using reviser::grid::Position;
 
 class SimpleCommandLinePlayer final : public reviser::game::Player
 {
@@ -21,13 +21,11 @@ private:
     compute_possible_moves(const Board& board) const;
 
     void print_possible_moves(const std::vector<Position>& moves) const;
-    void
-    print_possible_move(const std::vector<Position>& moves, unsigned i) const;
+    void print_possible_move(const std::vector<Position>& moves, unsigned i) const;
 
-    [[nodiscard]] static Position
-    handle_user_input(const std::vector<Position>& moves);
+    [[nodiscard]] static Position handle_user_input(const std::vector<Position>& moves);
 };
 
-}
+} // namespace reviser_cli
 
 #endif // SIMPLE_COMMAND_LINE_PLAYER_HPP

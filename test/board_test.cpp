@@ -147,7 +147,8 @@ TEST_CASE("Board::is_valid_move()")
     }
 }
 
-void check_valid_moves(const Board& board, PlayerColor pc, const std::set<Position>& valid_moves)
+void check_valid_moves(
+    const Board& board, PlayerColor pc, const std::set<Position>& valid_moves)
 {
     for (auto pos : all_board_positions()) {
         auto result = board.is_valid_move(pc, pos);

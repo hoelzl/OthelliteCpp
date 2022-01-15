@@ -70,12 +70,10 @@ private:
         grid::Direction d, grid::Position starting_pos) const;
 
     [[nodiscard]] std::set<grid::Position> filter_positions_that_can_be_flipped(
-        PlayerColor pc,
-        const std::vector<grid::Position>& non_empty_positions) const;
+        PlayerColor pc, const std::vector<grid::Position>& non_empty_positions) const;
 
     [[nodiscard]] std::size_t find_highest_index_for_player_owned_fields(
-        PlayerColor pc,
-        const std::vector<grid::Position>& non_empty_positions) const;
+        PlayerColor pc, const std::vector<grid::Position>& non_empty_positions) const;
 
     [[nodiscard]] std::set<grid::Position>
     find_positions_flipped_by_move(PlayerColor pc, grid::Position pos) const;
