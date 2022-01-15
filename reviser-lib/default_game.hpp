@@ -60,8 +60,9 @@ void DefaultGame<BoardT>::new_game(const bool swap_payers)
     if (swap_payers) {
         players.swap_dark_and_light_player();
     }
+    set_current_player(players.get_dark_player());
     players.new_game();
-	notifier->note_new_game(players, *board.get());
+    notifier->note_new_game(players, *board.get());
 }
 
 template <BoardType BoardT>
@@ -96,10 +97,8 @@ template <BoardType BoardT>
 void DefaultGame<BoardT>::set_current_player(Player& player)
 {
     assert(player == players.get_dark_player() || player == players.get_light_player());
-    if (player != get_current_player()) {
-        current_player = player;
-        cached_moves_for_current_player = std::nullopt;
-    }
+    current_player = player;
+    cached_moves_for_current_player = std::nullopt;
 }
 
 template <BoardType BoardT>

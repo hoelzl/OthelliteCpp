@@ -16,7 +16,7 @@ using namespace std::string_literals;
 
 void Players::swap_dark_and_light_player()
 {
-	swap(dark_player, light_player);
+    swap(dark_player, light_player);
     dark_player.get().set_color(PlayerColor::dark);
     light_player.get().set_color(PlayerColor::light);
 }

@@ -23,11 +23,16 @@ enum class Field : int_least8_t
     dark,
 };
 
+std::ostream& operator<<(std::ostream& os, Field field);
+
 enum class PlayerColor : int_least8_t
 {
     dark,
     light,
 };
+
+std::ostream& operator<<(std::ostream& os, PlayerColor pc);
+
 
 bool field_is_empty(Field field);
 bool field_is_occupied(Field field);

@@ -10,6 +10,25 @@
 
 namespace reviser {
 
+std::ostream& operator<<(std::ostream& os, Field field)
+{
+    switch (field) {
+    case Field::empty: os << "empty"; break;
+    case Field::light: os << "light"; break;
+    case Field::dark: os << "dark"; break;
+    }
+	return os;
+}
+
+std::ostream& operator<<(std::ostream& os, PlayerColor pc)
+{
+    switch (pc) {
+    case PlayerColor::light: os << "light"; break;
+    case PlayerColor::dark: os << "dark"; break;
+    }
+	return os;
+}
+
 bool field_is_empty(const Field field) { return field == Field::empty; }
 
 bool field_is_occupied(const Field field) { return field != Field::empty; }
