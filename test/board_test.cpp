@@ -47,7 +47,7 @@ TEST_CASE("Board::from_string()")
 
 TEST_CASE("Board::to_string()")
 {
-    auto const board_str = "|O|*| | |O|*| | |\n"
+    const auto board_str = "|O|*| | |O|*| | |\n"
                            "|O|*| | |O|*| |*|\n"
                            "|O|*| | |O|*| | |\n"
                            "|O|*| | |O|*| | |\n"
@@ -147,8 +147,7 @@ TEST_CASE("Board::is_valid_move()")
     }
 }
 
-void check_valid_moves(
-    Board const& board, PlayerColor pc, std::set<Position> const& valid_moves)
+void check_valid_moves(const Board& board, PlayerColor pc, const std::set<Position>& valid_moves)
 {
     for (auto pos : all_board_positions()) {
         auto result = board.is_valid_move(pc, pos);
@@ -169,7 +168,7 @@ TEST_CASE("Board::is_valid_moves() for initial board (alternative test "
 
     SUBCASE("Light has four moves.")
     {
-        auto const valid_moves = std::set<Position>{
+        const auto valid_moves = std::set<Position>{
             Position{Row{2}, Column{3}},
             Position{Row{3}, Column{2}},
             Position{Row{4}, Column{5}},
@@ -179,7 +178,7 @@ TEST_CASE("Board::is_valid_moves() for initial board (alternative test "
 
     SUBCASE("Dark has four moves.")
     {
-        auto const valid_moves = std::set<Position>{
+        const auto valid_moves = std::set<Position>{
             Position{Row{2}, Column{4}},
             Position{Row{3}, Column{5}},
             Position{Row{4}, Column{2}},
@@ -195,7 +194,7 @@ TEST_CASE("Board::find_valid_moves() against initial board.")
 
     SUBCASE("Light has four moves.")
     {
-        auto const valid_moves = std::set<Position>{
+        const auto valid_moves = std::set<Position>{
             Position{Row{2}, Column{3}},
             Position{Row{3}, Column{2}},
             Position{Row{4}, Column{5}},
@@ -205,7 +204,7 @@ TEST_CASE("Board::find_valid_moves() against initial board.")
 
     SUBCASE("Dark has four moves.")
     {
-        auto const valid_moves = std::set<Position>{
+        const auto valid_moves = std::set<Position>{
             Position{Row{2}, Column{4}},
             Position{Row{3}, Column{5}},
             Position{Row{4}, Column{2}},
@@ -217,7 +216,7 @@ TEST_CASE("Board::find_valid_moves() against initial board.")
 
 TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
 {
-    auto const board_str = "|*|O|O|O| | | | |\n"
+    const auto board_str = "|*|O|O|O| | | | |\n"
                            "| |*| | | | | | |\n"
                            "| | | | | | | | |\n"
                            "| | | |*|O| | | |\n"
@@ -225,11 +224,11 @@ TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
                            "| | | | | | | | |\n"
                            "| | | | | | | | |\n"
                            "| | | | | | | | |";
-    auto const board = Board::from_string(board_str);
+    const auto board = Board::from_string(board_str);
 
     SUBCASE("Light has six moves.")
     {
-        auto const valid_moves = std::set<Position>{
+        const auto valid_moves = std::set<Position>{
             Position{Row{2}, Column{0}},
             Position{Row{2}, Column{1}},
             Position{Row{2}, Column{3}},
@@ -241,7 +240,7 @@ TEST_CASE("Board::find_valid_moves() against board with occupied corner.")
 
     SUBCASE("Dark has five moves.")
     {
-        auto const valid_moves = std::set<Position>{
+        const auto valid_moves = std::set<Position>{
             Position{Row{0}, Column{4}},
             Position{Row{2}, Column{4}},
             Position{Row{3}, Column{5}},
@@ -433,8 +432,8 @@ TEST_CASE("Board::play_move()")
 
 TEST_CASE("BoardReader::clean_board_str()")
 {
-    std::string const input{"a *bcd*0O*O !!!!!  O"};
-    std::string const expected{" **O*O   O"};
+    const std::string input{"a *bcd*0O*O !!!!!  O"};
+    const std::string expected{" **O*O   O"};
     CHECK(BoardReader::clean_board_str(input) == expected);
 }
 

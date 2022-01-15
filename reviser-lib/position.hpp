@@ -16,7 +16,7 @@ using coordinate_t = int_least8_t;
 
 struct Row
 {
-    constexpr explicit Row(int const row)
+    constexpr explicit Row(const int row)
         : value{static_cast<coordinate_t>(row)}
     {}
 
@@ -29,7 +29,7 @@ struct Row
     }
 };
 
-inline constexpr bool operator==(Row const lhs, Row const rhs)
+inline constexpr bool operator==(const Row lhs, const Row rhs)
 {
     return lhs.value == rhs.value;
 }
@@ -49,7 +49,7 @@ struct Column
     }
 };
 
-inline constexpr bool operator==(Column const lhs, Column const rhs)
+inline constexpr bool operator==(const Column lhs, const Column rhs)
 {
     return lhs.value == rhs.value;
 }
@@ -70,7 +70,7 @@ public:
         return 0 <= row && row < board_size && 0 <= column && column < board_size;
     }
 
-    [[nodiscard]] constexpr Position next_in_direction(Direction const d) const
+    [[nodiscard]] constexpr Position next_in_direction(const Direction d) const
     {
         throw_if_invalid();
         return {Row{row + d.get_dy()}, Column{column + d.get_dx()}};
@@ -93,28 +93,28 @@ private:
     }
 };
 
-inline constexpr bool operator==(Position const lhs, Position const rhs)
+inline constexpr bool operator==(const Position lhs, const Position rhs)
 {
     return lhs.get_row() == rhs.get_row() && lhs.get_column() == rhs.get_column();
 }
 
-inline constexpr bool operator<(Position const lhs, Position const rhs)
+inline constexpr bool operator<(const Position lhs, const Position rhs)
 {
     return lhs.get_row() < rhs.get_row()
            || (lhs.get_row() == rhs.get_row() && lhs.get_column() < rhs.get_column());
 }
 
-inline constexpr bool operator<=(Position const lhs, Position const rhs)
+inline constexpr bool operator<=(const Position lhs, const Position rhs)
 {
     return lhs == rhs || lhs < rhs;
 }
 
-inline constexpr bool operator>(Position const lhs, Position const rhs)
+inline constexpr bool operator>(const Position lhs, const Position rhs)
 {
     return rhs < lhs;
 }
 
-inline constexpr bool operator>=(Position const lhs, Position const rhs)
+inline constexpr bool operator>=(const Position lhs, const Position rhs)
 {
     return rhs <= lhs;
 }

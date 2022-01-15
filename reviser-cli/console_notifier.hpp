@@ -7,7 +7,9 @@
 
 #include "game.hpp"
 
-namespace reviser::game {
+namespace reviser_cli {
+
+using reviser::game::Notifier;
 
 class ConsoleNotifier final : public Notifier
 {
@@ -15,6 +17,6 @@ public:
     ConsoleNotifier() = default;
     void display_message(std::string_view message) override;
 };
-} // namespace reviser::game
+} // namespace reviser_cli
 
 #endif

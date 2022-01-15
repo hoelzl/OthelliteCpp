@@ -24,7 +24,7 @@ public:
     [[nodiscard]] Movement::int_type get_amount() const { return amount; }
 
 protected:
-    explicit constexpr Movement(int_type const amount)
+    explicit constexpr Movement(const int_type amount)
         : amount{amount}
     {}
     int_type amount;
@@ -32,7 +32,7 @@ protected:
 
 class HorizontalMovement : public Movement
 {
-    explicit constexpr HorizontalMovement(int_type const horizontal_movement)
+    explicit constexpr HorizontalMovement(const int_type horizontal_movement)
         : Movement(horizontal_movement)
     {}
     friend consteval class HorizontalMovement operator""_W(unsigned long long amount);
@@ -43,7 +43,7 @@ class HorizontalMovement : public Movement
 
 class VerticalMovement : public Movement
 {
-    explicit constexpr VerticalMovement(Movement::int_type const vertical_movement)
+    explicit constexpr VerticalMovement(const Movement::int_type vertical_movement)
         : Movement(vertical_movement)
     {}
     friend consteval class VerticalMovement operator""_N(unsigned long long amount);

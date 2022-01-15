@@ -19,7 +19,7 @@ TEST_CASE("Notifier")
 
     SUBCASE("display_board()")
     {
-        auto const board_string = "|*|O|O|O| | | | |\n"
+        const auto board_string = "|*|O|O|O| | | | |\n"
                                   "| |*| | | | | | |\n"
                                   "| | | |O| | | | |\n"
                                   "| | | |O|O| | | |\n"
@@ -27,7 +27,7 @@ TEST_CASE("Notifier")
                                   "| | | | | | | | |\n"
                                   "| |*|O|*|O|*|O| |\n"
                                   "| | |*|O|*|O| | |"s;
-        auto const board = Board::from_string(board_string);
+        const auto board = Board::from_string(board_string);
 
         notifier.display_board(board);
         CHECK(notifier.output() == board_string + "\n"s);
@@ -39,10 +39,18 @@ TEST_CASE("Notifier")
         auto light_player = ConstantPlayerStub{"light_player", PlayerColor::light};
         auto players = game::Players{dark_player, light_player};
 
+        auto empty_board_string = "| | | | | | | | |\n"
+                                  "| | | | | | | | |\n"
+                                  "| | | | | | | | |\n"
+                                  "| | | | | | | | |\n"
+                                  "| | | | | | | | |\n"
+                                  "| | | | | | | | |\n"
+                                  "| | | | | | | | |\n"
+                                  "| | | | | | | | |\n"s;
         auto constexpr board = Board{};
         std::string expected
             = ("Starting a new game.\n"s + "Dark player: dark_player\n"s
-               + "Light player: light_player\n"s);
+               + "Light player: light_player\n"s + empty_board_string);
 
         notifier.note_new_game(players, board);
 
@@ -136,11 +144,11 @@ TEST_CASE("Test game for the minimal player.")
     auto light_player = MinimalPlayer{"light_player", PlayerColor::light};
     auto notifier_spy = std::make_unique<SpyForNotifierMoves>();
     // We rely on the game keeping the notifier spy alive for us...
-    auto const* notifier_spy_ptr = notifier_spy.get();
+    const auto* notifier_spy_ptr = notifier_spy.get();
     auto game = std::make_unique<game::DefaultGame<Board>>(
         dark_player, light_player, std::move(notifier_spy));
 
-    auto const expected_moves = std::vector<SpyForNotifierMoves::Move>{
+    const auto expected_moves = std::vector<SpyForNotifierMoves::Move>{
         {"dark_player", PlayerColor::dark, 2, 4},
         {"light_player", PlayerColor::light, 2, 3},
         {"dark_player", PlayerColor::dark, 1, 2},

@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.21)
 project(reviser-cli)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
-add_executable(reviser-cli main.cpp)
+add_executable(reviser-cli
+    "main.cpp"
+    "simple_command_line_player.cpp"
+    "simple_command_line_player.hpp")
+
 target_link_libraries(reviser-cli reviser-lib)

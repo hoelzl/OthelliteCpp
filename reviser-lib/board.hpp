@@ -27,7 +27,7 @@ class Board
 
 public:
     using iterator = decltype(fields)::iterator;
-    using const_iterator [[maybe_unused]] = decltype(fields)::const_iterator;
+    using const_iterator = decltype(fields)::const_iterator;
 
     Board() = default;
 
@@ -37,7 +37,7 @@ public:
     static Board from_string(std::string_view board_string);
 
     Field& operator[](grid::Position pos);
-    Field const& operator[](grid::Position pos) const;
+    const Field& operator[](grid::Position pos) const;
 
     [[nodiscard]] std::string to_string() const;
 
@@ -70,47 +70,49 @@ private:
         grid::Direction d, grid::Position starting_pos) const;
 
     [[nodiscard]] std::set<grid::Position> filter_positions_that_can_be_flipped(
-        PlayerColor pc, std::vector<grid::Position> const& non_empty_positions) const;
+        PlayerColor pc,
+        const std::vector<grid::Position>& non_empty_positions) const;
 
     [[nodiscard]] std::size_t find_highest_index_for_player_owned_fields(
-        PlayerColor pc, std::vector<grid::Position> const& non_empty_positions) const;
+        PlayerColor pc,
+        const std::vector<grid::Position>& non_empty_positions) const;
 
     [[nodiscard]] std::set<grid::Position>
     find_positions_flipped_by_move(PlayerColor pc, grid::Position pos) const;
 
     void
-    flip_positions(PlayerColor pc, std::set<grid::Position> const& positions_to_flip);
+    flip_positions(PlayerColor pc, const std::set<grid::Position>& positions_to_flip);
 };
 
-bool operator==(Board const& lhs, Board const& rhs);
+bool operator==(const Board& lhs, const Board& rhs);
 
-[[nodiscard]] std::vector<grid::Position> const& all_board_positions();
+[[nodiscard]] const std::vector<grid::Position>& all_board_positions();
 
 template <typename BoardT>
 concept BoardType = requires(
     BoardT b,
-    BoardT const cb,
+    const BoardT cb,
     std::string s,
     grid::Position pos,
     InitialBoardState initial_state,
     PlayerColor pc)
 {
     // clang-format off
-	std::forward_iterator<typename BoardT::iterator>;
+    std::forward_iterator<typename BoardT::iterator>;
     { BoardT::from_string(s) } -> std::convertible_to<BoardT>;
-	{ ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
-	{ ::std::end(b) } -> std::convertible_to<typename BoardT::iterator>;
-	{ b.operator[](pos) } -> std::convertible_to<Field&>;
-	{ cb.operator[](pos) } -> std::convertible_to<Field const&>;
-	{ cb.to_string() } -> std::convertible_to<std::string>;
-	b.initialize();
-	b.initialize(initial_state);
-	{ b.is_empty(pos) } -> std::convertible_to<bool>;
-	{ b.is_occupied(pos) } -> std::convertible_to<bool>;
-	{ b.is_valid_move(pc, pos) } -> std::convertible_to<bool>;
-	{ b.find_valid_moves(pc) } -> std::convertible_to<std::set<grid::Position>>;
-	b.play_move(pc, pos);
-	{ b.compute_score() } -> std::convertible_to<Score>;
+    { ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
+    { ::std::end(b) } -> std::convertible_to<typename BoardT::iterator>;
+    { b.operator[](pos) } -> std::convertible_to<Field&>;
+    { cb.operator[](pos) } -> std::convertible_to<const Field&>;
+    { cb.to_string() } -> std::convertible_to<std::string>;
+    b.initialize();
+    b.initialize(initial_state);
+    { b.is_empty(pos) } -> std::convertible_to<bool>;
+    { b.is_occupied(pos) } -> std::convertible_to<bool>;
+    { b.is_valid_move(pc, pos) } -> std::convertible_to<bool>;
+    { b.find_valid_moves(pc) } -> std::convertible_to<std::set<grid::Position>>;
+    b.play_move(pc, pos);
+    { b.compute_score() } -> std::convertible_to<Score>;
     // clang-format on
 };
 
@@ -127,7 +129,7 @@ public:
 class BoardWriter
 {
 public:
-    static std::string board_to_string(Board const& board);
+    static std::string board_to_string(const Board& board);
 };
 
 } // namespace reviser

@@ -8,8 +8,8 @@ add_library(reviser-lib
         board.hpp
         common.cpp
         common.hpp
-        console_notifier.cpp
-        console_notifier.hpp
+        "../reviser-cli/console_notifier.cpp"
+        "../reviser-cli/console_notifier.hpp"
         direction.cpp
         direction.hpp
         game.cpp

@@ -25,9 +25,9 @@ public:
 
     void new_game(bool swap_payers) override;
     void run_game_loop() override;
-    [[nodiscard]] std::shared_ptr<GameResult const> get_result() const override;
+    [[nodiscard]] std::shared_ptr<const GameResult> get_result() const override;
 
-    [[maybe_unused]] [[nodiscard]] Players const& get_players() const
+    [[maybe_unused]] [[nodiscard]] const Players& get_players() const
     {
         return players;
     }
@@ -43,7 +43,7 @@ private:
 
     [[nodiscard]] Player& get_current_player() const;
     void set_current_player(Player& player);
-    std::set<grid::Position> const& get_valid_moves_for_current_player();
+    const std::set<grid::Position>& get_valid_moves_for_current_player();
     bool current_player_has_valid_moves();
     void swap_current_player();
     void pick_current_player_with_valid_moves();
@@ -53,7 +53,7 @@ private:
 };
 
 template <BoardType BoardT>
-void DefaultGame<BoardT>::new_game(bool const swap_payers)
+void DefaultGame<BoardT>::new_game(const bool swap_payers)
 {
     result = nullptr;
     get_board().initialize();
@@ -61,6 +61,7 @@ void DefaultGame<BoardT>::new_game(bool const swap_payers)
         players.swap_dark_and_light_player();
     }
     players.new_game();
+	notifier->note_new_game(players, *board.get());
 }
 
 template <BoardType BoardT>
@@ -80,7 +81,7 @@ void DefaultGame<BoardT>::run_game_loop()
 }
 
 template <BoardType BoardT>
-std::shared_ptr<GameResult const> DefaultGame<BoardT>::get_result() const
+std::shared_ptr<const GameResult> DefaultGame<BoardT>::get_result() const
 {
     return result;
 }
@@ -102,7 +103,7 @@ void DefaultGame<BoardT>::set_current_player(Player& player)
 }
 
 template <BoardType BoardT>
-std::set<grid::Position> const&
+const std::set<grid::Position>&
 DefaultGame<BoardT>::get_valid_moves_for_current_player()
 {
     if (!cached_moves_for_current_player.has_value()) {
@@ -137,7 +138,7 @@ template <BoardType BoardT>
 void DefaultGame<BoardT>::allow_current_player_to_move()
 {
     auto& player = get_current_player();
-    if (auto const move = player.pick_move(get_board());
+    if (const auto move = player.pick_move(get_board());
         get_valid_moves_for_current_player().contains(move)) {
         get_board().play_move(player.get_color(), move);
         notifier->note_move(player, move, get_board());
@@ -157,7 +158,7 @@ void DefaultGame<BoardT>::set_result_from_score()
             score, get_board(), players.get_dark_player(), players.get_light_player());
     }
     else {
-        auto const& [winner, loser] = score.compute_winner(players);
+        const auto& [winner, loser] = score.compute_winner(players);
         result = std::make_unique<WinByScore>(score, get_board(), winner, loser);
     }
 }

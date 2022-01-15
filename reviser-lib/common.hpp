@@ -46,9 +46,9 @@ class Score
 {
 public:
     Score(
-        int_fast8_t const num_dark_fields,
-        int_fast8_t const num_light_fields,
-        int_fast8_t const num_empty_fields)
+        const int_fast8_t num_dark_fields,
+        const int_fast8_t num_light_fields,
+        const int_fast8_t num_empty_fields)
         : num_dark_fields{num_dark_fields}
         , num_light_fields{num_light_fields}
         , num_empty_fields{num_empty_fields}
@@ -59,14 +59,14 @@ public:
     [[nodiscard]] int_fast8_t get_num_empty_fields() const { return num_empty_fields; }
 
     [[nodiscard]] int_fast8_t get_num_fields_for(PlayerColor pc) const;
-    [[nodiscard]] int_fast8_t get_num_fields_for(game::Player const& player) const;
+    [[nodiscard]] int_fast8_t get_num_fields_for(const game::Player& player) const;
 
     [[nodiscard]] std::string to_string(PlayerColor first_player) const;
-    [[nodiscard]] std::string to_string(game::Player const& player) const;
+    [[nodiscard]] std::string to_string(const game::Player& player) const;
 
     [[nodiscard]] bool is_tied() const;
-    [[nodiscard]] std::tuple<game::Player const&, game::Player const&>
-    compute_winner(game::Players const& players) const;
+    [[nodiscard]] std::tuple<const game::Player&, const game::Player&>
+    compute_winner(const game::Players& players) const;
 
 private:
     int_fast8_t num_dark_fields{};

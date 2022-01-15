@@ -29,7 +29,7 @@ public:
 
     [[nodiscard]] Player& get_light_player() const { return light_player; }
 
-    [[nodiscard]] Player& get_other_player(Player const& player) const
+    [[nodiscard]] Player& get_other_player(const Player& player) const
     {
         if (player == get_light_player()) {
             return get_dark_player();
@@ -51,34 +51,36 @@ class Notifier
 {
 public:
     Notifier() = default;
-    Notifier(Notifier const& other) = default;
+    Notifier(const Notifier& other) = default;
     Notifier(Notifier&& other) noexcept = default;
-    Notifier& operator=(Notifier const& other) = default;
+    Notifier& operator=(const Notifier& other) = default;
     Notifier& operator=(Notifier&& other) noexcept = default;
     virtual ~Notifier() = default;
 
     virtual void display_message(std::string_view message) = 0;
-    virtual void display_board(Board const& board);
+    virtual void display_board(const Board& board);
 
-    virtual void note_new_game(Players const& players, Board board);
+    virtual void note_new_game(const Players& players, const Board& board);
+
     virtual void
-    note_move(Player const& player, grid::Position pos, Board const& board);
-    virtual void note_result(GameResult const& result);
+    note_move(const Player& player, grid::Position pos, const Board& board);
+
+    virtual void note_result(const GameResult& result);
 };
 
 class Game
 {
 public:
     Game() = default;
-    Game(Game const& other) = default;
+    Game(const Game& other) = default;
     Game(Game&& other) noexcept = default;
-    Game& operator=(Game const& other) = default;
+    Game& operator=(const Game& other) = default;
     Game& operator=(Game&& other) noexcept = default;
     virtual ~Game() = default;
 
     [[maybe_unused]] virtual void new_game(bool swap_payers) = 0;
     [[maybe_unused]] virtual void run_game_loop() = 0;
-    [[maybe_unused]] [[nodiscard]] virtual std::shared_ptr<GameResult const>
+    [[maybe_unused]] [[nodiscard]] virtual std::shared_ptr<const GameResult>
     get_result() const = 0;
 };
 

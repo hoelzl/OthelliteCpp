@@ -4,11 +4,11 @@
 
 #include <iostream>
 
-namespace reviser::game {
+namespace reviser_cli {
 
-void ConsoleNotifier::display_message(std::string_view const message)
+void ConsoleNotifier::display_message(const std::string_view message)
 {
     std::cout << message << "\n";
 }
 
-} // namespace reviser::game
+} // namespace reviser_cli
