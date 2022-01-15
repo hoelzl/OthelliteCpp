@@ -1,3 +1,5 @@
+// Copyright (c) 2021-2022 Dr. Matthias Hölzl.
+
 #pragma once
 #ifndef SIMPLE_COMMAND_LINE_PLAYER_HPP
 #define SIMPLE_COMMAND_LINE_PLAYER_HPP

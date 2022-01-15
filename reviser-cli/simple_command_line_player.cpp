@@ -1,3 +1,5 @@
+// Copyright (c) 2021-2022 Dr. Matthias Hölzl.
+
 #include "simple_command_line_player.hpp"
 
 #include <algorithm>

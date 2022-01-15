@@ -1,3 +1,5 @@
+// Copyright (c) 2021-2022 Dr. Matthias Hölzl.
+
 #pragma once
 
 #ifndef REVISER_LIB_PLAYER_HPP

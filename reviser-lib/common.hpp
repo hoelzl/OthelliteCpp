@@ -1,4 +1,4 @@
-// Copyright (c) 2021 Dr. Matthias Hölzl.
+// Copyright (c) 2021-2022 Dr. Matthias Hölzl.
 
 #pragma once
 #ifndef REVISER_LIB_COMMON_HPP
