@@ -57,7 +57,7 @@ concept BoardType = requires(
     // clang-format on
 };
 
-template <typename Board>
+template <BoardType Board>
 class BoardReader
 {
 public:
@@ -94,7 +94,7 @@ public:
     }
 };
 
-template <typename Board>
+template <BoardType Board>
 class BoardWriter
 {
 public:

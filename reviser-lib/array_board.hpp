@@ -54,8 +54,8 @@ public:
     [[nodiscard]] Score compute_score() const;
 
 private:
-    template <typename T> friend class BoardReader;
-    template <typename T> friend class BoardWriter;
+    template <BoardType Board> friend class BoardReader;
+    template <BoardType Board> friend class BoardWriter;
 
     Field& operator[](std::size_t index);
 
