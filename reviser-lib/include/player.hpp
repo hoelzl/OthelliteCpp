@@ -9,15 +9,9 @@
 #include "position.hpp"
 
 namespace reviser {
+
 class BasicBoard;
-
 class GameResult;
-
-// template <BoardType Board>
-// class Strategy
-//{
-//
-//};
 
 class Player
 {

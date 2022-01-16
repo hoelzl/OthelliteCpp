@@ -27,6 +27,8 @@ protected:
     explicit constexpr Movement(const int_type amount)
         : amount{amount}
     {}
+
+private:
     int_type amount;
 };
 

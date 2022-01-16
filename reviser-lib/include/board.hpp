@@ -19,7 +19,8 @@
 #include "position.hpp"
 
 namespace reviser {
-using ::std::ranges::copy_if;
+
+namespace rng = ::std::ranges;
 
 enum class InitialBoardState
 {
@@ -125,7 +126,7 @@ public:
     {
         static const auto valid_chars = std::string{"O* "};
         auto result = std::string{};
-        copy_if(board_str, std::back_inserter(result), [](auto c) {
+        rng::copy_if(board_str, std::back_inserter(result), [](auto c) {
             return c == 'O' || c == '*' || c == ' ';
         });
         return result;

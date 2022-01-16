@@ -9,9 +9,7 @@
 
 namespace reviser_cli {
 
-using reviser::Notifier;
-
-class ConsoleNotifier final : public Notifier
+class ConsoleNotifier final : public reviser::Notifier
 {
 public:
     ConsoleNotifier() = default;

@@ -9,11 +9,9 @@
 #include <string>
 
 namespace reviser {
-class Players;
-class Player;
-} // namespace reviser
 
-namespace reviser {
+class Player;
+class Players;
 
 constexpr int_least8_t board_size{8};
 

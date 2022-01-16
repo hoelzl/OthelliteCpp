@@ -12,8 +12,6 @@
 
 namespace reviser {
 
-using reviser::BoardType;
-
 template <BoardType BoardT>
 class DefaultGame final : public Game
 {
