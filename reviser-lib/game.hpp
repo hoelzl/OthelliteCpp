@@ -10,7 +10,7 @@
 #include "game_result.hpp"
 #include "player.hpp"
 
-namespace reviser::game {
+namespace reviser {
 
 class Game
 {
@@ -88,12 +88,11 @@ public:
 
     virtual void note_new_game(const Players& players, const ArrayBoard& board);
 
-    virtual void
-    note_move(const Player& player, Position pos, const ArrayBoard& board);
+    virtual void note_move(const Player& player, Position pos, const ArrayBoard& board);
 
     virtual void note_result(const GameResult& result);
 };
 
-} // namespace reviser::game
+} // namespace reviser
 
 #endif

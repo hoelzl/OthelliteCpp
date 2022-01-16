@@ -86,7 +86,7 @@ int_fast8_t Score::get_num_fields_for(const PlayerColor pc) const
     throw std::invalid_argument{"Bad player color."};
 }
 
-int_fast8_t Score::get_num_fields_for(const game::Player& player) const
+int_fast8_t Score::get_num_fields_for(const Player& player) const
 {
     return get_num_fields_for(player.get_color());
 }
@@ -100,15 +100,15 @@ std::string Score::to_string(const PlayerColor first_player) const
         get_num_fields_for(other_player_color(first_player)));
 }
 
-std::string Score::to_string(const game::Player& player) const
+std::string Score::to_string(const Player& player) const
 {
     return to_string(player.get_color());
 }
 
 bool Score::is_tied() const { return get_num_dark_fields() == get_num_light_fields(); }
 
-std::tuple<const game::Player&, const game::Player&>
-Score::compute_winner(const game::Players& players) const
+std::tuple<const Player&, const Player&>
+Score::compute_winner(const Players& players) const
 {
     if (get_num_dark_fields() >= get_num_light_fields()) {
         return {players.get_dark_player(), players.get_light_player()};

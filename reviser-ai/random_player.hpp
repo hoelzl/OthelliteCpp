@@ -10,9 +10,6 @@
 
 namespace reviser::ai {
 
-using reviser::ArrayBoard; // FIXME
-using game::Player;
-
 class RandomPlayer final : public Player
 {
 public:

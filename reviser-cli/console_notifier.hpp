@@ -9,7 +9,7 @@
 
 namespace reviser_cli {
 
-using reviser::game::Notifier;
+using reviser::Notifier;
 
 class ConsoleNotifier final : public Notifier
 {

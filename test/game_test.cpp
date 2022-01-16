@@ -38,7 +38,7 @@ TEST_CASE("Notifier")
     {
         auto dark_player = std::make_shared<ConstantPlayerStub>("dark_player", PlayerColor::dark);
         auto light_player = std::make_shared<ConstantPlayerStub>("light_player", PlayerColor::light);
-        auto players = game::Players{dark_player, light_player};
+        auto players = Players{dark_player, light_player};
 
         auto empty_board_string = "| | | | | | | | |\n"
                                   "| | | | | | | | |\n"
@@ -90,7 +90,7 @@ TEST_CASE("Notifier")
         SUBCASE("Dark player won with best score.")
         {
             auto score = Score{44, 20, 0};
-            auto result = game::WinByScore{score, board, *dark_player, *light_player};
+            auto result = WinByScore{score, board, *dark_player, *light_player};
             auto expected
                 = "\nGAME OVER.\ndark_player (dark) won.\nThe score was 44:20.\n"s;
 
@@ -102,7 +102,7 @@ TEST_CASE("Notifier")
         SUBCASE("White player won with best score.")
         {
             auto score = Score{24, 40, 0};
-            auto result = game::WinByScore{score, board, *light_player, *dark_player};
+            auto result = WinByScore{score, board, *light_player, *dark_player};
             auto expected
                 = "\nGAME OVER.\nlight_player (light) won.\nThe score was 40:24.\n"s;
 
@@ -115,7 +115,7 @@ TEST_CASE("Notifier")
         {
             auto score = Score{24, 40, 0};
             auto result
-                = game::WinByOpponentMistake{score, board, *dark_player, *light_player};
+                = WinByOpponentMistake{score, board, *dark_player, *light_player};
             auto expected
                 = "\nGAME OVER.\ndark_player (dark) won.\nThe opponent made an "
                   "invalid move.\n"s;
@@ -128,7 +128,7 @@ TEST_CASE("Notifier")
         SUBCASE("Tie.")
         {
             auto score = Score{32, 32, 0};
-            auto result = game::TiedResult{score, board, *dark_player, *light_player};
+            auto result = TiedResult{score, board, *dark_player, *light_player};
             auto expected
                 = "\nGAME OVER.\nThe game was a tie.\nThe score was 32:32.\n"s;
 
@@ -146,7 +146,7 @@ TEST_CASE("Test game for the minimal player.")
     auto notifier_spy = std::make_unique<SpyForNotifierMoves>();
     // We rely on the game keeping the notifier spy alive for us...
     const auto* notifier_spy_ptr = notifier_spy.get();
-    auto game = std::make_unique<game::DefaultGame<ArrayBoard>>(
+    auto game = std::make_unique<DefaultGame<ArrayBoard>>(
         dark_player, light_player, std::move(notifier_spy));
 
     const auto expected_moves = std::vector<SpyForNotifierMoves::Move>{

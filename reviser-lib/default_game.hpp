@@ -10,7 +10,7 @@
 #include "game.hpp"
 #include "game_result.hpp"
 
-namespace reviser::game {
+namespace reviser {
 
 using reviser::BoardType;
 
@@ -205,6 +205,6 @@ void DefaultGame<BoardT>::disqualify_current_player()
         get_current_player());
 }
 
-} // namespace reviser::game
+} // namespace reviser
 
 #endif

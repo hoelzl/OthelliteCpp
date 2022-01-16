@@ -18,7 +18,7 @@ namespace reviser {
 class ArrayBoard;
 }
 
-namespace reviser::game {
+namespace reviser {
 
 class Player;
 
@@ -106,5 +106,5 @@ private:
 };
 
 
-} // namespace reviser::game
+} // namespace reviser
 #endif // REVISER_LIB_GAME_RESULT_HPP

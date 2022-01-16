@@ -8,10 +8,10 @@
 #include <map>
 #include <string>
 
-namespace reviser::game {
+namespace reviser {
 class Players;
 class Player;
-} // namespace reviser::game
+} // namespace reviser
 
 namespace reviser {
 
@@ -81,14 +81,14 @@ public:
     [[nodiscard]] int_fast8_t get_num_empty_fields() const { return num_empty_fields; }
 
     [[nodiscard]] int_fast8_t get_num_fields_for(PlayerColor pc) const;
-    [[nodiscard]] int_fast8_t get_num_fields_for(const game::Player& player) const;
+    [[nodiscard]] int_fast8_t get_num_fields_for(const Player& player) const;
 
     [[nodiscard]] std::string to_string(PlayerColor first_player) const;
-    [[nodiscard]] std::string to_string(const game::Player& player) const;
+    [[nodiscard]] std::string to_string(const Player& player) const;
 
     [[nodiscard]] bool is_tied() const;
-    [[nodiscard]] std::tuple<const game::Player&, const game::Player&>
-    compute_winner(const game::Players& players) const;
+    [[nodiscard]] std::tuple<const Player&, const Player&>
+    compute_winner(const Players& players) const;
 
 private:
     int_fast8_t num_dark_fields{};

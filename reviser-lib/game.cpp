@@ -9,7 +9,7 @@
 #include "game_result.hpp"
 
 
-namespace reviser::game {
+namespace reviser {
 
 using namespace std::string_literals;
 using ::reviser::ArrayBoard;
@@ -60,4 +60,4 @@ void Notifier::note_result(const GameResult& result)
     display_message(message);
 }
 
-} // namespace reviser::game
+} // namespace reviser

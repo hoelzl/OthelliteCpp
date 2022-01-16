@@ -17,7 +17,7 @@
 namespace reviser {
 using ::std::ranges::min;
 
-struct ConstantPlayerStub final : public game::Player
+struct ConstantPlayerStub final : public Player
 {
     explicit ConstantPlayerStub(
         const std::string_view player_name = "Unnamed Player",
@@ -38,7 +38,7 @@ struct ConstantPlayerStub final : public game::Player
     Position played_position;
 };
 
-struct MinimalPlayer final : public game::Player
+struct MinimalPlayer final : public Player
 {
     using Player::Player;
 
@@ -50,7 +50,7 @@ struct MinimalPlayer final : public game::Player
     }
 };
 
-struct SpyForNotifierOutput final : public game::Notifier
+struct SpyForNotifierOutput final : public Notifier
 {
     void display_message(const std::string_view message) override
     {
@@ -62,7 +62,7 @@ struct SpyForNotifierOutput final : public game::Notifier
     std::stringstream stream{};
 };
 
-struct SpyForNotifierMoves final : public game::Notifier
+struct SpyForNotifierMoves final : public Notifier
 {
     void display_message(std::string_view message) override
     {
@@ -75,11 +75,11 @@ struct SpyForNotifierMoves final : public game::Notifier
     }
 
     void
-    note_new_game(const game::Players& players, const ArrayBoard& board) override
+    note_new_game(const Players& players, const ArrayBoard& board) override
     {}
 
     void note_move(
-        const game::Player& player,
+        const Player& player,
         Position pos,
         const ArrayBoard& board) override
     {
@@ -90,21 +90,21 @@ struct SpyForNotifierMoves final : public game::Notifier
             pos.get_column());
     }
 
-    void note_result(const game::GameResult& result) override
+    void note_result(const GameResult& result) override
     {
-        if (auto* win_result = dynamic_cast<const game::WinByScore*>(&result)) {
+        if (auto* win_result = dynamic_cast<const WinByScore*>(&result)) {
             result_summary.type = "win";
             result_summary.winner = win_result->get_winner().get_color();
             result_summary.loser = win_result->get_loser().get_color();
         }
-        else if (auto* tie_result = dynamic_cast<const game::TiedResult*>(&result)) {
+        else if (auto* tie_result = dynamic_cast<const TiedResult*>(&result)) {
             result_summary.type = "tie";
             result_summary.winner = tie_result->get_dark_player().get_color();
             result_summary.loser = tie_result->get_light_player().get_color();
         }
         else if (
             auto* goof_result
-            = dynamic_cast<const game::WinByOpponentMistake*>(&result)) {
+            = dynamic_cast<const WinByOpponentMistake*>(&result)) {
             result_summary.type = "wrong_move";
             result_summary.winner = goof_result->get_winner().get_color();
             result_summary.loser = goof_result->get_loser().get_color();

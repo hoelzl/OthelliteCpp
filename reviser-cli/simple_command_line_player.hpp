@@ -12,7 +12,7 @@ namespace reviser_cli {
 using reviser::ArrayBoard;
 using reviser::Position;
 
-class SimpleCommandLinePlayer final : public reviser::game::Player
+class SimpleCommandLinePlayer final : public reviser::Player
 {
 public:
     using Player::Player;

@@ -9,8 +9,8 @@
 
 using reviser::ai::RandomPlayer;
 using reviser::ArrayBoard;
-using reviser::game::DefaultGame;
-using reviser::game::Game;
+using reviser::DefaultGame;
+using reviser::Game;
 using reviser_cli::ConsoleNotifier;
 using reviser_cli::SimpleCommandLinePlayer;
 

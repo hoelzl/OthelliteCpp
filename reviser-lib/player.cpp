@@ -2,7 +2,7 @@
 
 #include "player.hpp"
 
-namespace reviser::game {
+namespace reviser {
 
 void Player::new_game() {}
 
@@ -12,4 +12,4 @@ bool operator==(const Player& lhs, const Player& rhs) { return &lhs == &rhs; }
 
 bool operator!=(const Player& lhs, const Player& rhs) { return !(lhs == rhs); }
 
-} // namespace reviser::game
+} // namespace reviser

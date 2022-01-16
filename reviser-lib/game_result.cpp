@@ -6,7 +6,7 @@
 
 #include "player.hpp"
 
-namespace reviser::game {
+namespace reviser {
 
 
 std::string WinByScore::to_string() const
@@ -34,4 +34,4 @@ std::string TiedResult::to_string() const
 }
 
 [[maybe_unused]] const ArrayBoard& GameResult::get_board() const { return board; }
-} // namespace reviser::game
+} // namespace reviser

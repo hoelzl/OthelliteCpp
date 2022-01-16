@@ -12,11 +12,17 @@ namespace reviser {
 class ArrayBoard;
 }
 
-namespace reviser::game {
+namespace reviser {
 
 using ::reviser::ArrayBoard;
 
 class GameResult;
+
+//template <BoardType Board>
+//class Strategy
+//{
+//    
+//};
 
 class Player
 {
@@ -53,6 +59,6 @@ private:
 bool operator==(const Player& lhs, const Player& rhs);
 bool operator!=(const Player& lhs, const Player& rhs);
 
-} // namespace reviser::game
+} // namespace reviser
 
 #endif
