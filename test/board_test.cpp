@@ -3,13 +3,13 @@
 #include "array_board.hpp"
 #include "doctest.hpp"
 
-using reviser::Field;
-using reviser::PlayerColor;
 using reviser::all_board_positions;
 using reviser::ArrayBoard;
 using reviser::BoardReader;
-using reviser::InitialBoardState;
 using reviser::Column;
+using reviser::Field;
+using reviser::InitialBoardState;
+using reviser::PlayerColor;
 using reviser::Position;
 using reviser::Row;
 

@@ -5,6 +5,7 @@
 #define RANDOM_PLAYER_HPP
 
 #include <random>
+
 #include "array_board.hpp" // FIXME!
 #include "player.hpp"
 
@@ -20,6 +21,6 @@ private:
     static std::mt19937 make_rng() { return std::mt19937{std::random_device{}()}; }
 };
 
-}
+} // namespace reviser::ai
 
 #endif // RANDOM_PLAYER_HPP

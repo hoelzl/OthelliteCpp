@@ -18,10 +18,10 @@ using ::reviser::ArrayBoard;
 
 class GameResult;
 
-//template <BoardType Board>
-//class Strategy
+// template <BoardType Board>
+// class Strategy
 //{
-//    
+//
 //};
 
 class Player

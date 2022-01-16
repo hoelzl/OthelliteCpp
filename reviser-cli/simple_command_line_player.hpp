@@ -5,6 +5,7 @@
 #define SIMPLE_COMMAND_LINE_PLAYER_HPP
 
 #include <vector>
+
 #include "player.hpp"
 
 namespace reviser_cli {

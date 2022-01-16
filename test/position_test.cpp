@@ -7,9 +7,9 @@
 
 #include "doctest.hpp"
 
-using reviser::Row;
 using reviser::Column;
 using reviser::Position;
+using reviser::Row;
 using namespace reviser;
 
 TEST_CASE("Rows with valid indices can be created and used.")

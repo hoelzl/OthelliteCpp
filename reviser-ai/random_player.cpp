@@ -15,4 +15,4 @@ auto RandomPlayer::pick_move(const ArrayBoard& board) const -> Position
     return out[0];
 }
 
-}
+} // namespace reviser::ai

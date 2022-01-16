@@ -11,8 +11,8 @@ reviser::operator<<(std::ostream& os, const VerticalMovement vertical_movement)
     return os;
 }
 
-std::ostream& reviser::operator<<(
-    std::ostream& os, const HorizontalMovement horizontal_movement)
+std::ostream&
+reviser::operator<<(std::ostream& os, const HorizontalMovement horizontal_movement)
 {
     const auto amount = horizontal_movement.get_amount();
     os << abs(amount) << (amount < 0 ? "W" : "E");

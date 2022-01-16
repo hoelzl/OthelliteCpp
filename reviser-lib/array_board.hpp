@@ -54,8 +54,10 @@ public:
     [[nodiscard]] Score compute_score() const;
 
 private:
-    template <BoardType Board> friend class BoardReader;
-    template <BoardType Board> friend class BoardWriter;
+    template <BoardType Board>
+    friend class BoardReader;
+    template <BoardType Board>
+    friend class BoardWriter;
 
     Field& operator[](std::size_t index);
 
@@ -65,8 +67,8 @@ private:
     [[nodiscard]] Positions positions_to_flip_in_direction(
         PlayerColor pc, Position starting_pos, Direction d) const;
 
-    [[nodiscard]] OrderedPositions occupied_positions_in_direction(
-        Direction d, Position starting_pos) const;
+    [[nodiscard]] OrderedPositions
+    occupied_positions_in_direction(Direction d, Position starting_pos) const;
 
     [[nodiscard]] Positions filter_positions_that_can_be_flipped(
         PlayerColor pc, const OrderedPositions& non_empty_positions) const;

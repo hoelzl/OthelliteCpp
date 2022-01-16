@@ -36,8 +36,10 @@ TEST_CASE("Notifier")
 
     SUBCASE("note_new_game()")
     {
-        auto dark_player = std::make_shared<ConstantPlayerStub>("dark_player", PlayerColor::dark);
-        auto light_player = std::make_shared<ConstantPlayerStub>("light_player", PlayerColor::light);
+        auto dark_player
+            = std::make_shared<ConstantPlayerStub>("dark_player", PlayerColor::dark);
+        auto light_player
+            = std::make_shared<ConstantPlayerStub>("light_player", PlayerColor::light);
         auto players = Players{dark_player, light_player};
 
         auto empty_board_string = "| | | | | | | | |\n"
@@ -60,7 +62,8 @@ TEST_CASE("Notifier")
 
     SUBCASE("note_new_game()")
     {
-        auto dark_player = std::make_shared<ConstantPlayerStub>("dark_player", PlayerColor::dark);
+        auto dark_player
+            = std::make_shared<ConstantPlayerStub>("dark_player", PlayerColor::dark);
 
         auto board_string = "|*|O|O|O| | | | |\n"
                             "| |*| | | | | | |\n"
@@ -74,8 +77,7 @@ TEST_CASE("Notifier")
         std::string expected
             = ("\ndark_player (dark) plays (1, 2).\n"s + board_string + "\n"s);
 
-        notifier.note_move(
-            *dark_player, Position{Row{1}, Column{2}}, board);
+        notifier.note_move(*dark_player, Position{Row{1}, Column{2}}, board);
 
         CHECK(notifier.output().size() == expected.size());
         CHECK(notifier.output() == expected);
@@ -83,8 +85,10 @@ TEST_CASE("Notifier")
 
     SUBCASE("note_result()")
     {
-        auto dark_player = std::make_shared<ConstantPlayerStub>("dark_player", PlayerColor::dark);
-        auto light_player = std::make_shared<ConstantPlayerStub>("light_player", PlayerColor::light);
+        auto dark_player
+            = std::make_shared<ConstantPlayerStub>("dark_player", PlayerColor::dark);
+        auto light_player
+            = std::make_shared<ConstantPlayerStub>("light_player", PlayerColor::light);
         auto board = ArrayBoard{};
 
         SUBCASE("Dark player won with best score.")
@@ -141,8 +145,10 @@ TEST_CASE("Notifier")
 
 TEST_CASE("Test game for the minimal player.")
 {
-    auto dark_player = std::make_shared<MinimalPlayer>("dark_player", PlayerColor::dark);
-    auto light_player = std::make_shared<MinimalPlayer>("light_player", PlayerColor::light);
+    auto dark_player
+        = std::make_shared<MinimalPlayer>("dark_player", PlayerColor::dark);
+    auto light_player
+        = std::make_shared<MinimalPlayer>("light_player", PlayerColor::light);
     auto notifier_spy = std::make_unique<SpyForNotifierMoves>();
     // We rely on the game keeping the notifier spy alive for us...
     const auto* notifier_spy_ptr = notifier_spy.get();

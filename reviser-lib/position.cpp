@@ -5,8 +5,7 @@
 #include <string>
 
 
-std::ostream&
-reviser::operator<<(std::ostream& os, const reviser::Position pos)
+std::ostream& reviser::operator<<(std::ostream& os, const reviser::Position pos)
 {
     os << "Position(" << std::to_string(pos.get_row().value) << ", "
        << std::to_string(pos.get_column().value) << ")";

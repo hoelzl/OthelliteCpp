@@ -7,10 +7,10 @@
 #include "random_player.hpp"
 #include "simple_command_line_player.hpp"
 
-using reviser::ai::RandomPlayer;
 using reviser::ArrayBoard;
 using reviser::DefaultGame;
 using reviser::Game;
+using reviser::ai::RandomPlayer;
 using reviser_cli::ConsoleNotifier;
 using reviser_cli::SimpleCommandLinePlayer;
 

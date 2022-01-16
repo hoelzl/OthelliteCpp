@@ -27,7 +27,10 @@ void Players::new_game()
     get_light_player().new_game();
 }
 
-void Notifier::display_board(const ArrayBoard& board) { display_message(board.to_string()); }
+void Notifier::display_board(const ArrayBoard& board)
+{
+    display_message(board.to_string());
+}
 
 void Notifier::note_new_game(const Players& players, const ArrayBoard& board)
 {

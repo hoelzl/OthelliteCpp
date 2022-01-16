@@ -82,7 +82,7 @@ public:
         return row * board_size + column;
     }
 
-	[[nodiscard]] std::string to_string() const
+    [[nodiscard]] std::string to_string() const
     {
         return std::format("({}, {})", get_row().value, get_column().value);
     }
