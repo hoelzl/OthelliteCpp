@@ -7,7 +7,10 @@
 
 #include "doctest.hpp"
 
-using namespace reviser::grid;
+using reviser::Row;
+using reviser::Column;
+using reviser::Position;
+using namespace reviser;
 
 TEST_CASE("Rows with valid indices can be created and used.")
 {

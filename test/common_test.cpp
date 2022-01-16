@@ -86,7 +86,7 @@ TEST_CASE("class Score")
         CHECK(score.get_num_fields_for(PlayerColor::light) == 20);
     }
 
-    SUBCASE("get_num_fields_for(grid::Player)")
+    SUBCASE("get_num_fields_for(Player)")
     {
         auto dark_player = ConstantPlayerStub{"dark_player", PlayerColor::dark};
         auto light_player = ConstantPlayerStub{"light_player", PlayerColor::light};

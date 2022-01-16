@@ -6,7 +6,7 @@
 
 #include "doctest.hpp"
 
-using namespace reviser::grid;
+using namespace reviser;
 
 TEST_CASE("HorizontalMovement can be constructed as literals")
 {

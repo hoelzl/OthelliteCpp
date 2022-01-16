@@ -11,7 +11,7 @@
 #include "common.hpp"
 #include "direction.hpp"
 
-namespace reviser::grid {
+namespace reviser {
 
 using coordinate_t = int_least8_t;
 
@@ -127,7 +127,7 @@ inline constexpr bool operator>=(const Position lhs, const Position rhs)
 
 std::ostream& operator<<(std::ostream& os, Position pos);
 
-} // namespace reviser::grid
+} // namespace reviser
 
 
 #endif // REVISER_LIB_POSITION_HPP

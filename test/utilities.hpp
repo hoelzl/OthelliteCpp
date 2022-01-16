@@ -22,28 +22,28 @@ struct ConstantPlayerStub final : public game::Player
     explicit ConstantPlayerStub(
         const std::string_view player_name = "Unnamed Player",
         const PlayerColor pc = PlayerColor::dark,
-        grid::Position played_position = grid::Position{grid::Row{0}, grid::Column{0}})
+        Position played_position = Position{Row{0}, Column{0}})
         : played_position{played_position}
     {
         set_name(player_name);
         set_color(pc);
     }
 
-    [[nodiscard]] grid::Position
-    pick_move(const board::ArrayBoard& board) const override
+    [[nodiscard]] Position
+    pick_move(const ArrayBoard& board) const override
     {
         return played_position;
     }
 
-    grid::Position played_position;
+    Position played_position;
 };
 
 struct MinimalPlayer final : public game::Player
 {
     using Player::Player;
 
-    [[nodiscard]] grid::Position
-    pick_move(const board::ArrayBoard& board) const override
+    [[nodiscard]] Position
+    pick_move(const ArrayBoard& board) const override
     {
         auto moves = board.find_valid_moves(get_color());
         return min(moves);
@@ -69,19 +69,19 @@ struct SpyForNotifierMoves final : public game::Notifier
         messages.emplace_back(message);
     }
 
-    void display_board(const board::ArrayBoard& board) override
+    void display_board(const ArrayBoard& board) override
     {
         boards.push_back(board);
     }
 
     void
-    note_new_game(const game::Players& players, const board::ArrayBoard& board) override
+    note_new_game(const game::Players& players, const ArrayBoard& board) override
     {}
 
     void note_move(
         const game::Player& player,
-        grid::Position pos,
-        const board::ArrayBoard& board) override
+        Position pos,
+        const ArrayBoard& board) override
     {
         moves.emplace_back(
             player.get_name().data(),
@@ -133,7 +133,7 @@ struct SpyForNotifierMoves final : public game::Notifier
     };
 
     std::vector<std::string> messages{};
-    std::vector<board::ArrayBoard> boards{};
+    std::vector<ArrayBoard> boards{};
     std::vector<Move> moves{};
     Result result_summary{};
 };

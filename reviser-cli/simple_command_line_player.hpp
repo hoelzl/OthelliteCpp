@@ -9,8 +9,8 @@
 
 namespace reviser_cli {
 
-using reviser::board::ArrayBoard;
-using reviser::grid::Position;
+using reviser::ArrayBoard;
+using reviser::Position;
 
 class SimpleCommandLinePlayer final : public reviser::game::Player
 {

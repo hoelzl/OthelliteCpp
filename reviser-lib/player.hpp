@@ -8,13 +8,13 @@
 #include "common.hpp"
 #include "position.hpp"
 
-namespace reviser::board {
+namespace reviser {
 class ArrayBoard;
 }
 
 namespace reviser::game {
 
-using ::reviser::board::ArrayBoard;
+using ::reviser::ArrayBoard;
 
 class GameResult;
 
@@ -41,7 +41,7 @@ public:
     void set_color(const PlayerColor pc) { this->color = pc; }
 
     virtual void new_game();
-    [[nodiscard]] virtual grid::Position pick_move(const ArrayBoard& board) const = 0;
+    [[nodiscard]] virtual Position pick_move(const ArrayBoard& board) const = 0;
     [[maybe_unused]] virtual void game_over(const GameResult& result);
 
 private:

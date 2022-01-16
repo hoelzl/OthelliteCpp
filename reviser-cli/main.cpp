@@ -8,7 +8,7 @@
 #include "simple_command_line_player.hpp"
 
 using reviser::ai::RandomPlayer;
-using reviser::board::ArrayBoard;
+using reviser::ArrayBoard;
 using reviser::game::DefaultGame;
 using reviser::game::Game;
 using reviser_cli::ConsoleNotifier;

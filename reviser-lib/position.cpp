@@ -6,7 +6,7 @@
 
 
 std::ostream&
-reviser::grid::operator<<(std::ostream& os, const reviser::grid::Position pos)
+reviser::operator<<(std::ostream& os, const reviser::Position pos)
 {
     os << "Position(" << std::to_string(pos.get_row().value) << ", "
        << std::to_string(pos.get_column().value) << ")";

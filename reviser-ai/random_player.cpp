@@ -4,11 +4,11 @@
 
 namespace reviser::ai {
 
-auto RandomPlayer::pick_move(const ArrayBoard& board) const -> grid::Position
+auto RandomPlayer::pick_move(const ArrayBoard& board) const -> Position
 {
     const auto moves = board.find_valid_moves(get_color());
 
-    std::vector<grid::Position> out{};
+    std::vector<Position> out{};
     std::ranges::sample(moves, std::back_inserter(out), 1, make_rng());
 
     assert(!out.empty());

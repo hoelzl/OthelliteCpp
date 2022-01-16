@@ -6,11 +6,7 @@
 #include "position.hpp"
 
 
-namespace reviser::board {
-
-using grid::Column;
-using grid::Position;
-using grid::Row;
+namespace reviser {
 
 const std::vector<Position>& all_board_positions()
 {

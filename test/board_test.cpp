@@ -5,13 +5,13 @@
 
 using reviser::Field;
 using reviser::PlayerColor;
-using reviser::board::all_board_positions;
-using reviser::board::ArrayBoard;
-using reviser::board::BoardReader;
-using reviser::board::InitialBoardState;
-using reviser::grid::Column;
-using reviser::grid::Position;
-using reviser::grid::Row;
+using reviser::all_board_positions;
+using reviser::ArrayBoard;
+using reviser::BoardReader;
+using reviser::InitialBoardState;
+using reviser::Column;
+using reviser::Position;
+using reviser::Row;
 
 TEST_CASE("ArrayBoard::from_string()")
 {

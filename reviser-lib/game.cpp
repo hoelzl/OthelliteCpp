@@ -12,7 +12,7 @@
 namespace reviser::game {
 
 using namespace std::string_literals;
-using ::reviser::board::ArrayBoard;
+using ::reviser::ArrayBoard;
 
 void Players::swap_dark_and_light_player()
 {
@@ -42,7 +42,7 @@ void Notifier::note_new_game(const Players& players, const ArrayBoard& board)
 }
 
 void Notifier::note_move(
-    const Player& player, const grid::Position pos, const ArrayBoard& board)
+    const Player& player, const Position pos, const ArrayBoard& board)
 {
     const auto message = std::format(
         "\n{} ({}) plays {}.",

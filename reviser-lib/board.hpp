@@ -17,7 +17,7 @@
 #include "common.hpp"
 #include "position.hpp"
 
-namespace reviser::board {
+namespace reviser {
 using ::std::ranges::copy_if;
 
 enum class InitialBoardState
@@ -26,14 +26,14 @@ enum class InitialBoardState
     center_square,
 };
 
-[[nodiscard]] const std::vector<grid::Position>& all_board_positions();
+[[nodiscard]] const std::vector<Position>& all_board_positions();
 
 template <typename BoardT>
 concept BoardType = requires(
     BoardT b,
     const BoardT cb,
     std::string s,
-    grid::Position pos,
+    Position pos,
     InitialBoardState initial_state,
     PlayerColor pc)
 {
@@ -117,5 +117,5 @@ public:
     }
 };
 
-} // namespace reviser::board
+} // namespace reviser
 #endif // REVISER_LIB_BOARD_HPP

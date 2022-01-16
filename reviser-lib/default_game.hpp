@@ -12,7 +12,7 @@
 
 namespace reviser::game {
 
-using board::BoardType;
+using reviser::BoardType;
 
 template <BoardType BoardT>
 class DefaultGame final : public Game
@@ -37,7 +37,7 @@ public:
     [[nodiscard]] const Notifier& get_notifier() const noexcept { return *notifier; }
 
 private:
-    using Moves = std::set<grid::Position>;
+    using Moves = std::set<Position>;
 
     Players players;
 

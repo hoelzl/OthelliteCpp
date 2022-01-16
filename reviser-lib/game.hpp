@@ -89,7 +89,7 @@ public:
     virtual void note_new_game(const Players& players, const ArrayBoard& board);
 
     virtual void
-    note_move(const Player& player, grid::Position pos, const ArrayBoard& board);
+    note_move(const Player& player, Position pos, const ArrayBoard& board);
 
     virtual void note_result(const GameResult& result);
 };

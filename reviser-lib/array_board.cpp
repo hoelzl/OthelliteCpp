@@ -11,12 +11,8 @@
 #include "direction.hpp"
 #include "position.hpp"
 
-namespace reviser::board {
+namespace reviser {
 
-using grid::Column;
-using grid::Direction;
-using grid::Position;
-using grid::Row;
 using ::std::ranges::copy_if;
 
 auto ArrayBoard::from_string(const std::string_view board_string) -> ArrayBoard
@@ -30,12 +26,12 @@ auto ArrayBoard::operator[](const std::size_t index) -> Field&
     return fields.at(index);
 }
 
-auto ArrayBoard::operator[](const grid::Position pos) -> Field&
+auto ArrayBoard::operator[](const Position pos) -> Field&
 {
     return fields.at(pos.to_linear_index());
 }
 
-const Field& ArrayBoard::operator[](const grid::Position pos) const
+const Field& ArrayBoard::operator[](const Position pos) const
 {
     return fields.at(pos.to_linear_index());
 }
@@ -59,7 +55,7 @@ bool ArrayBoard::is_valid_move(const PlayerColor pc, const Position pos) const
 
 bool ArrayBoard::does_move_flip_any_field(PlayerColor pc, Position starting_pos) const
 {
-    return std::ranges::any_of(grid::directions, [&](auto d) {
+    return std::ranges::any_of(directions, [&](auto d) {
         return !positions_to_flip_in_direction(pc, starting_pos, d).empty();
     });
 }
@@ -163,7 +159,7 @@ ArrayBoard::Positions ArrayBoard::find_positions_flipped_by_move(
     const PlayerColor pc, const Position pos) const
 {
     auto result = std::set<Position>{};
-    for (const auto d : grid::directions) {
+    for (const auto d : directions) {
         result.merge(positions_to_flip_in_direction(pc, pos, d));
     }
     return result;

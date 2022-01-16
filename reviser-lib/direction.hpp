@@ -9,7 +9,7 @@
 #include <iostream>
 #include <limits>
 
-namespace reviser::grid {
+namespace reviser {
 
 class Movement
 {
@@ -120,6 +120,6 @@ constexpr Direction NW{1_N, 1_W};
 [[maybe_unused]] constexpr std::array<Direction, 8> directions{
     N, NE, E, SE, S, SW, W, NW};
 
-} // namespace reviser::grid
+} // namespace reviser
 
 #endif

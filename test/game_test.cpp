@@ -13,7 +13,6 @@
 namespace reviser {
 
 using namespace std::string_literals;
-using board::ArrayBoard;
 
 TEST_CASE("Notifier")
 {
@@ -29,7 +28,7 @@ TEST_CASE("Notifier")
                                   "| | | | | | | | |\n"
                                   "| |*|O|*|O|*|O| |\n"
                                   "| | |*|O|*|O| | |"s;
-        const auto board = board::ArrayBoard::from_string(board_string);
+        const auto board = ArrayBoard::from_string(board_string);
 
         notifier.display_board(board);
         CHECK(notifier.output() == board_string + "\n"s);
@@ -76,7 +75,7 @@ TEST_CASE("Notifier")
             = ("\ndark_player (dark) plays (1, 2).\n"s + board_string + "\n"s);
 
         notifier.note_move(
-            *dark_player, grid::Position{grid::Row{1}, grid::Column{2}}, board);
+            *dark_player, Position{Row{1}, Column{2}}, board);
 
         CHECK(notifier.output().size() == expected.size());
         CHECK(notifier.output() == expected);
