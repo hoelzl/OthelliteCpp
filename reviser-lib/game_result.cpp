@@ -33,5 +33,5 @@ std::string TiedResult::to_string() const
         get_score().to_string(PlayerColor::dark));
 }
 
-[[maybe_unused]] const ArrayBoard& GameResult::get_board() const { return board; }
+[[maybe_unused]] const BasicBoard& GameResult::get_board() const { return board; }
 } // namespace reviser

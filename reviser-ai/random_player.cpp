@@ -4,7 +4,7 @@
 
 namespace reviser::ai {
 
-auto RandomPlayer::pick_move(const ArrayBoard& board) const -> Position
+auto RandomPlayer::pick_move(const BasicBoard& board) const -> Position
 {
     const auto moves = board.find_valid_moves(get_color());
 

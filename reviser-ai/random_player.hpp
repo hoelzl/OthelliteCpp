@@ -15,7 +15,7 @@ class RandomPlayer final : public Player
 {
 public:
     using Player::Player;
-    [[nodiscard]] Position pick_move(const ArrayBoard& board) const override;
+    [[nodiscard]] Position pick_move(const BasicBoard& board) const override;
 
 private:
     static std::mt19937 make_rng() { return std::mt19937{std::random_device{}()}; }

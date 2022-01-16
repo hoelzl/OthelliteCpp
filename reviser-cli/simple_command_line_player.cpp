@@ -10,7 +10,7 @@
 
 namespace reviser_cli {
 
-Position SimpleCommandLinePlayer::pick_move(const ArrayBoard& board) const
+Position SimpleCommandLinePlayer::pick_move(const BasicBoard& board) const
 {
     const auto moves = compute_possible_moves(board);
     print_possible_moves(moves);
@@ -18,7 +18,7 @@ Position SimpleCommandLinePlayer::pick_move(const ArrayBoard& board) const
 }
 
 std::vector<Position>
-SimpleCommandLinePlayer::compute_possible_moves(const ArrayBoard& board) const
+SimpleCommandLinePlayer::compute_possible_moves(const BasicBoard& board) const
 {
     auto move_set = board.find_valid_moves(get_color());
     auto moves = std::vector<Position>{};

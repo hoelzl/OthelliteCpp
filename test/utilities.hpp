@@ -29,7 +29,7 @@ struct ConstantPlayerStub final : public Player
         set_color(pc);
     }
 
-    [[nodiscard]] Position pick_move(const ArrayBoard& board) const override
+    [[nodiscard]] Position pick_move(const BasicBoard& board) const override
     {
         return played_position;
     }
@@ -41,7 +41,7 @@ struct MinimalPlayer final : public Player
 {
     using Player::Player;
 
-    [[nodiscard]] Position pick_move(const ArrayBoard& board) const override
+    [[nodiscard]] Position pick_move(const BasicBoard& board) const override
     {
         auto moves = board.find_valid_moves(get_color());
         return min(moves);
@@ -67,11 +67,19 @@ struct SpyForNotifierMoves final : public Notifier
         messages.emplace_back(message);
     }
 
-    void display_board(const ArrayBoard& board) override { boards.push_back(board); }
+    void display_board(const BasicBoard& board) override
+    {
+        if (const auto array_board{dynamic_cast<const ArrayBoard*>(&board)}) {
+            boards.push_back(*array_board);
+        }
+        else {
+            throw std::runtime_error("Board type not supported in notifier spy!");
+        }
+    }
 
-    void note_new_game(const Players& players, const ArrayBoard& board) override {}
+    void note_new_game(const Players& players, const BasicBoard& board) override {}
 
-    void note_move(const Player& player, Position pos, const ArrayBoard& board) override
+    void note_move(const Player& player, Position pos, const BasicBoard& board) override
     {
         moves.emplace_back(
             player.get_name().data(),

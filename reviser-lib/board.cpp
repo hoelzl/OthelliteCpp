@@ -2,7 +2,6 @@
 
 #include "board.hpp"
 
-#include "direction.hpp"
 #include "position.hpp"
 
 

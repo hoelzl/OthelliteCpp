@@ -9,6 +9,7 @@
 #include <cassert>
 #include <concepts>
 #include <iterator>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -28,8 +29,44 @@ enum class InitialBoardState
 
 [[nodiscard]] const std::vector<Position>& all_board_positions();
 
+class BasicBoard
+{
+public:
+    BasicBoard() = default;
+    BasicBoard(const BasicBoard& other) = delete;
+    BasicBoard(BasicBoard&& other) noexcept = delete;
+    BasicBoard& operator=(const BasicBoard& other) = delete;
+    BasicBoard& operator=(BasicBoard&& other) noexcept = delete;
+    virtual ~BasicBoard() = default;
+
+    using Moves = std::set<Position>;
+    using OrderedMoves = std::vector<Position>;
+    using Positions = std::set<Position>;
+    using OrderedPositions = std::vector<Position>;
+
+    virtual Field& operator[](Position pos) = 0;
+    virtual const Field& operator[](Position pos) const = 0;
+
+    [[nodiscard]] virtual std::string to_string() const = 0;
+
+    virtual void
+    initialize(InitialBoardState initial_state = InitialBoardState::center_square)
+        = 0;
+
+    [[nodiscard]] virtual bool is_empty(Position pos) const = 0;
+    [[nodiscard]] virtual bool is_occupied(Position pos) const = 0;
+
+    [[nodiscard]] virtual bool is_valid_move(PlayerColor pc, Position pos) const = 0;
+
+    [[nodiscard]] virtual Moves find_valid_moves(PlayerColor pc) const = 0;
+
+    virtual void play_move(PlayerColor pc, Position pos) = 0;
+
+    [[nodiscard]] virtual Score compute_score() const = 0;
+};
+
 template <typename BoardT>
-concept BoardType = requires(
+concept BasicBoardType = requires(
     BoardT b,
     const BoardT cb,
     std::string s,
@@ -38,12 +75,7 @@ concept BoardType = requires(
     PlayerColor pc)
 {
     // clang-format off
-	BoardT{};
-    std::forward_iterator<typename BoardT::iterator>;
 	typename BoardT::Moves;
-    { BoardT::from_string(s) } -> std::convertible_to<BoardT>;
-    { ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
-    { ::std::end(b) } -> std::convertible_to<typename BoardT::iterator>;
     { b.operator[](pos) } -> std::convertible_to<Field&>;
     { cb.operator[](pos) } -> std::convertible_to<const Field&>;
     { cb.to_string() } -> std::convertible_to<std::string>;
@@ -57,6 +89,22 @@ concept BoardType = requires(
     { b.compute_score() } -> std::convertible_to<Score>;
     // clang-format on
 };
+
+static_assert(BasicBoardType<BasicBoard>);
+
+template <typename BoardT>
+// clang-format off
+concept BoardType = BasicBoardType<BoardT> && requires(BoardT b, std::string s)
+{
+	BoardT{};
+    std::forward_iterator<typename BoardT::iterator>;
+	typename BoardT::Moves;
+    //{ BoardT::from_string(s) } -> std::convertible_to<BoardT>;
+    { ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
+    { ::std::end(b) } -> std::convertible_to<typename BoardT::iterator>;
+};
+// clang-format on
+
 
 template <BoardType Board>
 class BoardReader

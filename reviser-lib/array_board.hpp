@@ -15,8 +15,9 @@
 
 namespace reviser {
 
-class ArrayBoard
+class ArrayBoard final : public BasicBoard
 {
+private:
     std::array<Field, 64> fields{};
 
 public:
@@ -30,28 +31,56 @@ public:
 
     ArrayBoard() = default;
 
+    ArrayBoard(const ArrayBoard& other)
+        : fields{other.fields}
+    {}
+
+    ArrayBoard(ArrayBoard&& other) noexcept
+        : fields{other.fields}
+    {}
+
+    ArrayBoard& operator=(const ArrayBoard& other)
+    {
+        if (this == &other) {
+            return *this;
+        }
+        fields = other.fields;
+        return *this;
+    }
+
+    ArrayBoard& operator=(ArrayBoard&& other) noexcept
+    {
+        if (this == &other) {
+            return *this;
+        }
+        fields = other.fields;
+        return *this;
+    }
+	~ArrayBoard() override = default;
+
     iterator begin() { return std::begin(fields); }
     iterator end() { return std::end(fields); }
 
     static ArrayBoard from_string(std::string_view board_string);
 
-    Field& operator[](Position pos);
-    const Field& operator[](Position pos) const;
+    Field& operator[](Position pos) override;
+    const Field& operator[](Position pos) const override;
 
-    [[nodiscard]] std::string to_string() const;
+    [[nodiscard]] std::string to_string() const override;
 
-    void initialize(InitialBoardState initial_state = InitialBoardState::center_square);
+    void initialize(
+        InitialBoardState initial_state = InitialBoardState::center_square) override;
 
-    [[nodiscard]] bool is_empty(Position pos) const;
-    [[maybe_unused]] [[nodiscard]] bool is_occupied(Position pos) const;
+    [[nodiscard]] bool is_empty(Position pos) const override;
+    [[maybe_unused]] [[nodiscard]] bool is_occupied(Position pos) const override;
 
-    [[nodiscard]] bool is_valid_move(PlayerColor pc, Position pos) const;
+    [[nodiscard]] bool is_valid_move(PlayerColor pc, Position pos) const override;
 
-    [[nodiscard]] Moves find_valid_moves(PlayerColor pc) const;
+    [[nodiscard]] Moves find_valid_moves(PlayerColor pc) const override;
 
-    void play_move(PlayerColor pc, Position pos);
+    void play_move(PlayerColor pc, Position pos) override;
 
-    [[nodiscard]] Score compute_score() const;
+    [[nodiscard]] Score compute_score() const override;
 
 private:
     template <BoardType Board>
@@ -84,6 +113,7 @@ private:
 
 bool operator==(const ArrayBoard& lhs, const ArrayBoard& rhs);
 
+static_assert(BasicBoardType<ArrayBoard>);
 static_assert(BoardType<ArrayBoard>);
 
 } // namespace reviser

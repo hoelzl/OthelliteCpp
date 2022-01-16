@@ -10,7 +10,7 @@
 
 namespace reviser_cli {
 
-using reviser::ArrayBoard;
+using reviser::BasicBoard;
 using reviser::Position;
 
 class SimpleCommandLinePlayer final : public reviser::Player
@@ -18,11 +18,11 @@ class SimpleCommandLinePlayer final : public reviser::Player
 public:
     using Player::Player;
 
-    [[nodiscard]] Position pick_move(const ArrayBoard& board) const override;
+    [[nodiscard]] Position pick_move(const BasicBoard& board) const override;
 
 private:
     [[nodiscard]] std::vector<Position>
-    compute_possible_moves(const ArrayBoard& board) const;
+    compute_possible_moves(const BasicBoard& board) const;
 
     void print_possible_moves(const std::vector<Position>& moves) const;
     void print_possible_move(const std::vector<Position>& moves, unsigned i) const;

@@ -11,21 +11,15 @@
 #include "common.hpp"
 
 namespace reviser {
-class Score;
-} // namespace reviser
 
-namespace reviser {
-class ArrayBoard;
-}
-
-namespace reviser {
-
+class BasicBoard;
 class Player;
+class Score;
 
 class GameResult
 {
 public:
-    GameResult(Score score, const ArrayBoard& board)
+    GameResult(Score score, const BasicBoard& board)
         : score{score}
         , board{std::ref(board)}
     {}
@@ -39,11 +33,11 @@ public:
     [[nodiscard]] virtual std::string to_string() const = 0;
 
     [[nodiscard]] virtual Score get_score() const { return score; }
-    [[maybe_unused]] [[nodiscard]] virtual const ArrayBoard& get_board() const;
+    [[maybe_unused]] [[nodiscard]] virtual const BasicBoard& get_board() const;
 
 private:
     Score score;
-    std::reference_wrapper<const ArrayBoard> board;
+    std::reference_wrapper<const BasicBoard> board;
 };
 
 class DecisiveGameResult : public GameResult
@@ -51,7 +45,7 @@ class DecisiveGameResult : public GameResult
 public:
     DecisiveGameResult(
         const Score score,
-        const ArrayBoard& board,
+        const BasicBoard& board,
         const Player& winner,
         const Player& loser)
         : GameResult{score, board}
@@ -87,7 +81,7 @@ class TiedResult final : public GameResult
 public:
     TiedResult(
         const Score score,
-        const ArrayBoard& board,
+        const BasicBoard& board,
         const Player& dark_player,
         const Player& light_player)
         : GameResult{score, board}
