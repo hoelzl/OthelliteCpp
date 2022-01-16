@@ -5,8 +5,6 @@
 #ifndef REVISER_LIB_PLAYER_HPP
 #define REVISER_LIB_PLAYER_HPP
 
-#include <random>
-
 #include "common.hpp"
 #include "position.hpp"
 
@@ -54,17 +52,6 @@ private:
 
 bool operator==(const Player& lhs, const Player& rhs);
 bool operator!=(const Player& lhs, const Player& rhs);
-
-
-class RandomPlayer final : public Player
-{
-public:
-    using Player::Player;
-    [[nodiscard]] grid::Position pick_move(const ArrayBoard& board) const override;
-
-private:
-    static std::mt19937 make_rng() { return std::mt19937{std::random_device{}()}; }
-};
 
 } // namespace reviser::game
 
