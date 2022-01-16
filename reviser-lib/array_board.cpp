@@ -11,8 +11,7 @@
 #include "direction.hpp"
 #include "position.hpp"
 
-
-namespace reviser {
+namespace reviser::board {
 
 using grid::Column;
 using grid::Direction;

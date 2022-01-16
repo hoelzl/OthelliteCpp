@@ -10,13 +10,15 @@
 #include "common.hpp"
 #include "position.hpp"
 
-namespace reviser {
+namespace reviser::board {
 class ArrayBoard;
 }
 
 namespace reviser::game {
-class GameResult;
 
+using ::reviser::board::ArrayBoard;
+
+class GameResult;
 
 class Player
 {
@@ -61,7 +63,7 @@ public:
     [[nodiscard]] grid::Position pick_move(const ArrayBoard& board) const override;
 
 private:
-    static std::mt19937 make_rng() { return std::mt19937{std::random_device{}()}; };
+    static std::mt19937 make_rng() { return std::mt19937{std::random_device{}()}; }
 };
 
 } // namespace reviser::game

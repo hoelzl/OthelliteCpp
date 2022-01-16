@@ -1,10 +1,14 @@
 // Copyright (c) 2021-2022 Dr. Matthias Hölzl.
 
 #include "array_board.hpp"
-
 #include "doctest.hpp"
 
-using namespace reviser;
+using reviser::Field;
+using reviser::PlayerColor;
+using reviser::board::all_board_positions;
+using reviser::board::ArrayBoard;
+using reviser::board::BoardReader;
+using reviser::board::InitialBoardState;
 using reviser::grid::Column;
 using reviser::grid::Position;
 using reviser::grid::Row;
@@ -254,13 +258,13 @@ TEST_CASE("ArrayBoard::find_valid_moves() against board with occupied corner.")
 TEST_CASE("ArrayBoard::play_move()")
 {
     auto board = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                    "| |*| | | | | | |\n"
-                                    "| | | | | | | | |\n"
-                                    "| | | |*|O| | | |\n"
-                                    "| | | |O|*| | | |\n"
-                                    "| | | | | | | | |\n"
-                                    "| | | | | | | | |\n"
-                                    "| | | | | | | | |");
+                                         "| |*| | | | | | |\n"
+                                         "| | | | | | | | |\n"
+                                         "| | | |*|O| | | |\n"
+                                         "| | | |O|*| | | |\n"
+                                         "| | | | | | | | |\n"
+                                         "| | | | | | | | |\n"
+                                         "| | | | | | | | |");
 
     SUBCASE("Light player moves.")
     {
@@ -269,13 +273,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::light, Position{Row{2}, Column{0}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |O| | | | | | |\n"
-                                               "|O| | | | | | | |\n"
-                                               "| | | |*|O| | | |\n"
-                                               "| | | |O|*| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |O| | | | | | |\n"
+                                                    "|O| | | | | | | |\n"
+                                                    "| | | |*|O| | | |\n"
+                                                    "| | | |O|*| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
 
@@ -284,13 +288,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::light, Position{Row{2}, Column{1}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |O| | | | | | |\n"
-                                               "| |O| | | | | | |\n"
-                                               "| | | |*|O| | | |\n"
-                                               "| | | |O|*| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |O| | | | | | |\n"
+                                                    "| |O| | | | | | |\n"
+                                                    "| | | |*|O| | | |\n"
+                                                    "| | | |O|*| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
 
@@ -299,13 +303,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::light, Position{Row{2}, Column{3}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | |O| | | | |\n"
-                                               "| | | |O|O| | | |\n"
-                                               "| | | |O|*| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | |O| | | | |\n"
+                                                    "| | | |O|O| | | |\n"
+                                                    "| | | |O|*| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
 
@@ -314,13 +318,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::light, Position{Row{3}, Column{2}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | |O|O|O| | | |\n"
-                                               "| | | |O|*| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | |O|O|O| | | |\n"
+                                                    "| | | |O|*| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
 
@@ -329,13 +333,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::light, Position{Row{4}, Column{5}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | |*|O| | | |\n"
-                                               "| | | |O|O|O| | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | |*|O| | | |\n"
+                                                    "| | | |O|O|O| | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
 
@@ -344,13 +348,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::light, Position{Row{5}, Column{4}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | |*|O| | | |\n"
-                                               "| | | |O|O| | | |\n"
-                                               "| | | | |O| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | |*|O| | | |\n"
+                                                    "| | | |O|O| | | |\n"
+                                                    "| | | | |O| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
     }
@@ -362,13 +366,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::dark, Position{Row{0}, Column{4}});
 
             auto expected = ArrayBoard::from_string("|*|*|*|*|*| | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | |*|O| | | |\n"
-                                               "| | | |O|*| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | |*|O| | | |\n"
+                                                    "| | | |O|*| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
         SUBCASE("Dark player plays (2, 4).")
@@ -376,13 +380,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::dark, Position{Row{2}, Column{4}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | | |*| | | |\n"
-                                               "| | | |*|*| | | |\n"
-                                               "| | | |O|*| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | | |*| | | |\n"
+                                                    "| | | |*|*| | | |\n"
+                                                    "| | | |O|*| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
         SUBCASE("Dark player plays (3, 5).")
@@ -390,13 +394,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::dark, Position{Row{3}, Column{5}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | |*|*|*| | |\n"
-                                               "| | | |O|*| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | |*|*|*| | |\n"
+                                                    "| | | |O|*| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
         SUBCASE("Dark player plays (4, 2).")
@@ -404,13 +408,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::dark, Position{Row{4}, Column{2}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | |*|O| | | |\n"
-                                               "| | |*|*|*| | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | |*|O| | | |\n"
+                                                    "| | |*|*|*| | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
         SUBCASE("Dark player plays (5, 3).")
@@ -418,13 +422,13 @@ TEST_CASE("ArrayBoard::play_move()")
             board.play_move(PlayerColor::dark, Position{Row{5}, Column{3}});
 
             auto expected = ArrayBoard::from_string("|*|O|O|O| | | | |\n"
-                                               "| |*| | | | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | |*|O| | | |\n"
-                                               "| | | |*|*| | | |\n"
-                                               "| | | |*| | | | |\n"
-                                               "| | | | | | | | |\n"
-                                               "| | | | | | | | |");
+                                                    "| |*| | | | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | |*|O| | | |\n"
+                                                    "| | | |*|*| | | |\n"
+                                                    "| | | |*| | | | |\n"
+                                                    "| | | | | | | | |\n"
+                                                    "| | | | | | | | |");
             CHECK(board == expected);
         }
     }

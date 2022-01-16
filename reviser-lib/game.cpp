@@ -12,15 +12,16 @@
 namespace reviser::game {
 
 using namespace std::string_literals;
+using ::reviser::board::ArrayBoard;
 
 void Players::swap_dark_and_light_player()
 {
     swap(dark_player, light_player);
-    dark_player.get().set_color(PlayerColor::dark);
-    light_player.get().set_color(PlayerColor::light);
+    get_dark_player().set_color(PlayerColor::dark);
+    get_light_player().set_color(PlayerColor::light);
 }
 
-void Players::new_game() const
+void Players::new_game()
 {
     get_dark_player().new_game();
     get_light_player().new_game();

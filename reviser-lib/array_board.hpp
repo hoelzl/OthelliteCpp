@@ -13,7 +13,7 @@
 #include "common.hpp"
 #include "position.hpp"
 
-namespace reviser {
+namespace reviser::board {
 
 class ArrayBoard
 {

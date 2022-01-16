@@ -15,7 +15,7 @@
 #include "position.hpp"
 
 namespace reviser {
-using std::ranges::min;
+using ::std::ranges::min;
 
 struct ConstantPlayerStub final : public game::Player
 {
@@ -29,7 +29,8 @@ struct ConstantPlayerStub final : public game::Player
         set_color(pc);
     }
 
-    [[nodiscard]] grid::Position pick_move(const ArrayBoard& board) const override
+    [[nodiscard]] grid::Position
+    pick_move(const board::ArrayBoard& board) const override
     {
         return played_position;
     }
@@ -41,7 +42,8 @@ struct MinimalPlayer final : public game::Player
 {
     using Player::Player;
 
-    [[nodiscard]] grid::Position pick_move(const ArrayBoard& board) const override
+    [[nodiscard]] grid::Position
+    pick_move(const board::ArrayBoard& board) const override
     {
         auto moves = board.find_valid_moves(get_color());
         return min(moves);
@@ -67,12 +69,19 @@ struct SpyForNotifierMoves final : public game::Notifier
         messages.emplace_back(message);
     }
 
-    void display_board(const ArrayBoard& board) override { boards.push_back(board); }
+    void display_board(const board::ArrayBoard& board) override
+    {
+        boards.push_back(board);
+    }
 
-    void note_new_game(const game::Players& players, const ArrayBoard& board) override {}
+    void
+    note_new_game(const game::Players& players, const board::ArrayBoard& board) override
+    {}
 
     void note_move(
-        const game::Player& player, grid::Position pos, const ArrayBoard& board) override
+        const game::Player& player,
+        grid::Position pos,
+        const board::ArrayBoard& board) override
     {
         moves.emplace_back(
             player.get_name().data(),
@@ -124,7 +133,7 @@ struct SpyForNotifierMoves final : public game::Notifier
     };
 
     std::vector<std::string> messages{};
-    std::vector<ArrayBoard> boards{};
+    std::vector<board::ArrayBoard> boards{};
     std::vector<Move> moves{};
     Result result_summary{};
 };

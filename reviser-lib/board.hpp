@@ -17,7 +17,7 @@
 #include "common.hpp"
 #include "position.hpp"
 
-namespace reviser {
+namespace reviser::board {
 using ::std::ranges::copy_if;
 
 enum class InitialBoardState
@@ -38,7 +38,8 @@ concept BoardType = requires(
     PlayerColor pc)
 {
     // clang-format off
-     std::forward_iterator<typename BoardT::iterator>;
+	BoardT{};
+    std::forward_iterator<typename BoardT::iterator>;
 	typename BoardT::Moves;
     { BoardT::from_string(s) } -> std::convertible_to<BoardT>;
     { ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
@@ -116,5 +117,5 @@ public:
     }
 };
 
-} // namespace reviser
+} // namespace reviser::board
 #endif // REVISER_LIB_BOARD_HPP
