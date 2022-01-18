@@ -16,10 +16,10 @@ class Game
 {
 public:
     Game() = default;
-    Game(const Game& other) = default;
-    Game(Game&& other) noexcept = default;
-    Game& operator=(const Game& other) = default;
-    Game& operator=(Game&& other) noexcept = default;
+    Game(const Game& other) = delete;
+    Game(Game&& other) noexcept = delete;
+    Game& operator=(const Game& other) = delete;
+    Game& operator=(Game&& other) noexcept = delete;
     virtual ~Game() = default;
 
     virtual void new_game(bool swap_payers) = 0;
@@ -30,18 +30,7 @@ public:
 class Players
 {
 public:
-    Players(std::shared_ptr<Player> dp, std::shared_ptr<Player> lp)
-        : dark_player{std::move(dp)}
-        , light_player{std::move(lp)}
-    {
-        // Make sure not to access the arguments in the body of the constructor, since
-        // we have moved from them!
-        if (dark_player == nullptr || light_player == nullptr) {
-            throw std::invalid_argument("Must provide valid players.");
-        }
-        dark_player->set_color(PlayerColor::dark);
-        light_player->set_color(PlayerColor::light);
-    }
+    Players(std::shared_ptr<Player> dp, std::shared_ptr<Player> lp);
 
     [[nodiscard]] const Player& get_dark_player() const { return *dark_player; }
     [[nodiscard]] Player& get_dark_player() { return *dark_player; }
@@ -49,21 +38,8 @@ public:
     [[nodiscard]] const Player& get_light_player() const { return *light_player; }
     [[nodiscard]] Player& get_light_player() { return *light_player; }
 
-    [[nodiscard]] const Player& get_other_player(const Player& player) const
-    {
-        if (player == get_light_player()) {
-            return get_dark_player();
-        }
-        return get_light_player();
-    }
-
-    [[nodiscard]] Player& get_other_player(const Player& player)
-    {
-        if (player == get_light_player()) {
-            return get_dark_player();
-        }
-        return get_light_player();
-    }
+    [[nodiscard]] const Player& get_other_player(const Player& player) const;
+    [[nodiscard]] Player& get_other_player(const Player& player);
 
     void swap_dark_and_light_player();
     void new_game();
@@ -87,9 +63,7 @@ public:
     virtual void display_board(const BasicBoard& board);
 
     virtual void note_new_game(const Players& players, const BasicBoard& board);
-
     virtual void note_move(const Player& player, Position pos, const BasicBoard& board);
-
     virtual void note_result(const GameResult& result);
 };
 

@@ -43,35 +43,20 @@ private:
     std::unique_ptr<BoardT> board;
     Player* current_player;
     mutable std::optional<Moves> cached_moves_for_current_player{};
-    mutable std::shared_ptr<GameResult> result{};
+    mutable std::shared_ptr<GameResult> cached_result{};
 
     [[nodiscard]] Players& get_players() { return players; }
     [[nodiscard]] BoardT& get_board() noexcept { return *board; }
     [[nodiscard]] Notifier& get_notifier() noexcept { return *notifier; }
 
-    [[nodiscard]] const Player& get_dark_player() const
-    {
-        return get_players().get_dark_player();
-    }
-    [[nodiscard]] Player& get_dark_player() { return get_players().get_dark_player(); }
+    [[nodiscard]] const Player& get_dark_player() const;
+    [[nodiscard]] Player& get_dark_player();
 
-    [[nodiscard]] const Player& get_light_player() const
-    {
-        return get_players().get_light_player();
-    }
-    [[nodiscard]] Player& get_light_player()
-    {
-        return get_players().get_light_player();
-    }
+    [[nodiscard]] const Player& get_light_player() const;
+    [[nodiscard]] Player& get_light_player();
 
-    [[nodiscard]] const Player& get_non_current_player() const
-    {
-        return get_players().get_other_player(get_current_player());
-    }
-    [[nodiscard]] Player& get_non_current_player()
-    {
-        return get_players().get_other_player(get_current_player());
-    }
+    [[nodiscard]] const Player& get_non_current_player() const;
+    [[nodiscard]] Player& get_non_current_player();
 
     [[nodiscard]] const Player& get_current_player() const { return *current_player; }
     [[nodiscard]] Player& get_current_player() { return *current_player; }
@@ -90,7 +75,7 @@ private:
 template <BoardType BoardT>
 void DefaultGame<BoardT>::new_game(const bool swap_payers)
 {
-    result = nullptr;
+    cached_result = nullptr;
     get_board().initialize();
     if (swap_payers) {
         get_players().swap_dark_and_light_player();
@@ -103,7 +88,7 @@ void DefaultGame<BoardT>::new_game(const bool swap_payers)
 template <BoardType BoardT>
 void DefaultGame<BoardT>::run_game_loop()
 {
-    while (!result) {
+    while (!cached_result) {
         pick_current_player_with_valid_moves();
         if (current_player_has_valid_moves()) {
             allow_current_player_to_move();
@@ -119,7 +104,35 @@ void DefaultGame<BoardT>::run_game_loop()
 template <BoardType BoardT>
 std::shared_ptr<const GameResult> DefaultGame<BoardT>::get_result() const
 {
-    return result;
+    return cached_result;
+}
+
+template <BoardType BoardT>
+const Player& DefaultGame<BoardT>::get_dark_player() const {
+    return get_players().get_dark_player();
+}
+
+template <BoardType BoardT>
+Player& DefaultGame<BoardT>::get_dark_player() { return get_players().get_dark_player(); }
+
+template <BoardType BoardT>
+const Player& DefaultGame<BoardT>::get_light_player() const {
+    return get_players().get_light_player();
+}
+
+template <BoardType BoardT>
+Player& DefaultGame<BoardT>::get_light_player() {
+    return get_players().get_light_player();
+}
+
+template <BoardType BoardT>
+const Player& DefaultGame<BoardT>::get_non_current_player() const {
+    return get_players().get_other_player(get_current_player());
+}
+
+template <BoardType BoardT>
+Player& DefaultGame<BoardT>::get_non_current_player() {
+    return get_players().get_other_player(get_current_player());
 }
 
 template <BoardType BoardT>
@@ -182,12 +195,12 @@ void DefaultGame<BoardT>::set_result_from_score()
     auto score = get_board().compute_score();
 
     if (score.is_tied()) {
-        result = std::make_unique<TiedResult>(
+        cached_result = std::make_unique<TiedResult>(
             score, get_board(), get_dark_player(), get_light_player());
     }
     else {
         const auto& [winner, loser] = score.compute_winner(get_players());
-        result = std::make_unique<WinByScore>(score, get_board(), winner, loser);
+        cached_result = std::make_unique<WinByScore>(score, get_board(), winner, loser);
     }
 }
 
@@ -196,7 +209,7 @@ void DefaultGame<BoardT>::disqualify_current_player()
 {
     auto score = get_board().compute_score();
 
-    result = std::make_unique<WinByOpponentMistake>(
+    cached_result = std::make_unique<WinByOpponentMistake>(
         score,
         get_board(),
         get_players().get_other_player(get_current_player()),

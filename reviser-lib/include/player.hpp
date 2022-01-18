@@ -24,9 +24,9 @@ public:
     {}
 
     Player(const Player&) = delete;
-    Player(Player&&) noexcept = default;
+    Player(Player&&) noexcept = delete;
     Player& operator=(const Player&) = delete;
-    Player& operator=(Player&&) noexcept = default;
+    Player& operator=(Player&&) noexcept = delete;
     virtual ~Player() = default;
 
     [[nodiscard]] const std::string& get_name() const { return name; }

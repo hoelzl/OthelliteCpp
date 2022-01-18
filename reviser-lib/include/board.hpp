@@ -76,7 +76,7 @@ concept BasicBoardType = requires(
     PlayerColor pc)
 {
     // clang-format off
-	typename BoardT::Moves;
+    typename BoardT::Moves;
     { b.operator[](pos) } -> std::convertible_to<Field&>;
     { cb.operator[](pos) } -> std::convertible_to<const Field&>;
     { cb.to_string() } -> std::convertible_to<std::string>;
@@ -97,9 +97,9 @@ template <typename BoardT>
 // clang-format off
 concept BoardType = BasicBoardType<BoardT> && requires(BoardT b, std::string s)
 {
-	BoardT{};
+    BoardT{};
     std::forward_iterator<typename BoardT::iterator>;
-	typename BoardT::Moves;
+    typename BoardT::Moves;
     //{ BoardT::from_string(s) } -> std::convertible_to<BoardT>;
     { ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
     { ::std::end(b) } -> std::convertible_to<typename BoardT::iterator>;

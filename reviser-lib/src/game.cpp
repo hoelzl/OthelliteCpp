@@ -14,6 +14,35 @@ namespace reviser {
 using namespace std::string_literals;
 using ::reviser::BasicBoard;
 
+Players::Players(std::shared_ptr<Player> dp, std::shared_ptr<Player> lp)
+    : dark_player{std::move(dp)}
+    , light_player{std::move(lp)}
+{
+    // Make sure not to access the arguments in the body of the constructor, since
+    // we have moved from them!
+    if (dark_player == nullptr || light_player == nullptr) {
+        throw std::invalid_argument("Must provide valid players.");
+    }
+    dark_player->set_color(PlayerColor::dark);
+    light_player->set_color(PlayerColor::light);
+}
+
+const Player& Players::get_other_player(const Player& player) const
+{
+    if (player == get_light_player()) {
+        return get_dark_player();
+    }
+    return get_light_player();
+}
+
+Player& Players::get_other_player(const Player& player)
+{
+    if (player == get_light_player()) {
+        return get_dark_player();
+    }
+    return get_light_player();
+}
+
 void Players::swap_dark_and_light_player()
 {
     swap(dark_player, light_player);
