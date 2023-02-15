@@ -6,7 +6,7 @@
 
 #include <random>
 
-#include "array_board.hpp" // FIXME! Should only depend on interface
+#include "board.hpp"
 #include "player.hpp"
 
 namespace reviser::ai {
