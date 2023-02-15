@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/reviser-ai/include/random_player.hpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reviser-cli/include/simple_command_line_player.hpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reviser-cli/src/simple_command_line_player.cpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reviser-lib/include/default_game.hpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reviser-lib/include/player.hpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reviser-lib/src/game_result.cpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reviser-lib/src/player.cpp" charset="UTF-8" />
+  </component>
+</project>

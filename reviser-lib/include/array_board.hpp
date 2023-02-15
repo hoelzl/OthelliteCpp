@@ -1,4 +1,4 @@
-// Copyright (c) 2021 Dr. Matthias Hölzl.
+// Copyright (c) 2021-2023 Dr. Matthias Hölzl.
 
 #pragma once
 #ifndef REVISER_LIB_ARRAY_BOARD_HPP
@@ -15,106 +15,108 @@
 
 namespace reviser {
 
-class ArrayBoard final : public BasicBoard
-{
-private:
-    std::array<Field, 64> fields{};
+    class ArrayBoard final : public BasicBoard {
+    private:
+        std::array<Field, 64> fields{};
 
-public:
-    using iterator = decltype(fields)::iterator;
-    using const_iterator = decltype(fields)::const_iterator;
-    using Moves = std::set<Position>;
-    using OrderedMoves = std::vector<Position>;
-    using Positions = std::set<Position>;
-    using OrderedPositions = std::vector<Position>;
+    public:
+        using iterator = decltype(fields)::iterator;
+        using const_iterator [[maybe_unused]] = decltype(fields)::const_iterator;
+        using Moves = std::set<Position>;
+        using OrderedMoves [[maybe_unused]] = std::vector<Position>;
+        using Positions = std::set<Position>;
+        using OrderedPositions = std::vector<Position>;
 
 
-    ArrayBoard() = default;
+        ArrayBoard() = default;
 
-    ArrayBoard(const ArrayBoard& other)
-        : fields{other.fields}
-    {}
+        ArrayBoard(const ArrayBoard &other)
+                : fields{other.fields} {}
 
-    ArrayBoard(ArrayBoard&& other) noexcept
-        : fields{other.fields}
-    {}
+        ArrayBoard(ArrayBoard &&other) noexcept
+                : fields{other.fields} {}
 
-    ArrayBoard& operator=(const ArrayBoard& other)
-    {
-        if (this == &other) {
+        ArrayBoard &operator=(const ArrayBoard &other) {
+            if (this == &other) {
+                return *this;
+            }
+            fields = other.fields;
             return *this;
         }
-        fields = other.fields;
-        return *this;
-    }
 
-    ArrayBoard& operator=(ArrayBoard&& other) noexcept
-    {
-        if (this == &other) {
+        ArrayBoard &operator=(ArrayBoard &&other) noexcept {
+            if (this == &other) {
+                return *this;
+            }
+            fields = other.fields;
             return *this;
         }
-        fields = other.fields;
-        return *this;
-    }
-	~ArrayBoard() override = default;
 
-    iterator begin() { return std::begin(fields); }
-    iterator end() { return std::end(fields); }
+        ~ArrayBoard() override = default;
 
-    static ArrayBoard from_string(std::string_view board_string);
+        iterator begin() { return std::begin(fields); }
 
-    Field& operator[](Position pos) override;
-    const Field& operator[](Position pos) const override;
+        iterator end() { return std::end(fields); }
 
-    [[nodiscard]] std::string to_string() const override;
+        static ArrayBoard from_string(std::string_view board_string);
 
-    void initialize(
-        InitialBoardState initial_state = InitialBoardState::center_square) override;
+        Field &operator[](Position pos) override;
 
-    [[nodiscard]] bool is_empty(Position pos) const override;
-    [[maybe_unused]] [[nodiscard]] bool is_occupied(Position pos) const override;
+        const Field &operator[](Position pos) const override;
 
-    [[nodiscard]] bool is_valid_move(PlayerColor pc, Position pos) const override;
+        [[nodiscard]] std::string to_string() const override;
 
-    [[nodiscard]] Moves find_valid_moves(PlayerColor pc) const override;
+        void initialize(
+                InitialBoardState initial_state = InitialBoardState::center_square) override;
 
-    void play_move(PlayerColor pc, Position pos) override;
+        [[nodiscard]] bool is_empty(Position pos) const override;
 
-    [[nodiscard]] Score compute_score() const override;
+        [[maybe_unused]] [[nodiscard]] bool is_occupied(Position pos) const override;
 
-private:
-    template <BoardType Board>
-    friend class BoardReader;
-    template <BoardType Board>
-    friend class BoardWriter;
+        [[nodiscard]] bool is_valid_move(PlayerColor pc, Position pos) const override;
 
-    Field& operator[](std::size_t index);
+        [[nodiscard]] Moves find_valid_moves(PlayerColor pc) const override;
 
-    [[nodiscard]] bool
-    does_move_flip_any_field(PlayerColor pc, Position starting_pos) const;
+        void play_move(PlayerColor pc, Position pos) override;
 
-    [[nodiscard]] Positions positions_to_flip_in_direction(
-        PlayerColor pc, Position starting_pos, Direction d) const;
+        [[nodiscard]] Score compute_score() const override;
 
-    [[nodiscard]] OrderedPositions
-    occupied_positions_in_direction(Direction d, Position starting_pos) const;
+    private:
+        template<BoardType Board>
+        friend
+        class BoardReader;
 
-    [[nodiscard]] Positions filter_positions_that_can_be_flipped(
-        PlayerColor pc, const OrderedPositions& non_empty_positions) const;
+        template<BoardType Board>
+        friend
+        class BoardWriter;
 
-    [[nodiscard]] std::size_t find_highest_index_for_player_owned_fields(
-        PlayerColor pc, const OrderedPositions& non_empty_positions) const;
+        Field &operator[](std::size_t index);
 
-    [[nodiscard]] Positions
-    find_positions_flipped_by_move(PlayerColor pc, Position pos) const;
+        [[nodiscard]] bool
+        does_move_flip_any_field(PlayerColor pc, Position starting_pos) const;
 
-    void flip_positions(PlayerColor pc, const Positions& positions_to_flip);
-};
+        [[nodiscard]] Positions positions_to_flip_in_direction(
+                PlayerColor pc, Position starting_pos, Direction d) const;
 
-bool operator==(const ArrayBoard& lhs, const ArrayBoard& rhs);
+        [[nodiscard]] OrderedPositions
+        occupied_positions_in_direction(Direction d, Position starting_pos) const;
 
-static_assert(BasicBoardType<ArrayBoard>);
-static_assert(BoardType<ArrayBoard>);
+        [[nodiscard]] Positions filter_positions_that_can_be_flipped(
+                PlayerColor pc, const OrderedPositions &non_empty_positions) const;
+
+        [[nodiscard]] std::size_t find_highest_index_for_player_owned_fields(
+                PlayerColor pc, const OrderedPositions &non_empty_positions) const;
+
+        [[nodiscard]] Positions
+        find_positions_flipped_by_move(PlayerColor pc, Position pos) const;
+
+        void flip_positions(PlayerColor pc, const Positions &positions_to_flip);
+    };
+
+    bool operator==(const ArrayBoard &lhs, const ArrayBoard &rhs);
+
+    static_assert(BasicBoardType<ArrayBoard>);
+    static_assert(BoardType<ArrayBoard>);
 
 } // namespace reviser
 #endif // REVISER_LIB_ARRAY_BOARD_HPP

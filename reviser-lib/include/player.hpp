@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 Dr. Matthias Hölzl.
+// Copyright (c) 2021-2023 Dr. Matthias HÃ¶lzl.
 
 #pragma once
 
@@ -10,43 +10,50 @@
 
 namespace reviser {
 
-class BasicBoard;
-class GameResult;
+    class BasicBoard;
 
-class Player
-{
-public:
-    explicit Player(
-        const std::string_view name = "An unnamed player",
-        const PlayerColor pc = PlayerColor::dark)
-        : name{name}
-        , color{pc}
-    {}
+    class GameResult;
 
-    Player(const Player&) = delete;
-    Player(Player&&) noexcept = delete;
-    Player& operator=(const Player&) = delete;
-    Player& operator=(Player&&) noexcept = delete;
-    virtual ~Player() = default;
+    class Player {
+    public:
+        explicit Player(
+                const std::string_view name = "An unnamed player",
+                const PlayerColor pc = PlayerColor::dark)
+                : name{name}, color{pc} {}
 
-    [[nodiscard]] const std::string& get_name() const { return name; }
-    void set_name(std::string_view new_name) { this->name = new_name; }
+        Player(const Player &) = delete;
 
-    [[nodiscard]] PlayerColor get_color() const { return color; }
-    void set_color(const PlayerColor pc) { this->color = pc; }
+        Player(Player &&) noexcept = delete;
 
-    virtual void new_game();
-    [[nodiscard]] virtual Position pick_move(const BasicBoard& board) const = 0;
-    [[maybe_unused]] virtual void game_over(const GameResult& result);
+        Player &operator=(const Player &) = delete;
 
-private:
-    std::string name{"An unnamed player"};
-    PlayerColor color{};
-};
+        Player &operator=(Player &&) noexcept = delete;
+
+        virtual ~Player() = default;
+
+        [[nodiscard]] const std::string &get_name() const { return name; }
+
+        void set_name(std::string_view new_name) { this->name = new_name; }
+
+        [[nodiscard]] PlayerColor get_color() const { return color; }
+
+        void set_color(const PlayerColor pc) { this->color = pc; }
+
+        virtual void new_game();
+
+        [[nodiscard]] virtual Position pick_move(const BasicBoard &board) const = 0;
+
+        [[maybe_unused]] virtual void game_over(const GameResult &result);
+
+    private:
+        std::string name{"An unnamed player"};
+        PlayerColor color{};
+    };
 
 
-bool operator==(const Player& lhs, const Player& rhs);
-bool operator!=(const Player& lhs, const Player& rhs);
+    bool operator==(const Player &lhs, const Player &rhs);
+
+    bool operator!=(const Player &lhs, const Player &rhs);
 
 } // namespace reviser
 
