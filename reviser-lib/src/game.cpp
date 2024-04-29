@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 Dr. Matthias Hölzl.
+// Copyright (c) 2021-2024 Dr. Matthias Hölzl.
 
 #include "game.hpp"
 
@@ -80,7 +80,7 @@ void Notifier::note_move(
         "\n{} ({}) plays {}.",
         player.get_name(),
         player_color_to_string(player.get_color()),
-        pos.to_string());
+        pos.to_user_string());
 
     display_message(message);
     display_board(board);

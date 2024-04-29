@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 Dr. Matthias Hölzl.
+// Copyright (c) 2021-2024 Dr. Matthias Hölzl.
 
 #pragma once
 #ifndef REVISER_LIB_POSITION_HPP
@@ -85,6 +85,11 @@ public:
     [[nodiscard]] std::string to_string() const
     {
         return std::format("({}, {})", get_row().value, get_column().value);
+    }
+
+    [[nodiscard]] std::string to_user_string() const
+    {
+        return std::format("({}, {})", get_row().value + 1, get_column().value + 1);
     }
 
 private:

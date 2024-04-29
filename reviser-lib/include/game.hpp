@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 Dr. Matthias Hölzl.
+// Copyright (c) 2021-2024 Dr. Matthias Hölzl.
 
 #pragma once
 
@@ -22,7 +22,7 @@ public:
     Game& operator=(Game&& other) noexcept = delete;
     virtual ~Game() = default;
 
-    virtual void new_game(bool swap_payers) = 0;
+    virtual void new_game(bool swap_players) = 0;
     virtual void run_game_loop() = 0;
     [[nodiscard]] virtual std::shared_ptr<const GameResult> get_result() const = 0;
 };
