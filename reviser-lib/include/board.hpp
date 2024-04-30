@@ -1,4 +1,4 @@
-// Copyright (c) 2021 Dr. Matthias Hölzl.
+// Copyright (c) 2021-2024 Dr. Matthias Hölzl.
 
 #pragma once
 #ifndef REVISER_LIB_BOARD_HPP
@@ -73,8 +73,7 @@ concept BasicBoardType = requires(
     std::string s,
     Position pos,
     InitialBoardState initial_state,
-    PlayerColor pc)
-{
+    PlayerColor pc) {
     // clang-format off
     typename BoardT::Moves;
     { b.operator[](pos) } -> std::convertible_to<Field&>;
@@ -98,7 +97,7 @@ template <typename BoardT>
 concept BoardType = BasicBoardType<BoardT> && requires(BoardT b, std::string s)
 {
     BoardT{};
-    std::forward_iterator<typename BoardT::iterator>;
+    requires std::forward_iterator<typename BoardT::iterator>;
     typename BoardT::Moves;
     //{ BoardT::from_string(s) } -> std::convertible_to<BoardT>;
     { ::std::begin(b) } -> std::convertible_to<typename BoardT::iterator>;
