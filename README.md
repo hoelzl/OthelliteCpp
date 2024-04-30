@@ -5,8 +5,14 @@ A C++ implementation of the Reversi (Othello) game.
 ## Installation
 
 You need a C++ compiler that supports C++23 and CMake to build the project.
+The project has been tested with, GCC 14, Clang 18 or MSVC 19.39.33523.0.
 
-If you have these prerequisites, you can build the project by running the following commands:
+If you have a C++20 compiler, you can modify the `CMakeLists.txt` file to
+require C++20 instead of C++23 and change the uses of `std::format` to,
+e.g., string concatenation.
+
+If you have these prerequisites, you can build the project by running
+the following commands:
 
 ```bash
 git clone https://github.com/hoelzl/Reviser.git
@@ -16,7 +22,8 @@ cmake ../Reviser
 cmake --build .
 ```
 
-Then run the binary created by the build process. For Windows this is typically something like
+Then run the binary created by the build process.
+For Windows this is typically something like
 
 ```powershell
 .\reviser-cli\Debug\reviser-cli.exe
